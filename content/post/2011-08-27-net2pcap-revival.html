@@ -1,0 +1,28 @@
+---
+categories:
+- network
+- capture
+- security
+- project
+date: "2011-08-27T14:54:00Z"
+title: net2pcap revival
+---
+
+<div class='post'>
+<a href="http://www.secdev.org/projects/net2pcap/">net2pcap</a> is a packet capture tool written by <a href="http://secdev.org/">Philippe Biondi</a>&nbsp;back in 2003. It was designed to be as secure as possible in order to be run in hostile environment. To do so, its code is minimalist without any complicate feature, the result is 406 lines of simple C. On top of its security, it is also the most reliable tool I have ever used on high traffic link regarding packet loss, even dumpcap does not perform better.<br />
+<br />
+Unfortunately, feature requests and bugs were lost in the <a href="http://trac.secdev.org/secdev/report/">middle of hundreds of spams in Phil's bug tracker</a>.&nbsp;To not lost patches, I have set up a <a href="https://github.com/nbareil/net2pcap">net2pcap repository</a>&nbsp;on github. <b>This is not a fork,</b>&nbsp;this is still maintained in collaboration with Phil, this is just a way to relieve him of the maintenance burden.<br />
+<br />
+For those interested in the project, <a href="https://github.com/nbareil/net2pcap/commits/master">the following patches were already applied</a>:<br />
+<br />
+<ul>
+<li>Privileges drop</li>
+<li>Chroot</li>
+<li>Compatible with 64 bits architecture</li>
+<li>Large file support on x86_32</li>
+</ul>
+<div>
+If you have any feature request or bug report, <a href="https://github.com/nbareil/net2pcap/issues">feel free to submit a ticket</a>!</div>
+<div>
+<br /></div>
+</div>

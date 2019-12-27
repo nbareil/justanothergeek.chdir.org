@@ -1,0 +1,74 @@
+---
+categories:
+- sandbox
+- glibc
+- elf
+date: "2011-11-02T16:30:00Z"
+title: ld-linux.so ELF hooker
+---
+
+<div class='post'>
+<div style="-moz-border-radius: 6px; -moz-box-shadow: #F6EECD 0px 0px 200px inset; -o-box-shadow: #F6EECD 0px 0px 200px inset; -webkit-border-radius: 6px; background-color: #faf8ef; border-collapse: separate; border-radius: 6px; border-spacing: 1.428em; box-shadow: #F6EECD 0px 0px 200px inset; padding: 1.428em;">
+<span style="color: #5d2a07; letter-spacing: 0.04em; text-transform: uppercase;"><b>TL;DR</b></span><br />
+<a href="https://plus.google.com/108914619478390609767">Stéphane</a> and <a href="https://plus.google.com/114289168433047035840">myself</a>&nbsp;are releasing a new tool injecting code at runtime, just between the ELF loader and target binary. It is an alternative to <code>LD_PRELOAD</code>, just a little bit more intrusive but 100% reliable :)<br />
+<div style="text-align: center;">
+&nbsp;<a href="https://github.com/sduverger/ld-shatner">Sources were released on Github</a>
+
+</div>
+</div>
+<br />
+<span style="font-family: inherit;"><br /></span><br />
+<span style="font-family: inherit;">When a binary is execve(), the kernel extracts from the ELF headers the interpreter to be launched, usually &nbsp;</span><span style="font-family: 'Courier New', Courier, monospace;">/lib/ld-linux.so.2</span><span style="font-family: inherit;">.&nbsp;</span><span style="background-color: transparent; font-family: inherit;">The kernel creates a new process and prepares the environment (arguments and auxiliary data). The target ELF entry point is set in auxiliary vector of type "ENTRY".</span><br />
+<span style="background-color: transparent; font-family: inherit;"><br /></span><br />
+<span style="font-family: inherit;">Then the kernel opens the requested interpreter, maps the memory regions and start its execution at ld's ELF entry point. Then the loader analyzes the target ELF file, performs its loader work and sets EIP to target ELF entry point (extracted from auxv). At this point, main()'s program is eventually executed.</span><br />
+<span style="font-family: inherit;"><br /></span><br />
+<span style="font-family: inherit;">Our goal was to permit the execution of code for abitrary dynamically linked binary without patching each of them. So our interest moved on&nbsp;<span style="background-color: transparent;">the loader, the common point between most executables. Thus, we decided to patch a normal ld in order to inject code. M</span></span><span style="background-color: transparent;">y awesome colleague,&nbsp;</span><span style="background-color: transparent; font-family: inherit;">Stéphane Duverger (the&nbsp;<a href="https://github.com/sduverger/ramooflax">ramooflax</a> author!) and myself wrote </span><a href="https://github.com/sduverger/ld-shatner" style="background-color: transparent; font-family: inherit;">ld-shatner</a>.&nbsp;<span style="background-color: transparent; font-family: inherit;">Its task is to patch </span><span style="background-color: transparent; font-family: 'Courier New', Courier, monospace;">ld-linux.so</span><span style="background-color: transparent; font-family: inherit;"> file accordingly:</span><br />
+<br />
+<div class="separator" style="clear: both; text-align: center;">
+</div>
+<div class="separator" style="clear: both; text-align: center;">
+</div>
+<div class="separator" style="clear: both; text-align: center;">
+</div>
+<ol>
+<li><span style="background-color: transparent;"><span style="font-family: inherit;">After ELF header, we shift "ELF program header" a few pages away</span></span></li>
+<li><span style="font-family: inherit;"><span style="background-color: transparent;">In this new section, we inject a "loader routine" (<a href="https://github.com/sduverger/ld-shatner/blob/master/hooked.s">hooked.s</a>) and</span><span style="background-color: transparent;">&nbsp;embedded code to be executed at runtime</span></span></li>
+<li><span style="background-color: transparent; font-family: inherit;">After having been saved in our section, ld's ELF entry point is&nbsp;</span><span style="background-color: transparent; font-family: inherit;">overwritten to jump directly on our routine. This routine&nbsp;</span><span style="background-color: transparent; font-family: inherit;">extracts from auxiliary vectors the target ELF entry point and&nbsp;</span><span style="background-color: transparent;"><span style="font-family: inherit;">overwrites it with a pointer to our embedded code (</span><span style="font-family: 'Courier New', Courier, monospace;">func()</span><span style="font-family: inherit;"> in&nbsp;</span><a href="https://github.com/sduverger/ld-shatner/blob/master/obj.c" style="font-family: inherit;">the payload</a><span style="font-family: inherit;">).</span></span></li>
+<li><span style="background-color: transparent;"><span style="font-family: inherit;">Original ld's entry point is called and ld works as usual</span></span></li>
+<li><span style="font-family: inherit;"><span style="background-color: transparent;">Eventually, it calls entry point set in auxiliary vector (which</span><span style="background-color: transparent;">&nbsp;was replaced by a pointer to our payload)</span></span></li>
+<li><span style="background-color: transparent;"><span style="font-family: inherit;">Embdded code runs</span></span></li>
+<li><span style="font-family: inherit;"><span style="background-color: transparent;">It returns to our routine which finally jumps on original target</span><span style="background-color: transparent;">&nbsp;entry point</span></span></li>
+</ol>
+<div>
+<span style="background-color: transparent;">Some pictures before/after ld-shatner voodoo:</span></div>
+<div>
+<br /></div>
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;"><tbody>
+<tr><td style="text-align: center;"><a href="https://docs.google.com/drawings/pub?id=134woIW7XWxLXnXc-8vNTcUyhuOqD-zt8IoQYKivDDh0&amp;w=1501&amp;h=979" imageanchor="1" style="margin-left: auto; margin-right: auto;"><img border="0" height="416" src="https://docs.google.com/drawings/pub?id=134woIW7XWxLXnXc-8vNTcUyhuOqD-zt8IoQYKivDDh0&amp;w=1501&amp;h=979" width="640" /></a></td></tr>
+<tr><td class="tr-caption" style="text-align: center;">ld-shatner voodo</td></tr>
+</tbody></table>
+<div>
+<h3>
+
+Screenshot</h3>
+<pre style="background-color: #f8f8f8; color: #444444; font-family: 'Bitstream Vera Sans Mono', Courier, monospace; font-size: 11px; font: normal normal normal 12px/normal 'Bitstream Vera Sans Mono', Courier, monospace; padding-bottom: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px; white-space: pre-wrap; width: 74em; word-wrap: break-word;">$ make clean all
+$ cp /lib/ld-linux.so.2 /bin/ls .
+$ ./ld-shatner ld-linux.so.2 obj.elf
+$ sudo cp ld-hook.so /lib/
+$ ./interpatch ls
+$ ./ls 
+ld-hook &lt;---------------------- output of obj.elf
+[...]</pre>
+<br />
+(Ok, we cheat for the moment because we have to patch ls binary but we will not have to do that eventually)<br />
+<h3>
+
+So what?</h3>
+</div>
+<div>
+My ultimate goal for ld-shatner is to use this method for starting applications in my sandbox project,&nbsp;<a href="http://chdir.org/~nico/seccomp-nurse/">seccomp-nurse</a>. For the moment, I rely on LD_PRELOAD feature but this approach is... hackish and I have to work around some bugs because of this special context...<br />
+<br /></div>
+<div>
+<br /></div>
+<div>
+<br /></div></div>

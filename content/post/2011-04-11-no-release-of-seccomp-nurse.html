@@ -1,0 +1,56 @@
+---
+categories:
+- sandbox
+- linux
+- seccomp
+date: "2011-04-11T11:37:00Z"
+title: no-release of seccomp-nurse
+---
+
+<div class='post'>
+<br />
+<div style="border-radius: 6px; background-color: #FAF8EF; -moz-box-shadow: #F6EECD 0px 0px 200px inset; -o-box-shadow: #F6EECD 0px 0px 200px inset; box-shadow: #F6EECD 0px 0px 200px inset; -webkit-border-radius: 6px;-moz-border-radius: 6px;border-collapse: separate;
+border-spacing: 1.428em;padding: 1.428em;">
+<span style="text-transform: uppercase; letter-spacing: .04em; color: #5D2A07;"><b>This post in a nutshell</b></span><br />
+
+This was a draft since <a href="http://chdir.org/~nico/papers/seccomp-nurse10/">my presentation at Ekoparty</a>, I will force myself to not procrastinate this time. <b>This post announces the no-release of seccomp-nurse</b> (it is not a release because it is still an advanced proof of concept).
+
+Quick links:
+<ul>
+<li><a href="http://chdir.org/~nico/seccomp-nurse/">seccomp-nurse homepage</a></li>
+<li><a href="http://github.com/nbareil/seccomp-nurse/">seccomp-nurse sources</a></li>
+<li><a href="http://www.youtube.com/watch?v=EUSxAJE9xqI">screencast: sandboxing the python interpreter</a></li>
+</ul>
+
+</div>
+
+<br />
+<a href="http://github.com/nbareil/seccomp-nurse/">seccomp-nurse</a> is a generic sandbox environnement for Linux, which doesn't require any recompilation. Its purpose is to run legit applications in hostile environment, I repeat, it is not designed to run malicious binary.<br />
+<br />
+<a name='more'></a>
+<b>How does it work?</b> The following figure describes the architecture of seccomp-nurse. You can see two processes, one running the untrusted code and the trusted one. The trusted process is charge of intercepting syscalls and checking if the action is allowed.<br />
+<div class="separator" style="clear: both; text-align: center;">
+<a href="http://chdir.org/~nico/seccomp-nurse/seccomp-nurse-architecture.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="http://chdir.org/~nico/seccomp-nurse/seccomp-nurse-architecture.png" /></a></div>
+<br />
+<br />
+<br />
+<i><b>How do we intercept syscalls?&nbsp;</b></i>By using a x86_32 hack. If you remember <a href="http://justanothergeek.chdir.org/2010/02/how-system-calls-work-on-recent-linux.html">my previous post, I described how the GNU Libc was executing syscalls</a>: by making an indirect call in VDSO. seccomp-nurse overrides this page in order to call our own function instead of performing the syscall. Our handler retrieves CPU registers and directly sends them to the trusted process through a socket. The trusted process checks its policy engine, like: "can this process open this file?"<br />
+<br />
+<b><i>If action is allowed, how to execute it?&nbsp;</i></b>SECCOMP only permits 4 syscalls, how to do? Well. SECCOMP flag is limited to the thread scope, that means that if a process has two threads, one can be sandboxed (which will be called untrustee) and the other (called trustee) is free to do whatever it wants, furthermore, if threads share everything, any action done in one thread has an impact on the other. This is pretty cool! But so dangereous!<br />
+<br />
+Indeed, everything is shared, only the CPU registers are not shared between threads, that's all! The trustee must consider its environment as hostile: its code must not do on memory access, only registers can be used. That's why <a href="https://github.com/nbareil/seccomp-nurse/blob/master/companion.s">this part is written in assembly</a> in order to control every instructions. It has been designed to be the simplest possible because this is the keystone of the sandbox, the security of the system relies on it.<br />
+<br />
+This routine is completely dummy and has no intelligence at all, everything is done in the trusted process, the trustee understands only theses commands:<br />
+<ul>
+<li>Execute this syscall</li>
+<li>Raise a SIGTRAP (for debugging purpose)</li>
+<li>Native exit</li>
+<li>Poke/Peek memory</li>
+</ul>
+
+<b><i>How are exchanged the information between both processes?&nbsp;</i></b>Thanks to a POSIX shared memory, marked as read-only for the untrusted process. That way, when the trusted process wants to delegate a syscall, it writes the values of all registers in this shared memory and notifies the trustee to execute it. With this mechanism, there is no race condition: every syscall arguments are copied so they cannot be modified after the policy check.<br />
+<br />
+<b><i>Limitations:&nbsp;</i></b>Because of our way of intercepting syscalls, we can only run dynamically linked binaries on 32 bits, using the GNU Libc. It is hoped that the situation will improve greatly in the following weeks... Stay tuned!<br />
+<br />
+<b><i>Performances:&nbsp;</i></b>Hahem. I don't know. Each time the untrustee makes a syscall, our sandbox&nbsp;makes a lot of back and forth between both processes (one back and forth = at least one read, one write).<br />
+<br /></div>

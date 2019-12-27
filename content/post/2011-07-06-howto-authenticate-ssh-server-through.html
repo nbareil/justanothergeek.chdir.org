@@ -1,0 +1,49 @@
+---
+categories:
+- howto
+- ssh
+date: "2011-07-06T14:34:00Z"
+title: HOWTO authenticate ssh server through certificates
+---
+
+<div class='post'>
+In August 2010, OpenSSH 5.6 added support for certificate authentication (<a href="http://www.openssh.org/txt/release-5.6">release notes</a>), unfortunately, no documentation really exists at the moment (you are on your own with <a href="http://www.openbsd.org/cgi-bin/man.cgi?query=sshd_config&amp;sektion=5">sshd_config(1)</a>,&nbsp;<a href="http://www.openbsd.org/cgi-bin/man.cgi?query=ssh-keygen&amp;apropos=0&amp;sektion=0&amp;manpath=OpenBSD+Current&amp;arch=i386&amp;format=html">ssh-keygen(1)</a>&nbsp;and&nbsp;<a href="http://www.openbsd.org/cgi-bin/man.cgi?query=ssh&amp;apropos=0&amp;sektion=0&amp;manpath=OpenBSD+Current&amp;arch=i386&amp;format=html">ssh_config(1)</a>, good luck with that). &nbsp;This is a surprising because this feature is awesome for system administrators, even for a small deployment.<br />
+<br />
+Certificates allow you to sign user or host keys. In other words:<br />
+<ul>
+<li>Thanks to a unique file (CA certificate) on the server, it can accept any (signed) user keys transparently</li>
+<li>If every servers' host keys are signed, clients only need to carry the CA to authenticate every servers of your network, which means no more "The authenticity of host foobar can't be established. Fingerprint is..." message</li>
+</ul>
+<div>
+Here is the HOWTO for the latter case.</div>
+<div>
+<br /></div>
+<div style="-moz-border-radius: 6px; -moz-box-shadow: #F6EECD 0px 0px 200px inset; -o-box-shadow: #F6EECD 0px 0px 200px inset; -webkit-border-radius: 6px; background-color: #faf8ef; border-collapse: separate; border-radius: 6px; border-spacing: 1.428em; box-shadow: #F6EECD 0px 0px 200px inset; padding: 1.428em;">
+<span style="color: #5d2a07; letter-spacing: 0.04em; text-transform: uppercase;">
+<b>Geek summary: Sign SSHd host key</b>
+</span>
+
+<br />
+<span style="color: #5d2a07; letter-spacing: 0.04em; text-transform: uppercase;"><b><br /></b></span><br />
+<pre>$ ssh-keygen -f ~/.ssh/cert_signer
+$ scp foobar.example.org:/etc/ssh/ssh_host_rsa_key.pub foobar.pub
+$ ssh-keygen -h                             \ # sign host key
+             -s ~/.ssh/cert_signer          \ # CA key
+             -I foobar                      \ # Key identifier
+             -V +1w                         \ # Valid only 1 week
+             -n foobar,foobar.example.org   \ # Valid hostnames
+             foobar.pub                       # Host pubkey file
+$ scp foobar-cert.pub foobar.example.org:/etc/ssh/ssh_host_rsa_key-cert.pub
+</pre>
+<br />
+On foobar.example.org, add "HostCertificate /etc/ssh/ssh_host_rsa_key-cert.pub" in sshd_config and reload sshd. Now, configure the ssh client to use this authority:
+<br />
+<br />
+<pre>$ (  echo -n '@cert-authority * '; \
+     cat ~/.ssh/cert_signer.pub ) > ~/.ssh/known_hosts_cert
+$ ssh -oUserKnownHostsFile=~/.ssh/known_hosts_cert foobar.example.org
+</pre>
+</div>
+<br />
+At this point, you can connect to every servers without any annoying messages. You don't even have to care when the server is replaced without conserving its old ssh keys.<br />
+<br /></div>
