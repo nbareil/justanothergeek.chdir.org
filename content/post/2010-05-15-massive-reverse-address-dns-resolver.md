@@ -1,26 +1,22 @@
 ---
 categories:
-- dns
-- async
-- scan
-- nodejs
+ - dns
+ - async
+ - scan
+ - nodejs
 date: "2010-05-15T09:26:00Z"
 title: Massive reverse address DNS resolver
 ---
 
-<div class='post'>
-<p>Just for the record (and <a href="http://news0ft.blogspot.com/">newsoft</a> :), here is a basic reverse DNS
-bruteforce implemented with <a href="http://nodejs.org/">Node.js</a>: thanks to this awesome
-event-based library, it is possible to write powerful tools in a few
-Javascript lines!
-</p>
-<p>
-The following code will resolve a /24 netblock in less than 5
-seconds.
-</p>
+Just for the record (and [newsoft](http://news0ft.blogspot.com/) :),
+here is a basic reverse DNS bruteforce implemented with
+[Node.js](http://nodejs.org/): thanks to this awesome event-based
+library, it is possible to write powerful tools in a few Javascript
+lines!
 
+The following code will resolve a /24 netblock in less than 5 seconds.
 
-<pre class="prettyprint lang-js">
+``` {.prettyprint .lang-js}
 #! /usr/bin/nodejs
 
 var baseaddr = '88.191.98.';
@@ -52,9 +48,8 @@ for (var i = 0 ; i < 255 ; i++) {
         sys.puts(addr + ' = ' + domains);
     });
 }
-</pre>
+```
 
-<p>
-There is no retry mechanism if the remote server returns a
-<code>SERVFAIL</code> but this is left as exercise to the reader&hellip;
-</p></div>
+There is no retry mechanism if the remote server returns a `SERVFAIL`
+but this is left as exercise to the reader…
+
