@@ -1,0 +1,15 @@
+<section class="container text-monospace mt-5">
+	<div class="container text-center">
+		<img class="rounded-circle" src='{{ .Site.Params.img | absURL }}' title="Icon by freepik rom www.flaticon.com" width="200px"/>
+		<h3 class="mt-3">{{ .Site.Title }}</h3>
+		<span class='text-secondary'>{{ .Site.Params.about }}</span>
+		<br><br>
+    <div class="bg-white">
+			<a href="{{ .Site.Params.github }}"><span class="badge badge-pill badge-dark">Github</span></a>
+			<a href="{{ .Site.Params.gitlab }}"><span class="badge badge-pill badge-danger">Gitlab</span></a>
+			<a href="mailto:{{ .Site.Params.email }}"><span class="badge badge-pill badge-success">Email</span></a>
+			<a href="{{ "index.xml" | absURL }}"><span class="badge badge-pill badge-warning">RSS Feed</span></a>
+
+    </div>
+	</div>
+</section>

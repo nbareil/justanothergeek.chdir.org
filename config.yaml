@@ -1,4 +1,6 @@
-baseURL: http://example.org/
+baseURL: https://justanothergeek.chdir.org/
 disablePathToLower: true
 languageCode: en-us
-title: My New Hugo Site
+title: Just Another Geek
+googleAnalytics: UA-13174242-1
+theme: monopriv

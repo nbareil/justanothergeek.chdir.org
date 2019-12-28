@@ -1,0 +1,15 @@
+# theme.toml template for a Hugo theme
+# See https://github.com/gohugoio/hugoThemes#themetoml for an example
+
+name = "monopriv"
+license = "MIT"
+licenselink = "https://gitlab.com/kskarthik/monopriv/blob/master/LICENSE"
+description = "A minimal privacy focused blogging theme for hugo"
+homepage = "https://gitlab.com/kskarthik/monopriv"
+tags = ["minimal", "simple", "clean", "blog", "light","bootstrap", "responsive", "fast", "privacy", "monospace"]
+features = ["blog", "Clean and minimal", "Responsive", "Social media links", "Syntax highlighting"]
+min_version = "0.41"
+
+[author]
+  name = "Sai Karthik"
+  homepage = "https://kskarthik.gitlab.io"

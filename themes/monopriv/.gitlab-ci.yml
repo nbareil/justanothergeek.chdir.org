@@ -1,0 +1,17 @@
+image: registry.gitlab.com/pages/hugo:latest
+
+pages:
+ script:
+  - apk add git
+  - git clone https://github.com/gohugoio/hugoBasicExample
+  - cd hugoBasicExample
+  - git submodule add -f https://gitlab.com/kskarthik/monopriv themes/monopriv
+  - mv themes/monopriv/exampleSite/config.toml .
+  - hugo -b https://kskarthik.gitlab.io/monopriv/
+  - cd ..
+  - mv hugoBasicExample/public .
+ artifacts:
+    paths:
+    - public
+ only:
+    - master

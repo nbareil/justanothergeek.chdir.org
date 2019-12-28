@@ -1,0 +1,8 @@
+<footer>
+  <div class="container-fluid bg-dark text-white text-monospace text-center mt-4">
+    <small>{{.Site.Copyright | safeHTML }} | Crafted using <a href="https://gohugo.io">Hugo</a></small>
+  </div>
+  {{ if .Site.Params.analytics }}
+    {{ template "_internal/google_analytics.html" . }}  
+{{ end }}
+</footer>

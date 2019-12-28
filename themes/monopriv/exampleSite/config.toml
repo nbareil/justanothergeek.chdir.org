@@ -1,0 +1,67 @@
+baseURL = "https://gohugo.io/"
+title = "Monopriv"
+languagecode = "en"
+author = "Steve Francia"
+copyright = "Copyright © 2008–2019" #supports html markup
+paginate = 3
+languageCode = "en"
+DefaultContentLanguage = "en"
+enableInlineShortcodes = true
+footnoteReturnLinkContents = "^"
+googleAnalytics = "UA-123-45"
+disqusShortname = "yourdiscussshortname"
+theme = "monopriv"
+
+[params]
+about = "A privacy focused minimal bootstrap theme"
+img = "img/logo.png"
+github = "https://github.com"
+gitlab = "https://gitlab.com"
+email = "mail@example.com"
+# site meta description
+metadesc = "A simple privacy oriented bootstrap hugo blog"
+# site meta keywords
+metakeys = "hugo, simple, minimal, bootstrap, blog"
+# enable/disable disqus comments 
+disqus = false 
+# enable/disable google analytics 
+analytics = false 
+
+[menu]
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about/"
+    weight = 10
+
+[taxonomies]
+category = "categories"
+tag = "tags"
+series = "series"
+
+[privacy]
+
+  [privacy.vimeo]
+    disabled = false
+    simple = true
+
+  [privacy.twitter]
+    disabled = false
+    enableDNT = true
+    simple = true
+
+  [privacy.instagram]
+    disabled = false
+    simple = true
+
+  [privacy.youtube]
+    disabled = false
+    privacyEnhanced = true
+
+[services]
+
+  [services.instagram]
+    disableInlineCSS = true
+
+  [services.twitter]
+    disableInlineCSS = true
