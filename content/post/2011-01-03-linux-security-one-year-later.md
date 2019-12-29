@@ -4,6 +4,7 @@ categories:
  - security
 date: "2011-01-03T22:48:00Z"
 title: Linux Security, one year later...
+description:
 ---
 
 This post (tries to) describe what happened in 2010 about GNU/Linux

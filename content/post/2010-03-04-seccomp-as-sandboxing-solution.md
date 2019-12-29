@@ -6,6 +6,7 @@ categories:
  - seccomp
 date: "2010-03-04T14:10:00Z"
 title: SECCOMP as a Sandboxing solution ?
+description: SECCOMP is a Linux feature introduced in 2.6.23 to run untrusted executables.
 ---
 
 ### Sandboxing technology?

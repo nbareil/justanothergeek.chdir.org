@@ -6,6 +6,7 @@ categories:
  - project
 date: "2011-08-27T14:54:00Z"
 title: net2pcap revival
+description: Giving an update to net2pcap
 ---
 
 [net2pcap](http://www.secdev.org/projects/net2pcap/) is a packet capture

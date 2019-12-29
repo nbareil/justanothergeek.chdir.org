@@ -6,6 +6,7 @@ categories:
  - nodejs
 date: "2010-05-15T09:26:00Z"
 title: Massive reverse address DNS resolver
+description: Dummy code to scan wide netblocks in NodeJS
 ---
 
 Just for the record (and [newsoft](http://news0ft.blogspot.com/) :),

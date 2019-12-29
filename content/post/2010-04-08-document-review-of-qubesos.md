@@ -7,6 +7,7 @@ categories:
  - security
 date: "2010-04-08T15:03:00Z"
 title: Document review of Qubes OS
+description: I had a glance to Qubes OS documents, this is my review
 ---
 
 Qubes OS

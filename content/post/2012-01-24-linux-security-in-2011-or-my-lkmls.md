@@ -1,6 +1,7 @@
 ---
 date: "2012-01-24T16:16:00Z"
 title: Linux security in 2011, or my LKML's yearly digest
+description: This is my bookmarks about Linux kernel security in 2011.
 ---
 
 ### Linux security in 2011, or LKML's yearly digest

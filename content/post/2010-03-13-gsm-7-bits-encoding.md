@@ -5,6 +5,8 @@ categories:
  - android
 date: "2010-03-13T11:14:00Z"
 title: GSM 7 bits encoding
+description: I implemented some GSM protocol parts in scapy so I had to implement
+ the infamous "7 bits alphabet".
 ---
 
 I implemented some GSM protocol parts in

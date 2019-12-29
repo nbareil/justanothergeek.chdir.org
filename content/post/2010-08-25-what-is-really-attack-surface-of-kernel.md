@@ -6,6 +6,7 @@ categories:
  - kernel
 date: "2010-08-25T14:09:00Z"
 title: What is really the attack surface of the kernel running a SECCOMP process?
+description: Were our SECCOMP expectations right?
 ---
 
 In a previous post, [I said the attack surface of the kernel for processes running SECCOMP was really

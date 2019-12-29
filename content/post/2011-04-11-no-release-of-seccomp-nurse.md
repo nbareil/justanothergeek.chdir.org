@@ -5,6 +5,7 @@ categories:
  - seccomp
 date: "2011-04-11T11:37:00Z"
 title: no-release of seccomp-nurse
+description: I released a new tool, seccomp-nurse
 ---
 <div
 style="border-radius: 6px; background-color: #FAF8EF; -moz-box-shadow: #F6EECD 0px 0px 200px inset; -o-box-shadow: #F6EECD 0px 0px 200px inset; box-shadow: #F6EECD 0px 0px 200px inset; -webkit-border-radius: 6px;-moz-border-radius: 6px;border-collapse: separate;

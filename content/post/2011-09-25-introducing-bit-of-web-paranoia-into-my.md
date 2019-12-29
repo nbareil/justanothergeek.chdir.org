@@ -5,6 +5,7 @@ categories:
  - web
 date: "2011-09-25T20:07:00Z"
 title: Introducing a bit of Web paranoia into my habits...
+description: How do I use Google Chrome? What are my must-have extensions?
 ---
 
 When I'm not slacking in Emacs, I now spend most of my time in Google

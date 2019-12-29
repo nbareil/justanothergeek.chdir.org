@@ -5,6 +5,7 @@ categories:
  - elf
 date: "2011-11-02T16:30:00Z"
 title: ld-linux.so ELF hooker
+description: I release a new tool, ldshatner, to inject code at runtime without the LD_PRELOAD hack
 ---
 <div
 style="-moz-border-radius: 6px; -moz-box-shadow: #F6EECD 0px 0px 200px inset; -o-box-shadow: #F6EECD 0px 0px 200px inset; -webkit-border-radius: 6px; background-color: #faf8ef; border-collapse: separate; border-radius: 6px; border-spacing: 1.428em; box-shadow: #F6EECD 0px 0px 200px inset; padding: 1.428em;">
@@ -12,7 +13,7 @@ style="-moz-border-radius: 6px; -moz-box-shadow: #F6EECD 0px 0px 200px inset; -o
 <span
 style="color: #5d2a07; letter-spacing: 0.04em; text-transform: uppercase;">**TL;DR**</span>\
 [Stéphane](https://plus.google.com/108914619478390609767) and
-[myself](https://plus.google.com/114289168433047035840) are releasing a
+[myself](https://plus.google.com/114289168433047035840) are releasing ag
 new tool injecting code at runtime, just between the ELF loader and
 target binary. It is an alternative to `LD_PRELOAD`, just a little bit
 more intrusive but 100% reliable :)\

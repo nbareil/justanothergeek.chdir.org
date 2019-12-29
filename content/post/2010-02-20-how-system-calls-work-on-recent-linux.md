@@ -5,6 +5,7 @@ categories:
  - kernel
 date: "2010-02-20T22:11:00Z"
 title: How system calls work on recent Linux x86 glibc
+description: This post explains how system calls are implemented on recent Linux system.
 ---
 
 This post explains how system calls are implemented on recent Linux
