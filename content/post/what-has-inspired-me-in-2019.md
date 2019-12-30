@@ -19,7 +19,7 @@ Nevertheless, while retrospecting on 2019, I wanted to re-open this blog by givi
   biggest influencer. Despite being an extremely talented security researcher, he is also trying to open people's mind and [change the infosec culture](https://medium.com/@mattifestation/improving-infosec-or-any-community-industry-in-one-simple-but-mindful-step-651e18296f9), I don't know his impact on the infosec community but I can say he made me change! The road is long, I am failing every days but I keep track of my commitment...
 
 - **Digital Transformation role model**: 🙏 [Dino Dai Zovi](https://twitter.com/dinodaizovi): Ok, easy pick you will say
-  as he was the keynoter of BH US this year... Fair play. Yet, I am following him since Ekoparty 2010 where I was lucky enough to dinner with him among others. I still remember his kindness and how he was genuinely interested in others thoughts and ideas.\
+  as he was the keynoter of BH US this year... Fair play. Yet, I am following him since a conference in 2010 where I was lucky enough to dinner with him among others. I still remember his kindness and how he was genuinely interested in others thoughts and ideas.\
   In his tweets, he is sharing his practices of working in a "cloud native" environment where "agile" means something. He is probably the one responsible of my commitment to CI/CD practices at work.
 
 - **Engineer role model**: 🙏 Dane "[@cryps1s](https://twitter.com/cryps1s)" impressed me by his execution capabilities.\
