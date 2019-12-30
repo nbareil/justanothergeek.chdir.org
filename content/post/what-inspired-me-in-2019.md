@@ -34,6 +34,6 @@ I committed to read one book per month in 2019 (and succeed!):
 Not all of them were worth it but two will remain in my mind for a long time:
 
  - "[Nonviolent Communication: A Language of Compassion](https://www.amazon.com/Nonviolent-Communication-Compassion-Marshall-Rosenberg/dp/1892005026)" by *Marshall B. Rosenberg* changed my life for sure. It changed how I interact with people and how to deal with my emotions. It is a must-read!
-- "[Ultra-Solutions: How to fail most successfully"]
-(https://www.amazon.com/Ultra-Solutions-How-Fail-Most-Successfully/dp/0393333760/) by *Paul Watzlawick*. If you are all about perfection and success, read this book to understand that life is a journey, not a destination and how to cope with failures. I guess this book was actually **my trigger that made me wanting to change**, this led me to cultivate a growth mindset instead of working harder and harder.
+- "[Ultra-Solutions: How to fail most successfully]
+(https://www.amazon.com/Ultra-Solutions-How-Fail-Most-Successfully/dp/0393333760/)" by *Paul Watzlawick*. If you are all about perfection and success, read this book to understand that life is a journey, not a destination and how to cope with failures. I guess this book was actually **my trigger that made me wanting to change**, this led me to cultivate a growth mindset instead of working harder and harder.
 
