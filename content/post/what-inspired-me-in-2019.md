@@ -1,17 +1,17 @@
 ---
 date: "2019-12-29T00:00:00Z"
-title: What inspired me in 2019?
+title: What has inspired me in 2019?
 description: Last blog post was 8 years ago, I wanted to re-open this blog
-  by giving back to those who inspired me this year.
+  by giving back to those who had inspired me this year.
 ---
 
 Last blog post was 8 years ago, time flies and shame on me!
 
 A lot of things happened since 2012, among others, I took the opportunity to co-found an incident response team and the least we can say is that blue team work is not as bankable as offensive practices (that could clearly be a subject of a post) even thu the job is 🤩.
 
-Nevertheless, while retrospecting on 2019, I wanted to re-open this blog by giving back to those who inspired me this year. They will never read these lines but I hope you, reader, will get some inspiration too!
+Nevertheless, while retrospecting on 2019, I wanted to re-open this blog by giving back to those who had inspired me this year. They will never read these lines but I hope you, reader, will get some inspiration too!
 
-# Who inspired me?
+# To whom should I say thank you?
 
 - **Mindfulness role model**: 🙏 Matt "[@mattifestation](https://twitter.com/mattifestation)" Graeber is my 2019's
   biggest influencer. Despite being an extremely talented security researcher, he is also trying to open people's mind and [change the infosec culture](https://medium.com/@mattifestation/improving-infosec-or-any-community-industry-in-one-simple-but-mindful-step-651e18296f9), I don't know his impact on the infosec community but I can say he made me change! The road is long, I am failing every days but I keep track of my commitment...
