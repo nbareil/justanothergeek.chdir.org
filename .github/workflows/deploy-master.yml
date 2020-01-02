@@ -1,6 +1,8 @@
 name: Build and deploy justanothergeek.chdir.org
 
-on: [push]
+on:
+  push:
+    branches: master
 
 jobs:
   build:
