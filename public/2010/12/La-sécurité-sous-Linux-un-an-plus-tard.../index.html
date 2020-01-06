@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>La sécurité sous Linux, un an plus tard... - Just Another Geek</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="La sécurité sous Linux, un an plus tard..." />
+<meta property="og:description" content="Sorry english folks: this post is in french, but it will be translated soon, translated and updated post is available here.
+Plus qu&rsquo;une longue liste de vulnérabilités, ce post a pour objectif de décrire ce qu&rsquo;il s&rsquo;est passé en 2010 dans l&rsquo;écosystème de la sécurité sous GNU/Linux.
+La première partie est dédiée aux nouvelles classes de vulnérabilité. La deuxième partie se concentre sur la défense avec l&rsquo;analyse des différentes améliorations tendant à améliorer la sécurité de nos systèmes." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://justanothergeek.chdir.org/2010/12/La-s%C3%A9curit%C3%A9-sous-Linux-un-an-plus-tard.../" /><meta property="article:published_time" content="2010-12-28T15:43:00&#43;00:00"/>
+<meta property="article:modified_time" content="2010-12-28T15:43:00&#43;00:00"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="La sécurité sous Linux, un an plus tard..."/>
+<meta name="twitter:description" content="Sorry english folks: this post is in french, but it will be translated soon, translated and updated post is available here.
+Plus qu&rsquo;une longue liste de vulnérabilités, ce post a pour objectif de décrire ce qu&rsquo;il s&rsquo;est passé en 2010 dans l&rsquo;écosystème de la sécurité sous GNU/Linux.
+La première partie est dédiée aux nouvelles classes de vulnérabilité. La deuxième partie se concentre sur la défense avec l&rsquo;analyse des différentes améliorations tendant à améliorer la sécurité de nos systèmes."/>
+<link href='https://fonts.googleapis.com/css?family=Playfair+Display:700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" media="screen" href="https://justanothergeek.chdir.org/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://justanothergeek.chdir.org/css/main.css" />
+
+	
+		<script src="https://justanothergeek.chdir.org/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper">
+		<div class="header">
+	
+	<h1 class="site-title"><a href="https://justanothergeek.chdir.org/">Just Another Geek</a></h1>
+	<div class="site-description"><nav class="nav social">
+			<ul class="flat"></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post">
+			<div class="post-header">
+				
+					<div class="meta">
+						<div class="date">
+							<span class="day">28</span>
+							<span class="rest">Dec 2010</span>
+						</div>
+					</div>
+				
+				<div class="matter">
+					<h1 class="title">La sécurité sous Linux, un an plus tard...</h1>
+				</div>
+			</div>
+					
+			<div class="markdown">
+				
+
+<p><em>Sorry english folks: this post is in french, <del>but it will be
+translated soon</del>, <a href="http://justanothergeek.chdir.org/2011/01/linux-security-one-year-later.html">translated and updated post is available
+here</a>.</em></p>
+
+<p>Plus qu&rsquo;une longue liste de vulnérabilités, ce post a pour objectif de
+décrire ce qu&rsquo;il s&rsquo;est passé en 2010 dans l&rsquo;écosystème de la sécurité
+sous GNU/Linux.</p>
+
+<p>La première partie est dédiée aux nouvelles classes de vulnérabilité. La
+deuxième partie se concentre sur la défense avec l&rsquo;analyse des
+différentes améliorations tendant à améliorer la sécurité de nos
+systèmes. Enfin pour terminer ce post, il y aura quelques citations de
+développeurs noyau assez révélatrices.</p>
+
+<p>Ce post étant plutôt très long et puisque je suis syndiqué sur plusieurs
+&ldquo;planets&rdquo;, je préfère le couper, <a href="http://sid.rstack.org/blog/index.php/392-ca-m-enerve">désolé
+Sid</a> :)</p>
+
+<p>[]()</p>
+
+<h1 id="yang-nouvelles-classes-de-vulnérabilité">Yang: Nouvelles classes de vulnérabilité</h1>
+
+<p>Grâce à la popularisation des différents mécanismes de protection
+userspace dans les distributions &ldquo;grand public&rdquo; (compilation des paquets
+avec les différentes options de durcissement
+(<a href="http://www.trl.ibm.com/projects/security/ssp/"><code>stack-protector</code></a>,
+<a href="http://en.wikipedia.org/wiki/Position-independent_code"><code>PIE</code></a>,
+<a href="http://gcc.gnu.org/ml/gcc-patches/2004-09/msg02055.html"><code>FORTIFY_SOURCE</code></a>,
+écriture des règles d&rsquo;accès SELinux), les chercheurs de vulnérabilité
+ont dû trouver un nouveau terrain de jeu plus clément : celui du noyau.
+Grâce aux démonstrations de Tavis Ormandy et <a href="http://www.cr0.org/">Julien
+Tinnes</a>, 2009 avait été marqué par les
+vulnérabilités du type <em>NULL pointer dereference</em>. Des fonctionnalités
+pro-actives avaient été développées pour <em>mitiger</em> l&rsquo;impact de ce genre
+de bug mais le jeu du chat et de la souris ne s&rsquo;est jamais arrêté afin
+de trouver de nouveaux moyens de contourner ces protections.</p>
+
+<h2 id="contournement-de-mmap-min-addr">Contournement de <code>mmap_min_addr</code></h2>
+
+<p>Pour rappel, la protection principale du noyau contre cette classe de
+vulnérabilité est d&rsquo;interdire l&rsquo;allocation d&rsquo;une page de mémoire si son
+adresse virtuelle est en dessous de <code>mmap_min_addr</code>
+(<code>/proc/sys/vm/mmap_min_addr</code>), cela afin d&rsquo;éviter qu&rsquo;un attaquant n&rsquo;y
+dépose son shellcode et déclenche un déréférencement de pointeur NULL.</p>
+
+<p>Beaucoup de moyens de contourner cette vérification avaient été trouvés
+en 2009, pourtant encore deux méthodes de contournement ont été publiées
+cette année :</p>
+
+<ul>
+<li>Lorsque le noyau utilise des pointeurs manipulés par l&rsquo;userland, il
+vérifie qu&rsquo;ils pointent bien depuis/vers une zone utilisateur. C&rsquo;est
+le rôle d&rsquo;<code>access_ok()</code> de vérifier qu&rsquo;une adresse est en dessous de
+la frontière userspace/kernelspace.<br />
+De temps en temps, le noyau utilise des fonctions normalement
+dédiées à l&rsquo;espace utilisateur, or ces dernières vérifient que les
+adresses manipulées sont bien dans l&rsquo;espace <em>userland</em>, ce qui
+n&rsquo;arrange pas le noyau parce qu&rsquo;il aimerait utiliser les fonction
+pour lui-même (avec des adresses <em>kernelspaces</em>).<br />
+Afin de contourner cette vérification, le noyau manipule la
+&ldquo;frontière&rdquo; à l&rsquo;aide de <code>set_fs()</code> avant l&rsquo;appel à la fonction puis
+la rétablit au retour, ni vu ni connu. Cela signifie que
+temporairement, pendant l&rsquo;exécution de la fonction, aucune
+vérification ne sera effectuée.<br />
+<a href="http://blog.nelhage.com/">Nelson Elhage</a> a brillamment trouvé
+comment exploiter cette particularité : lorsque le noyau traite un
+<em>Kernel Oops</em> ou un <code>BUG()</code>, il termine le processus ayant généré
+l&rsquo;exception à l&rsquo;aide de <code>do_exit()</code>. Cette fonction peut notifier la
+mort du processus à d&rsquo;autres threads en écrivant 0 à une adresse
+arbitraire contrôlée par <code>access_ok()</code>.<br />
+L&rsquo;exploit consiste dès lors à déclencher une exception pendant le
+traitement d&rsquo;une fonction tournant avec <code>access_ok()</code> désactivé.
+Lorsque l&rsquo;exception sera déclenché, <code>do_exit()</code> sera appelé et
+puisqu&rsquo;<code>access_ok()</code> sera désactivé, la valeur 0 sera écrite à une
+adresse arbitraire. Boom ! Première méthode.</li>
+<li>Deuxième méthode maintenant. Tavis Ormandy a constaté qu&rsquo;à la
+création des mapping mémoires, <a href="http://thread.gmane.org/gmane.linux.kernel/1074552">le VDSO pouvait être projeter une
+page en dessous de
+<code>mmap_min_addr</code></a>,
+ce qui est particulièrement intéressant pour les noyaux Redhat
+puisque <code>mmap_min_addr</code> == 4096.<br />
+En théorie, cela signifie qu&rsquo;une exploitation déférencement de
+pointeur <code>NULL</code> devrait utiliser les octets du VDSO pour rebondir.</li>
+</ul>
+
+<p>En fin d&rsquo;année 2010, cela a été la redécouverte des problèmes de
+variables non initialisées, mais dans le noyau cette fois-ci.</p>
+
+<h2 id="variables-non-initialisées">Variables non-initialisées</h2>
+
+<p>Un code vulnérable typique ressemble à cela :</p>
+
+<pre><code>struct { short a; char b; int c; } s;
+
+s.a = X;
+s.b = Y;
+s.c = Z;
+
+copy_to_user(to, &amp;s, sizeof s);
+</code></pre>
+
+<p>Le problème ici est qu&rsquo;on ne fait pas attention à l&rsquo;octet de <em>padding</em>
+ajouté par le compilateur entre <code>.b</code> et <code>.c</code> afin d&rsquo;aligner la structure
+sur un mot processeur. En pratique, cela signifie que le processus
+userspace peut récupérer un octet de mémoire &ldquo;aléatoire&rdquo;.</p>
+
+<h3 id="correctif">Correctif</h3>
+
+<p>Le correctif pourrait sembler assez simple, avec l&rsquo;ajout d&rsquo;un
+<code>memset(&amp;s, '\0', sizeof s)</code>, néanmoins, les choses ne sont pas aussi
+faciles puisque d&rsquo;après la norme C99, le compilateur est libre
+d&rsquo;optimiser les cas suivants :</p>
+
+<ul>
+<li>Considérer que le <code>memset()</code> est superflu et le supprimer puisque
+chaque membre de la structure est initialisé</li>
+<li>Plus tard, écraser l&rsquo;octet de padding en faisant une assignation
+dans <code>.b</code></li>
+</ul>
+
+<p>De plus, dans le cas des <a href="http://git.kernel.org/?p=linux/kernel/git/stable/linux-2.6.36.y.git;a=commit;h=2bd84dce08a6a782925f5e34c2e87ad957c57007">filtres
+BPF</a>,
+les développeurs de <code>netdev</code> ont considérés que forçer l&rsquo;initialisation
+d&rsquo;un tableau (de 16 mots de 32 bits) étaient beaucoup trop couteux, car
+appelé pour chaque paquet. À la place, ils ont écrit un vérificateur de
+code BPF afin de vérifier que chaque accès au tableau était valide.</p>
+
+<h3 id="impact">Impact</h3>
+
+<dl>
+<dt>netdev](<a href="http://thread.gmane.org/gmane.linux.network/177506/focus=177549">http://thread.gmane.org/gmane.linux.network/177506/focus=177549</a>)</dt>
+<dd><a href="http://lists.grok.org.uk/pipermail/full-disclosure/2010-November/077321.html">la réponse de Dan
+Rosenberg</a>
+a été cinglante avec la publication d&rsquo;un exploit sur <em>full-disclosure</em>,
+même si plus tard, il a avoué avoir publié cet exploit car il <a href="http://permalink.gmane.org/gmane.comp.security.bugtraq/45315">doutait
+de sa
+criticité</a>.</dd>
+</dl>
+
+<dl>
+<dt>177549)</dt>
+<dd><a href="http://lists.grok.org.uk/pipermail/full-disclosure/2010-November/077321.html">la réponse de Dan
+Rosenberg</a>
+a été cinglante avec la publication d&rsquo;un exploit sur <em>full-disclosure</em>,
+même si plus tard, il a avoué avoir publié cet exploit car il <a href="http://permalink.gmane.org/gmane.comp.security.bugtraq/45315">doutait
+de sa
+criticité</a>.</dd>
+</dl>
+
+<p>Malgré cet épisode, les développeurs noyau ont bien pris en compte ce
+type de vulnérabilité et des <a href="http://search.gmane.org/?query=uninitialized+memory&amp;author=&amp;group=gmane.linux.kernel&amp;sort=date&amp;DEFAULTOP=and&amp;xP=Zuniniti%09Zmemori&amp;xFILTERS=Glinux.kernel---A">dizaines de correctifs ont été
+appliqués</a>
+depuis.</p>
+
+<h3 id="expansion-de-la-pile-noyau">Expansion de la pile noyau</h3>
+
+<p>En 2005 déjà, <a href="http://cansecwest.com/core05/memory_vulns_delalleau.pdf">Gaël Delalleau discutait de l&rsquo;intérêt de faire se
+rencontrer la pile et le tas en espace
+utilisateur</a>,
+en novembre 2010, Nelson Elhage, l&rsquo;auteur de
+<a href="http://ksplice.com/">Ksplice,</a> remettait au goût du jour cette attaque
+pour le noyau.</p>
+
+<p>La mémoire allouée pour le noyau lui-même est minimale : une tâche noyau
+ne peut avoir au plus que deux pages mémoire pour ses variables locales
+(sa pile). Mais cette limitation est juste &ldquo;conventionnelle&rdquo;
+puisqu&rsquo;aucun méchanisme n&rsquo;empêche la tâche de s&rsquo;étendre, il n&rsquo;y a pas de
+page de garde par exemple.<br />
+En pratique, si nous sommes capables de faire &ldquo;grossir&rdquo; la pile d&rsquo;une
+tâche noyau au delà de ses deux pages réglementaires (voir
+<a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-3848">CVE-2010-3848</a>
+pour un exemple concret), la pile va recouvrir la structure
+<code>thread_info</code> de la tâche courante.</p>
+
+<p>En <a href="http://jon.oberheide.org/blog/2010/11/29/exploiting-stack-overflows-in-the-linux-kernel/">écrasant certains pointeurs de
+fonction</a>
+disponibles à l&rsquo;intérieur de cette structure, nous sommes capables de
+détourner le flot d&rsquo;éxécution.</p>
+
+<h1 id="ying-nouvelles-protections">Ying: Nouvelles protections</h1>
+
+<h2 id="correction-de-bugs">Correction de bugs</h2>
+
+<p>Cette année ne sera pas l&rsquo;année du changement de mentalité de Linus
+Torvalds concernant les bugs de sécurité, mais on s&rsquo;y rapproche grâce
+aux efforts des équipes de Redhat, SuSe ou Ubuntu.</p>
+
+<p>Il semblerait qu&rsquo;elles suivent de près les listes de diffusion du noyau
+afin d&rsquo;identifier des commits &ldquo;sensibles&rdquo; et un numéro de CVE est
+assigné. Eugene Teo maintient d&rsquo;ailleurs un <a href="http://git.kernel.org/?p=linux/kernel/git/eugeneteo/linux-2.6-cve-tagged.git;a=summary">repository git avec tous
+les CVE
+taggés</a>,
+ce qui est particulièrement utile lors d&rsquo;audits puisqu&rsquo;il est facile
+d&rsquo;identifier les vulnérabilités d&rsquo;un noyau donné. C&rsquo;est un petit peu
+l&rsquo;équivalent <em>whitehat</em> des <a href="http://xrayoptics.by.ru/database/localroot/lista_exploits_kernel.txt">listes d&rsquo;exploits par
+noyau</a>
+utilisé par les pirates.</p>
+
+<h2 id="sécurité-proactive">Sécurité proactive</h2>
+
+<p>De nombreuses contributions ont été faites dans le noyau Linux pour
+améliorer sa sécurité en amont. Beaucoup de chantiers ont été commençés
+afin de rendre la tâche beaucoup plus compliquée aux développeurs
+d&rsquo;exploits. Par exemple, si on revient sur les vulnérabilités de Nelson
+Elhage, <a href="http://permalink.gmane.org/gmane.comp.security.full-disclosure/76457">l&rsquo;exploit de Dan
+Rosenberg</a>
+aura nécessité la combinaison de trois vulnérabilités pour transformer
+un DoS en élévation de privilèges.</p>
+
+<p>Cette défense en profondeur permet de voir à quel point il devient
+coûteux d&rsquo;exploiter certaines vulnérabilités. Mais revenons sur les
+chantiers qui ont eu lieu en 2010.</p>
+
+<h3 id="renforcement-des-permissions">Renforcement des permissions</h3>
+
+<p>Brad Spengler l&rsquo;a répété de nombreuses fois les années précédentes :
+beaucoup trop d&rsquo;informations sont disponibles à l&rsquo;utilisateur. C&rsquo;est la
+raison pour laquelle son patch grsecurity restreint au maximum les
+droits d&rsquo;accès sur les fichiers spéciaux du noyau.</p>
+
+<p>En effet, on retrouve dans ces fichiers les adresses d&rsquo;objets du noyau,
+ce qui est très pratique lorsqu&rsquo;on exploite une vulnérabilité puisque
+cela évite de faire du bruteforce, ce qui est rarement une bonne chose à
+faire en kernel land :)</p>
+
+<p>Dan Rosenberg et Kees Cook ont donc oeuvrés pour intégrer ces
+restrictions dans la branche officielle :</p>
+
+<ul>
+<li><a href="http://news.gmane.org/find-root.php?message_id=%3c1289273338.6287.128.camel%40dan%3e">dmesg_restrict</a>:
+l&rsquo;accès à <code>dmesg(8)</code> nécessite désormais <code>CAP_SYS_ADMIN</code>.</li>
+<li>Suppression des adresses dans
+<a href="http://permalink.gmane.org/gmane.linux.kernel/1064008"><code>/proc/timer_list</code></a>,
+<a href="http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=59365d136d205cc20fe666ca7f89b1c5001b0d5a"><code>/proc/kallsyms</code></a>, etc.
+Les développeurs officiels ne voient pas d&rsquo;un très bon oeil ces
+patches qui à leurs yeux, sont inutiles et compliqueront la tâche de
+débugging en cas de problème, c&rsquo;est la raison pour laquelle le
+<a href="http://thread.gmane.org/gmane.linux.network/177739/focus=2076">mainteneur de netdev s&rsquo;est clairement opposé à appliquer ce genre
+de
+transformation</a>.
+On peut d&rsquo;ailleurs féliciter le zen et patience de Dan Rosenberg !<br />
+Les solutions qui ont été proposées sont :
+
+<ul>
+<li>Puisqu&rsquo;on ne peut pas simplement supprimer les adresses car cela
+casserait l&rsquo;ABI, mettre des adresses nulles.</li>
+<li>Changer les permissions d&rsquo;accès au fichier (mais <a href="http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=33e0d57f5d2f079104611be9f3fccc27ef2c6b24">cela casse
+certains logiciels
+anciens</a>)</li>
+<li>XOR-er les adresses avec une valeur secrète</li>
+</ul></li>
+</ul>
+
+<p>La solution qui semble la mieux engagée est le remplacement des adresses
+par une valeur arbitraire lorsque le lecteur ne dispose pas de privilège
+suffisant. Mais pour éviter la duplication de code, le <a href="http://news.gmane.org/find-root.php?message_id=%3c1292692835.10804.67.camel%40dan%3e"><em>format
+specifier</em>
+<code>%pK</code></a>
+a été implémenté : en fonction de la variable sysctl <code>kptr_restrict</code>,
+l&rsquo;adresse sera affichée ou non.</p>
+
+<p>À l&rsquo;occasion de ces restrictions, une <a href="http://permalink.gmane.org/gmane.linux.kernel.lsm/12185">nouvelle capability
+<code>CAP_SYSLOG</code></a> a
+été créé. C&rsquo;est ce privilège qui conditionne l&rsquo;accès aux adresses.</p>
+
+<p>Beaucoup de travail reste encore à faire. Grâce à <a href="http://codemonkey.org.uk/2010/12/15/system-call-fuzzing-continued/">son nouveau
+fuzzer</a>,
+Dave Jones a
+<a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2010-4347">découvert</a>
+que n&rsquo;importe quel utilisateur pouvait charger une nouvelle table ACPI
+si <code>debugfs</code> était monté à cause de permissions laxistes.</p>
+
+<h3 id="marquage-en-lecture-seule">Marquage en lecture seule</h3>
+
+<p>Un chantier pas encore terminé à ce jour est le <a href="http://thread.gmane.org/gmane.linux.kernel/1058823">marquage de certaines
+zones mémoires en lecture
+seule</a>, pour cela,
+plusieurs actions sont nécessaires :</p>
+
+<ul>
+<li><a href="http://git.kernel.org/?p=linux/kernel/git/x86/linux-2.6-tip.git;a=commitdiff;h=65187d24fa3ef60f691f847c792e8eaca7e19251">Mettre de réelle permission matérielle sur le segment
+<code>.ro.data</code></a>.
+Pour le moment, les permissions sont purement virtuelles, ce patch
+permet de marquer physiquement la page en lecture seule (ceci étant
+contrôlé par le CPU)</li>
+<li>Marquer les pointeurs de fonctions comme <code>const</code>-ant lorsque cela
+est possible. Une des techniques les plus simples pour exploiter une
+vulnérabilité noyau est d&rsquo;écraser un pointeur de fonction, le
+passage de ces pointeurs en constante permet de déplacer ces
+variables dans la zone <code>.ro.data</code> et donc empêcher la réécriture.
+Bien sûr, il restera toujours des pointeurs de fonction en écriture,
+mais ce n&rsquo;est pas une raison pour ne rien faire…</li>
+<li>Désactivation des points d&rsquo;entrée vers <code>set_kernel_text_rw()</code> afin
+de ne pas laisser un attaquant changer la permission d&rsquo;une page.</li>
+</ul>
+
+<p>À priori, les développeurs ne semblaient pas opposés à ce patch et ils
+seraient même plutôt heureux de l&rsquo;intégrer pour faire des <a href="http://article.gmane.org/gmane.linux.kernel/1058954">optimisations
+de virtualization</a>.</p>
+
+<h3 id="empêcher-le-chargement-automatique-des-modules">Empêcher le chargement automatique des modules</h3>
+
+<p>La pluspart des vulnérabilités exploitées touchent des parties de code
+assez peu utilisées, c&rsquo;est d&rsquo;ailleurs peut-être la raison pour laquelle
+on y trouve des bugs.</p>
+
+<p>En général, les distributions n&rsquo;ont pas d&rsquo;autres choix que de compiler
+le noyau avec toutes les fonctionnalités, le tout en module afin de pas
+se retrouver avec un noyau monolithique de 30 Mo en mémoire.</p>
+
+<p>Afin que ce soit transparent, le noyau est capable de charger
+automatiquement en mémoire le module chargé de réaliser l&rsquo;opération
+demandée, ce qui est plutôt une bonne chose pour les attaquants : il
+suffit de demander le support de X.25 pour qu&rsquo;il soit chargé, prêt à
+être exploité.</p>
+
+<p>Dan Rosenberg (encore !) a <a href="http://article.gmane.org/gmane.linux.kernel/1058922">proposé de charger automatiquement les
+modules uniquement si le processus déclencheur est
+root</a>. Cette
+restriction est déjà présente dans la suite de patches grsecurity mais
+cette limitation est jugée impactante pour les distributions et a donc
+été refusé de peur de casser l&rsquo;existant :-/</p>
+
+<h3 id="support-de-uderef-sur-architecture-amd64">Support de <code>UDEREF</code> sur architecture AMD64</h3>
+
+<p>Les développeurs de PaX ont toujours été clairs que les systèmes AMD64
+ne seraient jamais aussi bien protégés que sur i386 à cause du manque de
+la segmentation.</p>
+
+<p>Néanmoins, ils font du <em>best-effort</em> et nous le prouve encore avec
+l&rsquo;<a href="http://grsecurity.net/pipermail/grsecurity/2010-April/001024.html">implémentation
+d&rsquo;<code>UDEREF</code></a>
+pour cette architecture.</p>
+
+<p>Pour rappel, <code>UDEREF</code> empêche le noyau d&rsquo;utiliser de la mémoire
+userspace sans l&rsquo;avoir demandé explicitement. Cette fonctionnalité
+empêche ainsi l&rsquo;exploitation de <em>NULL pointer dereferences</em>.</p>
+
+<p>Sur i386, c&rsquo;est plutôt facile en utilisant la segmentation. Mais sur
+AMD64, c&rsquo;est plutôt une bidouille plutôt sale : déplacer la zone de
+mémoire userspace et la marquer comme non-exécutable.</p>
+
+<p>Le problème, c&rsquo;est qu&rsquo;on ne fait que le déplacer : désormais, plutôt que
+déréférencer un pointeur nul, il faudrait influencer le noyau pour
+déréférencer une autre adresse (mais comme le dit pageexec, si on en
+arrive là, c&rsquo;est le dernier de nos soucis).<br />
+Ensuite, on perd 5 bits d&rsquo;adressage donc un processus voit son espace
+d&rsquo;adressage réduit à 42 bits et un peu d&rsquo;ASLR au passage&hellip;<br />
+Et cerise sur le gateau, chaque transition user-to-kernel et
+kernel-to-user subit le coût d&rsquo;un vidage de la TLB (dû au déplacement de
+la zone mémoire).</p>
+
+<h2 id="réseau">Réseau</h2>
+
+<p>La sécurité réseau est à l&rsquo;image des soumissions sur le sujet dans les
+conférences : ce n&rsquo;est malheureusement pas assez sexy pour que les
+chercheurs s&rsquo;y intéressent. Mise à part le début de réécriture
+d&rsquo;iptables appelé <a href="http://lwn.net/Articles/324989/">nftable</a> en 2009,
+pas grand chose n&rsquo;est arrivé en 2010. Parmi les choses remarquables, il
+y a le support des <a href="http://kernelnewbies.org/Linux_2_6_33#head-2c3c3a8cb87d5b7a6f1182e418abf071cda22c8c">TCP Cookie
+Transactions</a>
+et l&rsquo;amélioration des &ldquo;anciens&rdquo; syncookies.</p>
+
+<p>Les TCP syncookies sont utilisés pour ne pas créér d&rsquo;entrées dans la
+table des connexions tant qu&rsquo;elles n&rsquo;ont pas rééllement ouvertes, cela
+est particulièrement utile lors d&rsquo;un DoS par SYN flooding.<br />
+Auparavant, les SYNcookies étaient considérés comme &ldquo;à utiliser en
+dernier recours&rdquo; car ont perdait les options de négociation TCP (bit de
+congestion, <em>window scaling</em> ou <em>selective acknowledgement</em>).</p>
+
+<p>Cela est désormais terminé puisque <a href="http://git.kernel.org/?s=4dfc2817025965a2fc78a18c50f540736a6b5c24">le noyau stocke désormais ces
+informations</a>
+dans les 9 bits de poids faible de l&rsquo;option TCP Timestamp (à noter que
+la page de manuel
+<a href="http://www.kernel.org/doc/man-pages/online/pages/man7/tcp.7.html">tcp(7)</a>
+n&rsquo;a toujours pas été mise à jour). Ce qui signifie que l&rsquo;utilisation de
+cette fonctionnalité n&rsquo;est plus aussi impactante sur les performances
+qu&rsquo;auparavant.</p>
+
+<h1 id="aveux-d-échec">Aveux d&rsquo;échec</h1>
+
+<p><a href="http://permalink.gmane.org/gmane.linux.kernel.lsm/12196">Le drame des
+capabilities</a> :
+&gt; Quite frankly, the Linux capability system is largely a mess, with big
+&gt; bundled capacities that don&rsquo;t make much sense and are hideously
+&gt; inconvenient with the capability system used in user space (groups).<br />
+&gt; -hpa</p>
+
+<p><a href="http://permalink.gmane.org/gmane.linux.kernel/1068774">Trop de patches à relire pour la branche -stable du
+noyau</a> :<br />
+&gt; &gt; &gt; I realise it wasn&rsquo;t ready for stable as Linus only pulled it
+&gt; in<br />
+&gt; &gt; &gt; 2.6.37-rc3, but surely that means this neither of the
+&gt; changes<br />
+&gt; &gt; &gt; should have gone into 2.6.32.26.<br />
+&gt; &gt; Why didn&rsquo;t you respond to the review??<br />
+&gt; <br />
+&gt; I don&rsquo;t actually read those review emails, there are too many of them.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>Beaucoup de bonnes choses ont pris places dans le noyau Linux, en
+majeure partie grâce au travail des différentes personnes citées dans ce
+post, il est d&rsquo;ailleurs frappant de se rendre compte que toutes ces
+améliorations sont le résultat de chercheurs en sécurité plutôt que des
+développeurs du noyau. C&rsquo;est peut-être la raison pour laquelle chaque
+patch a fait l&rsquo;objet d&rsquo;interminables discussions (admirons encore la
+<a href="http://thread.gmane.org/gmane.linux.kernel/1015999/focus=1018279">patience de ces
+derniers</a>)&hellip;<br />
+Ce n&rsquo;est d&rsquo;ailleurs que maintenant que je comprends à quel point spender
+avait raison dans sa <a href="http://grsecurity.net/lsm.php">déclaration de guerre contre les
+LSM</a>. Est-ce que les mainteneurs du
+sous-système &ldquo;Security&rdquo; ne seraient pas dans leur tour d&rsquo;ivoire sans
+comprendre les problématiques de la &ldquo;vraie vie&rdquo; ? Là où le sysadmin n&rsquo;a
+pas le temps d&rsquo;utiliser la dernière release du noyau sur chaque serveur,
+ni le courage d&rsquo;écrire des règles SELinux qui seraient de toutes façons
+contourner au premier bug noyau&hellip;<br />
+Enfin, ce n&rsquo;est que l&rsquo;avis de quelqu&rsquo;un du <a href="http://article.gmane.org/gmane.linux.kernel/706950">security
+circus</a>&hellip;</p>
+
+<p>Malgré tout, on ne peut qu&rsquo;être heureux de voir les progrès de cette
+année. On peut presque espérer qu&rsquo;on n&rsquo;arrivera peut-être plus à
+échapper à <code>mmap_min_addr</code>&hellip; Et que toutes les modifications
+pro-actives qui ont été faites nécessiteront la combinaison de multiples
+vulnérabilités pour être exploitables. Je ne dis pas qu&rsquo;il n&rsquo;y aura plus
+d&rsquo;exploits, loin de là, mais plutôt que le coût d&rsquo;exploitation sera trop
+élevé pour le pirate moyen. À ce moment là, les chercheurs devront se
+plonger dans les bugs &ldquo;logiques&rdquo; comme les <a href="http://seclists.org/fulldisclosure/2010/Oct/257">vulnérabilités
+<code>LD_PRELOAD</code>/<code>LD_AUDIT</code></a>.</p>
+
+			</div>
+
+			<div class="tags">
+				
+					
+				
+			</div></div>
+	</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> <a href="https://github.com/knadh/hugo-ink">Ink</a> theme on <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-13174242-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</body>
+</html>

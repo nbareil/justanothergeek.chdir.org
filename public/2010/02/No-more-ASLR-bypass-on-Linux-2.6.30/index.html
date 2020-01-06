@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>No more ASLR bypass on Linux 2.6.30 - Just Another Geek</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="No more ASLR bypass on Linux 2.6.30" />
+<meta property="og:description" content="While trying to exploit a local setuid application, I had the unhappiness (as an attacker) to see that the security of the ASLR Linux kernel has increased, removing a whole method of exploitation. But let&rsquo;s begin from the start:
+The minimalist vulnerable example could be this vuln.c:
+#include &lt;stdio.h&gt; #include &lt;unistd.h&gt; int main( int argc, char *argv[] ) { char buf[4]; printf(&quot;%#p\n&quot;, &amp;buf); strcpy( buf, argv[1] ); return 0; }  Because of the Address Space Layout Randomization (ASLR), this bug is tough to exploit: if the binary is compiled with the right options and the kernel is configured to fully randomize the address space, it becomes impossible to guess where the buffer is, nor the location of the functions&rsquo; libraries." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://justanothergeek.chdir.org/2010/02/No-more-ASLR-bypass-on-Linux-2.6.30/" /><meta property="article:published_time" content="2010-02-23T12:26:00&#43;00:00"/>
+<meta property="article:modified_time" content="2010-02-23T12:26:00&#43;00:00"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="No more ASLR bypass on Linux 2.6.30"/>
+<meta name="twitter:description" content="While trying to exploit a local setuid application, I had the unhappiness (as an attacker) to see that the security of the ASLR Linux kernel has increased, removing a whole method of exploitation. But let&rsquo;s begin from the start:
+The minimalist vulnerable example could be this vuln.c:
+#include &lt;stdio.h&gt; #include &lt;unistd.h&gt; int main( int argc, char *argv[] ) { char buf[4]; printf(&quot;%#p\n&quot;, &amp;buf); strcpy( buf, argv[1] ); return 0; }  Because of the Address Space Layout Randomization (ASLR), this bug is tough to exploit: if the binary is compiled with the right options and the kernel is configured to fully randomize the address space, it becomes impossible to guess where the buffer is, nor the location of the functions&rsquo; libraries."/>
+<link href='https://fonts.googleapis.com/css?family=Playfair+Display:700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" media="screen" href="https://justanothergeek.chdir.org/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://justanothergeek.chdir.org/css/main.css" />
+
+	
+		<script src="https://justanothergeek.chdir.org/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper">
+		<div class="header">
+	
+	<h1 class="site-title"><a href="https://justanothergeek.chdir.org/">Just Another Geek</a></h1>
+	<div class="site-description"><nav class="nav social">
+			<ul class="flat"></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post">
+			<div class="post-header">
+				
+					<div class="meta">
+						<div class="date">
+							<span class="day">23</span>
+							<span class="rest">Feb 2010</span>
+						</div>
+					</div>
+				
+				<div class="matter">
+					<h1 class="title">No more ASLR bypass on Linux 2.6.30</h1>
+				</div>
+			</div>
+					
+			<div class="markdown">
+				<p>While trying to exploit a local setuid application, I had the
+unhappiness (as an attacker) to see that the security of the ASLR Linux
+kernel has increased, removing a whole method of exploitation. But let&rsquo;s
+begin from the start:<br />
+The minimalist vulnerable example could be this <code>vuln.c</code>:</p>
+
+<pre><code class="language-.src">#include &lt;stdio.h&gt;
+#include &lt;unistd.h&gt;
+
+int main( int argc, char *argv[] )
+{
+        char buf[4];
+
+        printf(&quot;%#p\n&quot;, &amp;buf);
+        strcpy( buf, argv[1] );
+        return 0;
+}
+</code></pre>
+
+<p>Because of the <em>Address Space Layout Randomization</em> (ASLR), this bug is
+tough to exploit: if the binary is compiled with the right options and
+the kernel is configured to fully randomize the address space, it
+becomes impossible to guess where the buffer is, nor the location of the
+functions&rsquo; libraries.<br />
+But there was a trick (firstly published by <a href="http://www.amazon.com/Hacking-Art-Exploitation-Jon-Erickson/dp/1593271441">Jon Erickson in his
+book</a>):
+the randomization is computed at <code>exec*()</code> time, the seed used to
+generate the entropy was rekeyed every X milliseconds with the PID and
+the <code>jiffies</code> variable (which is the number of clock interruptions since
+the boot), it was known to be cryptographically weak but it was good
+enough for daemons: remotely, it&rsquo;s not possible to guess either the PID
+or <code>jiffies</code> (except in case of a format string vulnerability or an
+information leak).<br />
+But locally, the entropy was just useless: a minimalistic process which
+would just <code>exec*()</code> another one would get the same memory layout
+because both program has the same PID and the jiffies would not be
+updated.<br />
+Practically, even on a fully randomized system, it was possible to guess
+the addresses, here is the minimalistic program just printing the
+address of its buffer and executing the vulnerable binary (which itself
+prints its buffer address):</p>
+
+<pre><code class="language-.src">#include &lt;unistd.h&gt;
+
+int main(int argc, char **argv) {
+        char dummy[4] = &quot;AAA&quot;;
+
+        printf(&quot;%#p\n&quot;, dummy);
+        execl(&quot;./vuln&quot;, dummy, NULL);
+}
+</code></pre>
+
+<p>The following Python code based on <code>expect</code> runs the exploit multiple
+times and compute the differences between the addresses of <code>./vuln</code> and
+<code>./exploit</code> :</p>
+
+<pre><code class="language-.src">#! /usr/bin/python
+
+import pexpect
+
+while True:
+    child = pexpect.spawn('./exploit')
+    child.sendeof()
+
+    a=int(child.readline()[:-2], 16)
+    b=int(child.readline()[:-2], 16)
+
+    print 'offset=%#x' % (b-a)
+    child.expect(pexpect.EOF)
+</code></pre>
+
+<p>Let&rsquo;s do it:<br />
+    lenny32:/tmp$ uname -a
+    Linux lenny32 2.6.26-2-686 #1 SMP Wed Aug 19 06:06:52 UTC 2009 i686 GNU/Linux
+    lenny32:/tmp$ cat /proc/sys/kernel/randomize_va_space
+    2
+    lenny32:/tmp$ ./guess_offset
+    offset=0x10
+    offset=0x148160
+    offset=0x10
+    offset=0x10
+    offset=0x10
+    offset=0x1bf9d0
+    offset=0x10
+    offset=0x1d91f0
+    offset=0x10
+    offset=-0x2ba2a0
+    offset=0x3d050
+    offset=0x10
+    offset=0x10
+    offset=0x10
+    offset=-0x19a990
+    offset=0x10
+    offset=0x10
+    offset=0x10
+    offset=0x10
+    offset=0x10
+    offset=0x10
+    offset=0x10
+    KeyboardInterrupt</p>
+
+<p>Most of the time, we can see that the offset is equals to <code>0x10</code>, great!
+But on a 2.6.32 kernel, the result is totally different:<br />
+    $ ./guess_offset
+    offset=0x4fddb0
+    offset=0x69f330
+    offset=0x137e40
+    offset=0x6b49f0
+    offset=0x407600
+    offset=0x14cf50
+    offset=0x3f4930
+    offset=0x4d0f80
+    offset=0x107d20
+    offset=0x1969b0
+    offset=0x1ae360
+    offset=0x409b30</p>
+
+<p>In other words, it&rsquo;s now impossible to guess the address space layout
+with this method.<br />
+When was patched the function in charge of the randomness,
+<a href="http://lxr.linux.no/linux+v2.6.32/+code=secure_ip_id"><code>get_random_int()</code></a>?
+Let&rsquo;s use <code>git-blame</code> in order to annotate each source line with its
+modification date and commit:<br />
+    % git blame -L 1688,1709 drivers/char/random.c
+    8a0a9bd4 DEFINE_PER_CPU(__u32 [4], get_random_int_hash);
+    ^1da177e unsigned int get_random_int(void)
+    ^1da177e {
+    8a0a9bd4  struct keydata *keyptr;
+    8a0a9bd4  __u32 *hash = get_cpu_var(get_random_int_hash);
+    8a0a9bd4  int ret;
+    8a0a9bd4
+    8a0a9bd4  keyptr = get_keyptr();
+    26a9a418  hash[0] += current-&gt;pid + jiffies + get_cycles();
+    8a0a9bd4
+    8a0a9bd4  ret = half_md4_transform(hash, keyptr-&gt;secret);
+    8a0a9bd4  put_cpu_var(get_random_int_hash);
+    8a0a9bd4
+    8a0a9bd4  return ret;
+    ^1da177e }
+    ^1da177e</p>
+
+<p>Arg! It was patched in commit
+<a href="http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=8a0a9bd4db63bc45e3017bedeafbd88d0eb84d02"><code>8a0a9bd4</code></a>
+by Linus Torvalds in response to
+<a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=2009-3238">CVE2009-3238</a>
+in May 2009. The first released kernel carrying this patch is the 2.6.30
+in June 2009.</p>
+
+<p>Actually, I&rsquo;m not aware of any generic trick to achieve the same goal
+(now that <a href="http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=f83ce3e6b02d5e48b3a43b001390e2b58820389d">information leaks on /proc entries have been fixed
+too</a>).</p>
+
+			</div>
+
+			<div class="tags">
+				
+					
+				
+			</div></div>
+	</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> <a href="https://github.com/knadh/hugo-ink">Ink</a> theme on <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-13174242-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</body>
+</html>

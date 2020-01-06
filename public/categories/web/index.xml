@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Web on Just Another Geek</title>
+    <link>https://justanothergeek.chdir.org/categories/web/</link>
+    <description>Recent content in Web on Just Another Geek</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 25 Sep 2011 20:07:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://justanothergeek.chdir.org/categories/web/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Introducing a bit of Web paranoia into my habits...</title>
+      <link>https://justanothergeek.chdir.org/2011/09/Introducing-a-bit-of-Web-paranoia-into-my-habits.../</link>
+      <pubDate>Sun, 25 Sep 2011 20:07:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/2011/09/Introducing-a-bit-of-Web-paranoia-into-my-habits.../</guid>
+      <description>When I&amp;rsquo;m not slacking in Emacs, I now spend most of my time in Google Chrome. Almost everything I do is in the &amp;ldquo;cloud&amp;rdquo; (I hate this buzz word): mail, blog, chats, voip and even version control.
+With the explosion of &amp;ldquo;social buttons&amp;rdquo; everywhere, I became really more paranoid than before about my privacy. And when I see new Facebook &amp;lsquo;Frictionless sharing&amp;rsquo; feature, I don&amp;rsquo;t regret my move. What did I do?</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -193,3 +193,24 @@ rule.
 I am sure everything is already available in MISP to make it happen, it just
 needs to be glued together...
 
+## Testing false-positives and true-positives
+
+Everything is about Quality&Assurance: how to ensure that our rule with match
+real samples (true positives)? And how to ensure that it will not match anything
+(false positives)?
+
+For true positives, it is "easy": as we are enforcing at CI/CD level a
+`reference_hash` meta variable, we have for each rule one sample of reference,
+it is only a matter of getting it from MISP or VT and check. Doable!
+
+For false positives, it is "only" a matter of having a good corpus of safe
+software and check if the new rule matches:
+- VirusTotal has done [its part with retrohunt](https://blog.virustotal.com/2019/10/test-your-yara-rules-against-goodware.html)
+- It is quite easy to reproduce on premise the same thing (if you have a nice
+  VirusTotal quota): you query VT once something like "*download all samples
+  tagged goodware*" and then you do the yara check yourself.
+- Also, to help, as usual, @Neo23x0 nailed it again with [yarGen](https://github.com/Neo23x0/yarGen)
+
+Well... That's the plan for 2020.
+
+

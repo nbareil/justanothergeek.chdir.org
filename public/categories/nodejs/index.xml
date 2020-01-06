@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Nodejs on Just Another Geek</title>
+    <link>https://justanothergeek.chdir.org/categories/nodejs/</link>
+    <description>Recent content in Nodejs on Just Another Geek</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 15 May 2010 09:26:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://justanothergeek.chdir.org/categories/nodejs/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Massive reverse address DNS resolver</title>
+      <link>https://justanothergeek.chdir.org/2010/05/Massive-reverse-address-DNS-resolver/</link>
+      <pubDate>Sat, 15 May 2010 09:26:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/2010/05/Massive-reverse-address-DNS-resolver/</guid>
+      <description>Just for the record (and newsoft :), here is a basic reverse DNS bruteforce implemented with Node.js: thanks to this awesome event-based library, it is possible to write powerful tools in a few Javascript lines!
+The following code will resolve a /24 netblock in less than 5 seconds.
+#! /usr/bin/nodejs var baseaddr = &#39;88.191.98.&#39;; var sys = require(&#39;sys&#39;); var dns = require(&#39;dns&#39;); var events = require(&#39;events&#39;); function reverse_addr(addr) { var e = new events.</description>
+    </item>
+    
+  </channel>
+</rss>

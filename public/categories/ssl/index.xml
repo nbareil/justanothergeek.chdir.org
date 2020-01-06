@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ssl on Just Another Geek</title>
+    <link>https://justanothergeek.chdir.org/categories/ssl/</link>
+    <description>Recent content in Ssl on Just Another Geek</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 25 Mar 2010 11:22:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://justanothergeek.chdir.org/categories/ssl/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>CVE-2010-0740: Record of death vulnerability in OpenSSL</title>
+      <link>https://justanothergeek.chdir.org/2010/03/CVE-2010-0740-Record-of-death-vulnerability-in-OpenSSL/</link>
+      <pubDate>Thu, 25 Mar 2010 11:22:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/2010/03/CVE-2010-0740-Record-of-death-vulnerability-in-OpenSSL/</guid>
+      <description>A new vulnerability (CVE-2010-0740) was found in OpenSSL, affectionately called &amp;ldquo;Record of death&amp;rdquo; (in reference to the ping of death vulnerability back in 1996) was fixed by the patch below:
+--- ssl/s3_pkt.c 24 Jan 2010 13:52:38 -0000 1.57.2.9 +++ ssl/s3_pkt.c 24 Mar 2010 00:00:00 -0000 @@ -291,9 +291,9 @@ if (version != s-&amp;gt;version) { SSLerr(SSL_F_SSL3_GET_RECORD,SSL_R_WRONG_VERSION_NUMBER); - /* Send back error using their - * version number :-) */ - s-&amp;gt;version=version; + if ((s-&amp;gt;version &amp;amp; 0xFF00) == (version &amp;amp; 0xFF00)) + /* Send back error using their minor version number :-) */ + s-&amp;gt;version = (unsigned short)version; al=SSL_AD_PROTOCOL_VERSION; goto f_err; }  Arno and myself had a look on this vuln, but at a glance, it&amp;rsquo;s hard to understand the consequences of theses two modifications:</description>
+    </item>
+    
+  </channel>
+</rss>

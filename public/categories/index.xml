@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Just Another Geek</title>
+    <link>https://justanothergeek.chdir.org/categories/</link>
+    <description>Recent content in Categories on Just Another Geek</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 13 Mar 2010 11:14:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://justanothergeek.chdir.org/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Android</title>
+      <link>https://justanothergeek.chdir.org/categories/android/</link>
+      <pubDate>Sat, 13 Mar 2010 11:14:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/android/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Async</title>
+      <link>https://justanothergeek.chdir.org/categories/async/</link>
+      <pubDate>Sat, 15 May 2010 09:26:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/async/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Capture</title>
+      <link>https://justanothergeek.chdir.org/categories/capture/</link>
+      <pubDate>Sat, 27 Aug 2011 14:54:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/capture/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Dns</title>
+      <link>https://justanothergeek.chdir.org/categories/dns/</link>
+      <pubDate>Sat, 15 May 2010 09:26:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/dns/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Elf</title>
+      <link>https://justanothergeek.chdir.org/categories/elf/</link>
+      <pubDate>Wed, 02 Nov 2011 16:30:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/elf/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Exploit</title>
+      <link>https://justanothergeek.chdir.org/categories/exploit/</link>
+      <pubDate>Thu, 25 Mar 2010 11:22:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/exploit/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>French</title>
+      <link>https://justanothergeek.chdir.org/categories/french/</link>
+      <pubDate>Tue, 28 Dec 2010 15:43:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/french/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Glibc</title>
+      <link>https://justanothergeek.chdir.org/categories/glibc/</link>
+      <pubDate>Wed, 02 Nov 2011 16:30:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/glibc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Gsm</title>
+      <link>https://justanothergeek.chdir.org/categories/gsm/</link>
+      <pubDate>Sat, 13 Mar 2010 11:14:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/gsm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Howto</title>
+      <link>https://justanothergeek.chdir.org/categories/howto/</link>
+      <pubDate>Wed, 06 Jul 2011 14:34:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/howto/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Kernel</title>
+      <link>https://justanothergeek.chdir.org/categories/kernel/</link>
+      <pubDate>Mon, 03 Jan 2011 22:48:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/kernel/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Linux</title>
+      <link>https://justanothergeek.chdir.org/categories/linux/</link>
+      <pubDate>Mon, 11 Apr 2011 11:37:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/linux/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Network</title>
+      <link>https://justanothergeek.chdir.org/categories/network/</link>
+      <pubDate>Sat, 27 Aug 2011 14:54:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/network/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Nodejs</title>
+      <link>https://justanothergeek.chdir.org/categories/nodejs/</link>
+      <pubDate>Sat, 15 May 2010 09:26:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/nodejs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Paranoia</title>
+      <link>https://justanothergeek.chdir.org/categories/paranoia/</link>
+      <pubDate>Sun, 25 Sep 2011 20:07:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/paranoia/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Project</title>
+      <link>https://justanothergeek.chdir.org/categories/project/</link>
+      <pubDate>Sat, 27 Aug 2011 14:54:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/project/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Sandbox</title>
+      <link>https://justanothergeek.chdir.org/categories/sandbox/</link>
+      <pubDate>Wed, 02 Nov 2011 16:30:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/sandbox/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Scan</title>
+      <link>https://justanothergeek.chdir.org/categories/scan/</link>
+      <pubDate>Sat, 15 May 2010 09:26:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/scan/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Scapy</title>
+      <link>https://justanothergeek.chdir.org/categories/scapy/</link>
+      <pubDate>Sat, 13 Mar 2010 11:14:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/scapy/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Seccomp</title>
+      <link>https://justanothergeek.chdir.org/categories/seccomp/</link>
+      <pubDate>Mon, 11 Apr 2011 11:37:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/seccomp/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Security</title>
+      <link>https://justanothergeek.chdir.org/categories/security/</link>
+      <pubDate>Sun, 25 Sep 2011 20:07:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/security/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ssh</title>
+      <link>https://justanothergeek.chdir.org/categories/ssh/</link>
+      <pubDate>Wed, 06 Jul 2011 14:34:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/ssh/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Ssl</title>
+      <link>https://justanothergeek.chdir.org/categories/ssl/</link>
+      <pubDate>Thu, 25 Mar 2010 11:22:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/ssl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Syscall</title>
+      <link>https://justanothergeek.chdir.org/categories/syscall/</link>
+      <pubDate>Thu, 04 Mar 2010 14:10:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/syscall/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Virtualization</title>
+      <link>https://justanothergeek.chdir.org/categories/virtualization/</link>
+      <pubDate>Thu, 08 Apr 2010 15:03:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/virtualization/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Vulnerability</title>
+      <link>https://justanothergeek.chdir.org/categories/vulnerability/</link>
+      <pubDate>Wed, 25 Aug 2010 14:09:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/vulnerability/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Web</title>
+      <link>https://justanothergeek.chdir.org/categories/web/</link>
+      <pubDate>Sun, 25 Sep 2011 20:07:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/web/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Xen</title>
+      <link>https://justanothergeek.chdir.org/categories/xen/</link>
+      <pubDate>Thu, 08 Apr 2010 15:03:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/categories/xen/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Seccomp on Just Another Geek</title>
+    <link>https://justanothergeek.chdir.org/categories/seccomp/</link>
+    <description>Recent content in Seccomp on Just Another Geek</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 11 Apr 2011 11:37:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://justanothergeek.chdir.org/categories/seccomp/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>no-release of seccomp-nurse</title>
+      <link>https://justanothergeek.chdir.org/2011/04/no-release-of-seccomp-nurse/</link>
+      <pubDate>Mon, 11 Apr 2011 11:37:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/2011/04/no-release-of-seccomp-nurse/</guid>
+      <description>**This post in a nutshell**\ This was a draft since [my presentation at Ekoparty](http://chdir.org/~nico/papers/seccomp-nurse10/), I will force myself to not procrastinate this time. **This post announces the no-release of seccomp-nurse** (it is not a release because it is still an advanced proof of concept). Quick links: - [seccomp-nurse homepage](http://chdir.org/~nico/seccomp-nurse/) - [seccomp-nurse sources](http://github.com/nbareil/seccomp-nurse/) - [screencast: sandboxing the python interpreter](http://www.youtube.com/watch?v=EUSxAJE9xqI)  
+seccomp-nurse is a generic sandbox environnement for Linux, which doesn&amp;rsquo;t require any recompilation.</description>
+    </item>
+    
+    <item>
+      <title>What is really the attack surface of the kernel running a SECCOMP process?</title>
+      <link>https://justanothergeek.chdir.org/2010/08/What-is-really-the-attack-surface-of-the-kernel-running-a-SECCOMP-process/</link>
+      <pubDate>Wed, 25 Aug 2010 14:09:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/2010/08/What-is-really-the-attack-surface-of-the-kernel-running-a-SECCOMP-process/</guid>
+      <description>In a previous post, I said the attack surface of the kernel for processes running SECCOMP was really low. To confirm this assumption, each vulnerability affecting the 2.6 kernel was reviewed.
+Only those triggerable from a SECCOMPed process were kept. On 440 vulnerabilities, 13 were qualified:
+Impact Description Architecture Reference
+HIGH infinite loop triggering signal handler i386 CVE-2004-0554 MEDIUM audit_syscall_entry bypass amd64 CVE-2009-0834 MEDIUM SECCOMP bypass amd64 CVE-2009-0835 MEDIUM Non-sign extension of syscall arguments s390 CVE-2009-0029 MEDIUM EFLAGS leak on context switch amd64/i386 CVE-2006-5755 MEDIUM Nested faults amd64 CVE-2005-1767 MEDIUM Not handling properly certain privileged instructions s390 CVE-2004-0887 LOW Fix register leak in 32 bits syscall audititing amd64 81766741f LOW 64-bit kernel register leak to 32-bit processes amd64 24e35800c LOW Register leak amd64 CVE-2009-2910 LOW DoS by using malformed LDT amd64 CVE-2008-3247 LOW DoS on floating point exceptions powerpc HTX CVE-2007-3107 LOW DoS on 32-bit compatibility mode amd64 CVE-2005-1765</description>
+    </item>
+    
+    <item>
+      <title>SECCOMP as a Sandboxing solution ?</title>
+      <link>https://justanothergeek.chdir.org/2010/03/SECCOMP-as-a-Sandboxing-solution/</link>
+      <pubDate>Thu, 04 Mar 2010 14:10:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/2010/03/SECCOMP-as-a-Sandboxing-solution/</guid>
+      <description>Sandboxing technology? SECCOMP is a Linux feature introduced in 2.6.23 (2005) by Andrea Arcangeli, initially designed for grid computing applications. The idea was to sell CPU times to the public by running untrusted binaries.
+When a process goes into SECCOMP mode, it can only do 4 syscalls: read, write, _exit and sigreturn. The kernel will enforce this limitation by killing (by a SIGKILL signal) the process if an unauthorized system call is made.</description>
+    </item>
+    
+  </channel>
+</rss>

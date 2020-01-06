@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Introducing a bit of Web paranoia into my habits... - Just Another Geek</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="Introducing a bit of Web paranoia into my habits..." />
+<meta property="og:description" content="How do I use Google Chrome? What are my must-have extensions?" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://justanothergeek.chdir.org/2011/09/Introducing-a-bit-of-Web-paranoia-into-my-habits.../" /><meta property="article:published_time" content="2011-09-25T20:07:00&#43;00:00"/>
+<meta property="article:modified_time" content="2011-09-25T20:07:00&#43;00:00"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Introducing a bit of Web paranoia into my habits..."/>
+<meta name="twitter:description" content="How do I use Google Chrome? What are my must-have extensions?"/>
+<link href='https://fonts.googleapis.com/css?family=Playfair+Display:700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" media="screen" href="https://justanothergeek.chdir.org/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://justanothergeek.chdir.org/css/main.css" />
+
+	
+		<script src="https://justanothergeek.chdir.org/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper">
+		<div class="header">
+	
+	<h1 class="site-title"><a href="https://justanothergeek.chdir.org/">Just Another Geek</a></h1>
+	<div class="site-description"><nav class="nav social">
+			<ul class="flat"></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post">
+			<div class="post-header">
+				
+					<div class="meta">
+						<div class="date">
+							<span class="day">25</span>
+							<span class="rest">Sep 2011</span>
+						</div>
+					</div>
+				
+				<div class="matter">
+					<h1 class="title">Introducing a bit of Web paranoia into my habits...</h1>
+				</div>
+			</div>
+					
+			<div class="markdown">
+				<p>When I&rsquo;m not slacking in Emacs, I now spend most of my time in Google
+Chrome. Almost everything I do is in the &ldquo;cloud&rdquo; (I hate this buzz
+word): mail, blog, chats, voip and even version control.<br />
+<br />
+With the explosion of &ldquo;social buttons&rdquo; everywhere, I became really more
+paranoid than before about my privacy. And when I see <a href="http://www.readwriteweb.com/archives/read_in_facebook_social_news_apps.php">new Facebook
+&lsquo;Frictionless
+sharing&rsquo;</a> feature,
+I don&rsquo;t regret my move. What did I do? Simple, I&rsquo;m just using dedicated
+browser profiles for each task:<br />
+<br />
+-   The most sensitive: the one I use <strong>only</strong> for my mail account and
+    nothing else. I even think to use the <a href="http://scarybeastsecurity.blogspot.com/2011/04/fiddling-with-chromiums-new-certificate.html">clever proxy hacks mentionned
+    by Chris
+    Evans</a> to
+    only authorized outbound connections to my mail provider. I didn&rsquo;t
+    do it yet because it would prevent me from reading HTML mails
+    linking to external image (OK this is not a big loss and a potential
+    privacy issue but useful sometimes). This is a dedicated profile
+    because if you have access to mails, you have access to every web
+    sites (ie &ldquo;I lost my password&rdquo;)
+-   Then there is my main profile (using it for Google
+    Reader, <a href="https://plus.google.com/114289168433047035840">Google+</a>,
+    <a href="https://twitter.com/nbareil/">Twitter</a> and Facebook). My biggest
+    fear is to be tracked because of social buttons or because I clicked
+    a link somewhere. So I changed my habit and instead of clicking, I
+    drag and drop interesting pages to my sandbox profile
+-   The sandbox profile is where I do searches, browsing web pages, etc.
+    It is configured to never send anything, or to store information
+    on disk. I never use this profile to log on a website and if I have
+    to do that, I get back to the main profile.</p>
+
+<p>To do this efficiently, when I boot, I spawn these browsers with
+specific profile directory (using &ndash;user-data-dir  Chrome option) and
+they are never closed. My window manager is configured to display the
+sandbox and my main profile side-by-side on the same workspace in order
+to switch rapidly.</p>
+
+<p>For each profile, I use these Chrome extensions:</p>
+
+<ul>
+<li><a href="https://chrome.google.com/webstore/detail/hhnjdplhmcnkiecampfdgfjilccfpfoe">Keep My Opt-Outs</a> and <a href="https://chrome.google.com/webstore/detail/gbiekjoijknlhijdjbaadobpkdhmoebb">IBA Opt-Out</a>,
+enabling <a href="http://en.wikipedia.org/wiki/Do_not_track_header">Do-Not-Track header</a> equivalent</li>
+<li><a href="https://chrome.google.com/webstore/detail/gofhjkjmkpinhpoiabjplobcaignabnl">FlashBlock</a> to
+disable Flash by default</li>
+<li><a href="https://chrome.google.com/webstore/detail/jeoacafpbcihiomhlakheieifhpjdfeo">Disconnect</a> to
+disable social buttons</li>
+<li><a href="https://chrome.google.com/webstore/detail/gighmmpiobklfepjocnamgkkbiglidom">AdBlock</a></li>
+</ul>
+
+<p>This setup works really well for me, I&rsquo;m using it for more than 6 months
+now and it&rsquo;s cool :)</p>
+
+<p>The next step is to use dedicated UIDs for each profile, I didn&rsquo;t do it
+yet because there is no &ldquo;perfect solution&rdquo; because of Xorg design: any
+X11 client can mess with other X11 client&hellip;</p>
+
+			</div>
+
+			<div class="tags">
+				
+					
+				
+			</div></div>
+	</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> <a href="https://github.com/knadh/hugo-ink">Ink</a> theme on <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-13174242-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</body>
+</html>

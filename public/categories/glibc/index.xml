@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Glibc on Just Another Geek</title>
+    <link>https://justanothergeek.chdir.org/categories/glibc/</link>
+    <description>Recent content in Glibc on Just Another Geek</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 02 Nov 2011 16:30:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://justanothergeek.chdir.org/categories/glibc/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>ld-linux.so ELF hooker</title>
+      <link>https://justanothergeek.chdir.org/2011/11/ld-linux.so-ELF-hooker/</link>
+      <pubDate>Wed, 02 Nov 2011 16:30:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/2011/11/ld-linux.so-ELF-hooker/</guid>
+      <description>**TL;DR**\ [Stéphane](https://plus.google.com/108914619478390609767) and [myself](https://plus.google.com/114289168433047035840) are releasing ag new tool injecting code at runtime, just between the ELF loader and target binary. It is an alternative to `LD_PRELOAD`, just a little bit more intrusive but 100% reliable :)\ [Sources were released on Github](https://github.com/sduverger/ld-shatner)  
+
+When a binary is execve(), the kernel extracts from the ELF headers the interpreter to be launched, usually /lib/ld-linux.so.2. The kernel creates a new process and prepares the environment (arguments and auxiliary data).</description>
+    </item>
+    
+    <item>
+      <title>How system calls work on recent Linux x86 glibc</title>
+      <link>https://justanothergeek.chdir.org/2010/02/How-system-calls-work-on-recent-Linux-x86-glibc/</link>
+      <pubDate>Sat, 20 Feb 2010 22:11:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/2010/02/How-system-calls-work-on-recent-Linux-x86-glibc/</guid>
+      <description>This post explains how system calls are implemented on recent Linux system. It covers only the x86_32 platform, on a recent Linux kernel and GNU Libc (where recent means &amp;ldquo;released after 2005&amp;rdquo;).
+Processor facility for making syscall On x86, userspace processes run in ring 3, while the kernel is in ring 0. Only the kernel can do the interface between the resources and the processes.
+A resource can be an access to a hardware device, a kernel object or any kind of IPC.</description>
+    </item>
+    
+  </channel>
+</rss>

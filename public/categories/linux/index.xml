@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on Just Another Geek</title>
+    <link>https://justanothergeek.chdir.org/categories/linux/</link>
+    <description>Recent content in Linux on Just Another Geek</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 11 Apr 2011 11:37:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://justanothergeek.chdir.org/categories/linux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>no-release of seccomp-nurse</title>
+      <link>https://justanothergeek.chdir.org/2011/04/no-release-of-seccomp-nurse/</link>
+      <pubDate>Mon, 11 Apr 2011 11:37:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/2011/04/no-release-of-seccomp-nurse/</guid>
+      <description>**This post in a nutshell**\ This was a draft since [my presentation at Ekoparty](http://chdir.org/~nico/papers/seccomp-nurse10/), I will force myself to not procrastinate this time. **This post announces the no-release of seccomp-nurse** (it is not a release because it is still an advanced proof of concept). Quick links: - [seccomp-nurse homepage](http://chdir.org/~nico/seccomp-nurse/) - [seccomp-nurse sources](http://github.com/nbareil/seccomp-nurse/) - [screencast: sandboxing the python interpreter](http://www.youtube.com/watch?v=EUSxAJE9xqI)  
+seccomp-nurse is a generic sandbox environnement for Linux, which doesn&amp;rsquo;t require any recompilation.</description>
+    </item>
+    
+    <item>
+      <title>La sécurité sous Linux, un an plus tard...</title>
+      <link>https://justanothergeek.chdir.org/2010/12/La-s%C3%A9curit%C3%A9-sous-Linux-un-an-plus-tard.../</link>
+      <pubDate>Tue, 28 Dec 2010 15:43:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/2010/12/La-s%C3%A9curit%C3%A9-sous-Linux-un-an-plus-tard.../</guid>
+      <description>Sorry english folks: this post is in french, but it will be translated soon, translated and updated post is available here.
+Plus qu&amp;rsquo;une longue liste de vulnérabilités, ce post a pour objectif de décrire ce qu&amp;rsquo;il s&amp;rsquo;est passé en 2010 dans l&amp;rsquo;écosystème de la sécurité sous GNU/Linux.
+La première partie est dédiée aux nouvelles classes de vulnérabilité. La deuxième partie se concentre sur la défense avec l&amp;rsquo;analyse des différentes améliorations tendant à améliorer la sécurité de nos systèmes.</description>
+    </item>
+    
+    <item>
+      <title>Document review of Qubes OS</title>
+      <link>https://justanothergeek.chdir.org/2010/04/Document-review-of-Qubes-OS/</link>
+      <pubDate>Thu, 08 Apr 2010 15:03:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/2010/04/Document-review-of-Qubes-OS/</guid>
+      <description>Qubes OS You must have heard about it, Invisible Things Lab released their own operating system, named Qubes OS (If you ask me, I would have refer to it as a Linux distribution instead). Their distribution focuses on security isolation and is based on their virtualization experience (for the record, Joanna and Rafal are the people behind most of the virtualization vulnerabilities found in the previous years).
+ Disclaimer: I do not had the occasion to test the system, this post is only based on my reading of their (great) QubesOs architecture paper (version 0.</description>
+    </item>
+    
+    <item>
+      <title>SECCOMP as a Sandboxing solution ?</title>
+      <link>https://justanothergeek.chdir.org/2010/03/SECCOMP-as-a-Sandboxing-solution/</link>
+      <pubDate>Thu, 04 Mar 2010 14:10:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/2010/03/SECCOMP-as-a-Sandboxing-solution/</guid>
+      <description>Sandboxing technology? SECCOMP is a Linux feature introduced in 2.6.23 (2005) by Andrea Arcangeli, initially designed for grid computing applications. The idea was to sell CPU times to the public by running untrusted binaries.
+When a process goes into SECCOMP mode, it can only do 4 syscalls: read, write, _exit and sigreturn. The kernel will enforce this limitation by killing (by a SIGKILL signal) the process if an unauthorized system call is made.</description>
+    </item>
+    
+    <item>
+      <title>No more ASLR bypass on Linux 2.6.30</title>
+      <link>https://justanothergeek.chdir.org/2010/02/No-more-ASLR-bypass-on-Linux-2.6.30/</link>
+      <pubDate>Tue, 23 Feb 2010 12:26:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/2010/02/No-more-ASLR-bypass-on-Linux-2.6.30/</guid>
+      <description>While trying to exploit a local setuid application, I had the unhappiness (as an attacker) to see that the security of the ASLR Linux kernel has increased, removing a whole method of exploitation. But let&amp;rsquo;s begin from the start:
+The minimalist vulnerable example could be this vuln.c:
+#include &amp;lt;stdio.h&amp;gt; #include &amp;lt;unistd.h&amp;gt; int main( int argc, char *argv[] ) { char buf[4]; printf(&amp;quot;%#p\n&amp;quot;, &amp;amp;buf); strcpy( buf, argv[1] ); return 0; }  Because of the Address Space Layout Randomization (ASLR), this bug is tough to exploit: if the binary is compiled with the right options and the kernel is configured to fully randomize the address space, it becomes impossible to guess where the buffer is, nor the location of the functions&amp;rsquo; libraries.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Network on Just Another Geek</title>
+    <link>https://justanothergeek.chdir.org/categories/network/</link>
+    <description>Recent content in Network on Just Another Geek</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 27 Aug 2011 14:54:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://justanothergeek.chdir.org/categories/network/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>net2pcap revival</title>
+      <link>https://justanothergeek.chdir.org/2011/08/net2pcap-revival/</link>
+      <pubDate>Sat, 27 Aug 2011 14:54:00 +0000</pubDate>
+      
+      <guid>https://justanothergeek.chdir.org/2011/08/net2pcap-revival/</guid>
+      <description>net2pcap is a packet capture tool written by Philippe Biondi back in 2003. It was designed to be as secure as possible in order to be run in hostile environment. To do so, its code is minimalist without any complicate feature, the result is 406 lines of simple C. On top of its security, it is also the most reliable tool I have ever used on high traffic link regarding packet loss, even dumpcap does not perform better.</description>
+    </item>
+    
+  </channel>
+</rss>

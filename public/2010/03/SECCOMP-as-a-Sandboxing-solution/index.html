@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>SECCOMP as a Sandboxing solution ? - Just Another Geek</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="SECCOMP as a Sandboxing solution ?" />
+<meta property="og:description" content="SECCOMP is a Linux feature introduced in 2.6.23 to run untrusted executables." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://justanothergeek.chdir.org/2010/03/SECCOMP-as-a-Sandboxing-solution/" /><meta property="article:published_time" content="2010-03-04T14:10:00&#43;00:00"/>
+<meta property="article:modified_time" content="2010-03-04T14:10:00&#43;00:00"/>
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SECCOMP as a Sandboxing solution ?"/>
+<meta name="twitter:description" content="SECCOMP is a Linux feature introduced in 2.6.23 to run untrusted executables."/>
+<link href='https://fonts.googleapis.com/css?family=Playfair+Display:700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" media="screen" href="https://justanothergeek.chdir.org/css/normalize.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://justanothergeek.chdir.org/css/main.css" />
+
+	
+		<script src="https://justanothergeek.chdir.org/js/main.js"></script>
+</head>
+
+<body>
+	<div class="container wrapper">
+		<div class="header">
+	
+	<h1 class="site-title"><a href="https://justanothergeek.chdir.org/">Just Another Geek</a></h1>
+	<div class="site-description"><nav class="nav social">
+			<ul class="flat"></ul>
+		</nav>
+	</div>
+
+	<nav class="nav">
+		<ul class="flat">
+			
+		</ul>
+	</nav>
+</div>
+
+
+		<div class="post">
+			<div class="post-header">
+				
+					<div class="meta">
+						<div class="date">
+							<span class="day">04</span>
+							<span class="rest">Mar 2010</span>
+						</div>
+					</div>
+				
+				<div class="matter">
+					<h1 class="title">SECCOMP as a Sandboxing solution ?</h1>
+				</div>
+			</div>
+					
+			<div class="markdown">
+				
+
+<h3 id="sandboxing-technology">Sandboxing technology?</h3>
+
+<p>SECCOMP is a Linux feature introduced in 2.6.23 (2005) by <a href="http://www.cpushare.com/blog/andrea/">Andrea
+Arcangeli</a>, initially designed for
+grid computing applications. The idea was to sell CPU times to the
+public by running untrusted binaries.</p>
+
+<p>When a process goes into SECCOMP mode, it can only do 4 syscalls:
+<code>read</code>, <code>write</code>, <code>_exit</code> and <code>sigreturn</code>. The kernel will enforce this
+limitation by killing (by a SIGKILL signal) the process if an
+unauthorized system call is made.</p>
+
+<p>The security warranty here is pretty strong: the only way to evade the
+protection is to use file descriptors already opened or access to shared
+memory.</p>
+
+<p>SECCOMP is the perfect solution for a sandbox because the kernel attack
+surface is really small! For the record, in the whole kernel security
+history, no vulnerability was ever found in theses syscalls.</p>
+
+<p>The downside of this feature is its limitation! Once in SECCOMP mode, it
+is impossible to do anything except some arithmetics. Another SECCOMP
+problem is that the action of entering in SECCOMP mode is voluntary: the
+program needs to issue itself a <code>prctl()</code> call with appropriate
+arguments: that means the application needs to be developed
+specifically.</p>
+
+<p>The purpose of a sandbox is to run untrusted binaries without requiring
+sources modifications. Currently, there are two main problems:</p>
+
+<ul>
+<li>Enter in SECCOMP mode</li>
+<li>Prevent the untrusted process from issuing system call</li>
+</ul>
+
+<p>Both problems need to be solved without requiring a recompilation. How
+to do it despite this constraint?</p>
+
+<h3 id="entering-in-seccomp-mode">Entering in SECCOMP mode</h3>
+
+<p>Basically, we need to inject a call to <code>prctl()</code> into a given process.
+The best known method is to write directly into the memory of the
+process by using the <code>ptrace()</code> interface.</p>
+
+<p>Beside the evident problems of portability and the inherent difficulties
+of injecting instructions in a process, this solution was not
+investigated because of its hackish nature.</p>
+
+<p>Instead, let&rsquo;s take a look at a simple binary:</p>
+
+<pre><code class="language-.src">$ objdump -f a.out
+a.out:     file format elf32-i386
+architecture: i386, flags 0x00000112:
+EXEC_P, HAS_SYMS, D_PAGED
+start address 0x080482e0
+</code></pre>
+
+<p>The entry point of the binary, <code>0x080482e0</code>, is the <code>_start</code> routine
+provided by the compiler and shown here:</p>
+
+<pre><code class="language-.src">080482e0 &lt;_start&gt;:
+ 80482e0:       31 ed                   xor    ebp,ebp
+ 80482e2:       5e                      pop    esi
+ 80482e3:       89 e1                   mov    ecx,esp
+ 80482e5:       83 e4 f0                and    esp,0xfffffff0
+ 80482e8:       50                      push   eax
+ 80482e9:       54                      push   esp
+ 80482ea:       52                      push   edx
+ 80482eb:       68 b0 83 04 08          push   0x80483b0
+ 80482f0:       68 c0 83 04 08          push   0x80483c0
+ 80482f5:       51                      push   ecx
+ 80482f6:       56                      push   esi
+ 80482f7:       68 94 83 04 08          push   0x8048394
+ 80482fc:       e8 c7 ff ff ff          call   80482c8 &lt;__libc_start_main@plt&gt;
+</code></pre>
+
+<p>It initializes the stack and then calls the &ldquo;init function&rdquo; of the GNU
+libc which will eventually execute the <code>main()</code> function. At this point,
+the program is effectively ran.</p>
+
+<p>The interesting property of this routine is how the libc function is
+called: by using the Procedure Linkage Table (PLT). In a few words, that
+means the linker will have to resolve the symbol.</p>
+
+<p>Thanks to the <code>LD_PRELOAD</code> feature, it&rsquo;s possible to overload ELF
+symbols. This is how we are issuing the <code>prctl()</code> call: by overriding
+the <code>__libc_start_main</code> function and calling it on our own to be totally
+transparent, here is how it&rsquo;s done:</p>
+
+<pre><code>typedef int (*main_t)(int, char **, char **);
+main_t realmain;
+
+int __libc_start_main(main_t main,
+                      int argc,
+                      char *__unbounded *__unbounded ubp_av,
+                      ElfW(auxv_t) *__unbounded auxvec,
+                      __typeof (main) init,
+                      void (*fini) (void),
+                      void (*rtld_fini) (void), void *__unbounded
+                      stack_end)
+{
+        void *libc;
+        int (*libc_start_main)(main_t main,
+                               int,
+                               char *__unbounded *__unbounded,
+                               ElfW(auxv_t) *,
+                               __typeof (main),
+                               void (*fini) (void),
+                               void (*rtld_fini) (void),
+                               void *__unbounded stack_end);
+
+        libc = dlopen(&quot;libc.so.6&quot;, RTLD_LOCAL  | RTLD_LAZY);
+        if (!libc)
+                ERROR(&quot;  dlopen() failed: %s\n&quot;, dlerror());
+        libc_start_main = dlsym(libc, &quot;__libc_start_main&quot;);
+        if (!libc_start_main)
+                ERROR(&quot;     Failed: %s\n&quot;, dlerror());
+
+        realmain = main;
+        void (*__malloc_initialize_hook) (void) = my_malloc_init;
+        return (*libc_start_main)(wrap_main, argc, ubp_av, auxvec,
+        init, fini, rtld_fini, stack_end);
+}
+</code></pre>
+
+<p>In a nutshell:</p>
+
+<ol>
+<li>The first parameter of the function is the address of the <code>main</code></li>
+<li>We open the libc library object</li>
+<li>We find the location of the original <code>__libc_start_main</code></li>
+<li>We save the original <code>main</code> function into a global variable</li>
+<li>We call the original <code>__libc_start_main</code> by replacing the original
+<code>main</code> by our own (<code>wrap_main</code>) shown here:</li>
+</ol>
+
+<!-- -->
+
+<pre><code>int wrap_main(int argc, char **argv, char **environ)
+{
+        if (prctl(PR_SET_SECCOMP, 1, 0, 0) == -1) {
+                perror(&quot;prctl(PR_SET_SECCOMP) failed&quot;);
+                printf(&quot;Maybe you don't have the CONFIG_SECCOMP support built into your kernel?\n&quot;);
+                exit(1);
+        }
+
+        (*realmain)(argc, argv, environ);
+}
+</code></pre>
+
+<p>At this point, the original <code>main()</code> is called and the program is
+executed under SECCOMP. The drawback of this method is its
+incompatibility with statically linked binary. In this case, the
+<code>_start</code> routine calls directly <code>__libc_start_main</code> function without
+using the PLT.</p>
+
+<p>The big vulnerability here is the case of a malicious binary with a
+<code>_start</code> routine not calling <code>__libc_start_main</code>, in that case, the
+<code>prctl()</code> would not be done and the program would run without
+sandboxing. This issue was ignored for the moment but it will require
+some thought&hellip;</p>
+
+<p>There is still the option of modifying the memory with some <code>ptrace()</code>
+calls or <a href="http://c-skills.blogspot.com/2010/02/runtime-hot-patching-processes-wo.html">rewriting some memory mapping thanks to the method of
+Sebastian Krahmer presented in
+lasso</a>.</p>
+
+<h3 id="interception-of-syscalls">Interception of syscalls</h3>
+
+<p>Now that the application is running under SECCOMP, it&rsquo;s not possible
+anymore to do a syscall (except <code>read</code>, <code>write</code>, <code>_exit</code> and
+<code>sigreturn</code>). Because we made the assumption that the sandboxed program
+was not designed to run SECCOMP, we have to prevent it from issuing such
+forbidden call.</p>
+
+<p>Thus, we need to intercept the syscall before the kernel, process it if
+possible and emulate the kernel behavior. The interception of syscalls
+is usually done, again, with the <code>ptrace()</code> interface, the main drawback
+of this method is the lack of debugging mean: because all debuggers use
+<code>ptrace</code> and a process can only be traced once, that means that each bug
+would be a nightmare.</p>
+
+<p>Furthermore, the <code>ptrace</code> interface is known to be crippled and a lot of
+security bugs have been found, fortunately, this was from the tracer
+side, but there was some advisories where the tracee could harm the
+tracer process.</p>
+
+<p>Another solution was investigated based on the analysis of the syscall
+handling in the Libc. We saw in my <a href="http://justanothergeek.chdir.org/2010/02/how-system-calls-work-on-recent-linux.html">previous post &ldquo;How system calls work
+on
+Linux?&rdquo;</a>
+that the GNU Libc was making syscalls by doing a <code>call *%gs:0x10</code> (where
+0x10 is variable).</p>
+
+<h4 id="hijacking-vdso">Hijacking VDSO</h4>
+
+<p>In order to intercept (legit) sycalls, we need to intercept the previous
+<code>call</code> instruction. This is easy, we have to overwrite the pointer
+stored at the address <code>%gs:0x10</code> and redirect the process to our own
+function.</p>
+
+<p>This what we do immediatly after turning on SECCOMP:</p>
+
+<pre><code>static void hijack_vdso_gate(void) {
+        asm(&quot;mov %%gs:0x10, %%ebx\n&quot;
+            &quot;mov %%ebx, %0\n&quot;
+
+            &quot;mov %1, %%ebx\n&quot;
+            &quot;mov %%ebx, %%gs:0x10\n&quot;
+
+            : &quot;=m&quot; (real_handler)
+            : &quot;r&quot; (handler)
+            : &quot;ebx&quot;);
+} __attribute__((always_inline));
+</code></pre>
+
+<p>From now on, every syscalls are trapped by our handler, even the one
+which are &ldquo;allowed&rdquo; by SECCOMP.</p>
+
+<h4 id="demultiplexing-syscalls">Demultiplexing syscalls</h4>
+
+<p>The purpose of the handler is to look at the syscall requested, see if
+we need to honor it ourself (because it&rsquo;s a forbidden syscall) or run
+the original VDSO&rsquo;s function.</p>
+
+<p>Our handler needs to be carefully written in order to not mess up with
+the registers: our function <strong>must not</strong> modify any register. That is
+the reason why it was written in assembly:</p>
+
+<pre><code>void handler(void) {
+        /* syscall_proxy() is the &quot;forbidden syscalls&quot; handler */
+        void (*syscall_proxy_addr)(void) = syscall_proxy;
+
+        asm(&quot;cmpl $4, %%eax\n&quot;
+            &quot;je do_syscall\n&quot;
+
+            &quot;cmpl $3, %%eax\n&quot;
+            &quot;je do_syscall\n&quot;
+
+            &quot;cmpl $0xfc, %%eax\n&quot;
+            &quot;jne wrapper\n&quot;
+
+            &quot;movl $1, %%eax\n&quot;
+            &quot;jmp do_syscall\n&quot;
+
+            &quot;wrapper:\n&quot;
+            &quot;                   call *%0\n&quot;
+            &quot;                   jmp out\n&quot;
+
+            &quot;do_syscall:\n&quot;
+            &quot;                   call *%1\n&quot;
+            &quot;out:               nop\n&quot;
+
+            : /* output */
+            : &quot;m&quot; (syscall_proxy_addr),
+              &quot;m&quot; (real_handler)); /* real_handler is the original
+                                    * VDSO function, performing 
+                                    * effectively the syscall 
+                                    */
+}
+</code></pre>
+
+<p>Each time the libc makes a syscall, we either perform the action
+directly or we call our &ldquo;syscall proxy&rdquo;. More on that later&hellip;</p>
+
+			</div>
+
+			<div class="tags">
+				
+					
+				
+			</div></div>
+	</div>
+	<div class="footer wrapper">
+	<nav class="nav">
+		<div> <a href="https://github.com/knadh/hugo-ink">Ink</a> theme on <a href="https://gohugo.io">Hugo</a></div>
+	</nav>
+</div>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-13174242-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+</body>
+</html>
