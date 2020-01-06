@@ -79,7 +79,7 @@ we decided to not enable it as we like to be able to push to master.
 
 The Python tests look like these ones:
 
-```python
+```
 class YaraTester(unittest.TestCase):
     ...
 
@@ -178,7 +178,7 @@ The VirusTotal team wrote an [official Go library for parsing YARA
 rules](https://github.com/VirusTotal/gyp/), gyp, very
 similarly to yara-parser. Its killer feature is that parsed rules can be
 serialized as [a Protocol Buffer](https://github.com/VirusTotal/gyp/blob/master/pb/yara.proto), this
-facilitate massively its manipulation in other programming languages.
+facilitates massively its manipulation in other programming languages.
 
 I guess we will eventually migrate to this library...
 
