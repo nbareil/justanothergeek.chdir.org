@@ -1,21 +1,21 @@
 provider "aws" {
-  profile    = "default"
-  region     = "us-east-1"
+  profile = "default"
+  region  = "us-east-1"
 }
 
 locals {
-  domain_name = "justanothergeekTEST.chdir.org"
-  blog_dnsnames = ["justanothergeekTEST.chdir.org"]
-  s3_origin_id = "XXX"
-  s3_bucket_log = "private-justanothergeekTEST-chdir-org-logs"
-  s3_bucket = "public-justanothergeekTEST-chdir-org"
+  domain_name               = "justanothergeekTEST.chdir.org"
+  blog_dnsnames             = ["justanothergeekTEST.chdir.org"]
+  s3_origin_id              = "XXX"
+  s3_bucket_log             = "private-justanothergeekTEST-chdir-org-logs"
+  s3_bucket                 = "public-justanothergeekTEST-chdir-org"
   s3_origin_access_identity = "origin-access-identity/cloudfront/ABCDEFG1234567"
 }
 
 resource "aws_cloudfront_distribution" "s3_distribution" {
   origin {
     domain_name = aws_s3_bucket.blog_htdocs.bucket_regional_domain_name
-    origin_id = local.s3_origin_id
+    origin_id   = local.s3_origin_id
 
     s3_origin_config {
       origin_access_identity = local.s3_origin_access_identity
@@ -54,13 +54,13 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 
   ordered_cache_behavior {
-    allowed_methods = ["HEAD", "GET"]
-    cached_methods = ["HEAD", "GET"]
-    path_pattern = "/*"
+    allowed_methods  = ["HEAD", "GET"]
+    cached_methods   = ["HEAD", "GET"]
+    path_pattern     = "/*"
     target_origin_id = "${local.s3_origin_id}"
 
     viewer_protocol_policy = "redirect-to-https"
-    compress = true
+    compress               = true
 
     // Lambda@Edge association
     lambda_function_association {
@@ -70,15 +70,15 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     }
   }
 
-    restrictions {
-      geo_restriction {
-        restriction_type = "none"
-      }
+  restrictions {
+    geo_restriction {
+      restriction_type = "none"
     }
+  }
 
-    viewer_certificate {
-      iam_certificate_id = aws_acm_certificate.https_certificate.arn
-    }
+  viewer_certificate {
+    iam_certificate_id = aws_acm_certificate.https_certificate.arn
+  }
 }
 
 resource "aws_acm_certificate" "https_certificate" {
@@ -109,7 +109,7 @@ resource "aws_s3_bucket" "log_bucket" {
 }
 
 resource "aws_iam_user" "deploy" {
-  name  = "justanothergeekTEST-deploy"
+  name = "justanothergeekTEST-deploy"
 }
 
 resource "aws_iam_user_policy" "deploy_rw" {
@@ -158,10 +158,10 @@ EOF
 }
 
 resource "aws_lambda_function" "redirect_lambda" {
-  function_name    = "lambda_function_name"
-  role             = aws_iam_role.redirect_lambda.arn
-  handler          = "index.handler"
-  runtime          = "nodejs10.x"
+  function_name = "lambda_function_name"
+  role          = aws_iam_role.redirect_lambda.arn
+  handler       = "index.handler"
+  runtime       = "nodejs10.x"
 
   filename         = "lambda-redirectLeadingSlash.zip"
   source_code_hash = filebase64sha256("lambda-redirectLeadingSlash.zip")
