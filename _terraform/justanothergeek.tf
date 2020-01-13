@@ -4,12 +4,13 @@ provider "aws" {
 }
 
 locals {
-  domain_name               = "justanothergeekTEST.chdir.org"
-  blog_dnsnames             = ["justanothergeekTEST.chdir.org"]
+  domain_name               = "blog.3amcall.com"
+  blog_dnsnames             = ["blog.3amcall.com"]
   s3_origin_id              = "XXX"
-  s3_bucket_log             = "private-justanothergeekTEST-chdir-org-logs"
-  s3_bucket                 = "public-justanothergeekTEST-chdir-org"
-  s3_origin_access_identity = "origin-access-identity/cloudfront/ABCDEFG1234567"
+  s3_bucket_logs            = "private-3amcall-logs"
+  s3_bucket                 = "public-3amcall-blog"
+  //s3_origin_access_identity = "origin-access-identity/cloudfront/ABCDEFG1234567"
+  s3_origin_access_identity = "origin-access-identity/cloudfront/E1ZTWJMWEM1KB8"
 }
 
 resource "aws_cloudfront_distribution" "s3_distribution" {
@@ -57,7 +58,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     allowed_methods  = ["HEAD", "GET"]
     cached_methods   = ["HEAD", "GET"]
     path_pattern     = "/*"
-    target_origin_id = "${local.s3_origin_id}"
+    target_origin_id = local.s3_origin_id
 
     viewer_protocol_policy = "redirect-to-https"
     compress               = true
