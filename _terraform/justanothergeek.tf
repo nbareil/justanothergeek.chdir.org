@@ -12,7 +12,6 @@ provider "aws" {
 locals {
   my_domain_name            = "3amcall.com"
   domain_name               = "blog.3amcall.com"
-  blog_dnsnames             = ["blog.3amcall.com"]
   s3_origin_id              = "XXX"
   s3_bucket_logs            = "private-3amcall-logs2"
   s3_bucket                 = "public-3amcall-htdocs"
@@ -24,6 +23,7 @@ resource "aws_cloudfront_origin_access_identity" "origin_access_identity" {
 
 resource "aws_cloudfront_distribution" "s3_distribution" {
   price_class = "PriceClass_100"
+  aliases = [local.domain_name]
 
   origin {
     domain_name = aws_s3_bucket.blog_htdocs.bucket_regional_domain_name
