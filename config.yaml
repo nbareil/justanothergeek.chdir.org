@@ -6,3 +6,7 @@ googleAnalytics: UA-13174242-1
 theme: hugo-ink
 permalinks:
   post: /:year/:month/:title/
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
