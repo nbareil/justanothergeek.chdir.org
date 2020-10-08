@@ -13,13 +13,17 @@ What is the solution? Take [*The Phoenix Project*](https://www.amazon.com/Phoeni
 
 # Needs
 
-To [*githubify the SOC*](https://medium.com/@johnlatwc/the-githubification-of-infosec-afbdbfaad1d1), we are still in need of a solid pipeline. There are a few bricks here and there ([Sigma](https://github.com/Neo23x0/sigma), [ADS](https://medium.com/palantir/alerting-and-detection-strategy-framework-52dc33722df2),  Elastic [detection-rules](https://github.com/elastic/detection-rules),  [Splunk stories](https://github.com/splunk/security-content/blob/develop/stories/credential_dumping.yml)), but I guess we are missing a little something that will glue everything together (Elastic [Detection engine](https://www.elastic.co/blog/elastic-siem-detections) looks promising).
+To [*githubify the SOC*](https://medium.com/@johnlatwc/the-githubification-of-infosec-afbdbfaad1d1), we are still in need of a complete pipeline: a consistent process from the idea of a detection rule to its deployment in the SIEM.
 
-Sigma is a solid project with a huge userbase, widely used to share detection rules in a technology agnostic format. As such, it is a very convenient input for the SOCs. Unfortunately, from what I see, their use is limited to a "read-only" mode, SOCs takes Sigma rules as input, transcribe it in their SIEM technology (using the sigma converter or not) and integrate it into their custom Use Case format.
+Individual components exist:
+- [Sigma](https://github.com/Neo23x0/sigma) for writing the SIEM query
+- [ADS](https://medium.com/palantir/alerting-and-detection-strategy-framework-52dc33722df2) to document the alert and give the context
+- [Elastic's detection-rules](https://github.com/elastic/detection-rules) or  [Splunk stories](https://github.com/splunk/security-content/blob/develop/stories/credential_dumping.yml)) for describing (lightly) the context and the query.
+- Github for collaborative editing, peer-reviewing, rollback, continuous integration and deployment
 
-Why?
+But we are missing this little something that will glue everything together; Elastic [Detection engine](https://www.elastic.co/blog/elastic-siem-detections) looks promising but misses the Github workflow and is limited to Elastic's stack obviously (*full disclosure: It is not really a cons in fact since I don't believe in "universal" solutions anyway*).
 
-From a pure SOC point of view, I don't believe in an universal format. For most, our time is limited so if your company uses Splunk, you will become a Splunk Ninja 👤  and you won't take the time to learn advanced features of Sigma, unless your business relies on it (examples: MSSP, freelancer or consultant).
+If I had a magic wand, I wish we would have Donald Knuth's dream: literate programming where the detection implementation would be embedded in the document (in ADS format). Could [Jupyter](https://jupyter.org) be an actual answer? I never had the chance to test Azure Sentinel yet, but [Microsoft seems to have took this path for hunting](https://docs.microsoft.com/en-us/azure/sentinel/notebooks).
 
 
 
