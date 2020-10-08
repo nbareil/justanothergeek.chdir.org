@@ -23,7 +23,10 @@ Individual components exist:
 
 But we are missing this little something that will glue everything together; Elastic [Detection engine](https://www.elastic.co/blog/elastic-siem-detections) looks promising but misses the Github workflow and is limited to Elastic's stack obviously (*full disclosure: It is not really a cons in fact since I don't believe in "universal" solutions anyway*).
 
-If I had a magic wand, I wish we would have Donald Knuth's dream: literate programming where the detection implementation would be embedded in the document (in ADS format). Could [Jupyter](https://jupyter.org) be an actual answer? I never had the chance to test Azure Sentinel yet, but [Microsoft seems to have took this path for hunting](https://docs.microsoft.com/en-us/azure/sentinel/notebooks).
+If I had a magic wand, I wish we would have Donald Knuth's dream: literate programming where the detection implementation would be embedded in the document (in ADS format). Is it what [Red Canary](https://redcanary.com/blog/breathing-life-detection-capability/) is doing for years?
+
+
+Could [Jupyter](https://jupyter.org) be an actual answer? I never had the chance to test Azure Sentinel yet, but [Microsoft seems to have took this path for hunting](https://docs.microsoft.com/en-us/azure/sentinel/notebooks).
 
 
 
