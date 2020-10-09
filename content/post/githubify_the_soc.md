@@ -1,11 +1,11 @@
 ---
 date: 2020-10-13
-title: Sigma is just the beginning
+title: Githubify the SOC
 description: XXX
   XXX
 ---
 
-On the engineering side,  the SOCs I know are now suffering from a non-scalable rules' lifecycle, bad quality assurance and regressions. The kind of problems that *state-of-the-art developpers* fixed in the last decade with the introduction of agile principles: continuous integration and deployment, end-to-end accountability, unit testing and a strong focus on the end user.
+The few SOCs I know are suffering from a non-scalable rules' lifecycle, bad quality assurance and regressions. The kind of problems that *state-of-the-art developpers* fixed in the last decade with the introduction of agile principles: continuous integration and deployment, end-to-end accountability, unit testing and a strong focus on the end user.
 
 SOCs need an easy way to accept contributions from various parts of the organization without putting in danger your detection pipeline: in the best of the worlds, anybody could submit and deploy a detection rule and let it be handed over to the RUN team. Yet, the current situation is extremely fragile: a bad query could overload your SIEM, a wrong filter and here is a storm of false positives to bulk-close, etc.
 
@@ -22,6 +22,8 @@ Individual components exist:
 - Github for collaborative editing, peer-reviewing, rollback, continuous integration and deployment
 
 But we are missing this little something that will glue everything together; Elastic [Detection engine](https://www.elastic.co/blog/elastic-siem-detections) looks promising but it misses the Github workflow and is limited to Elastic's stack obviously (*full disclosure: It is not really a cons in fact since I don't believe in "universal" solutions anyway*).
+
+# Enter my utopia
 
 If I had a magic wand, I wish we would realize Donald Knuth's dream: literate programming where the detection logic would be embedded in the document (in ADS format). And actually, it looks like in its [screenshot](https://redcanary.com/wp-content/uploads/image2-18.png) that [Red Canary](https://redcanary.com/blog/breathing-life-detection-capability/) is doing exactly that for years, gg!
 
