@@ -5,7 +5,7 @@ description: XXX
   XXX
 ---
 
-*Full disclosure: This post was in draft for months, and I recently stumbled upon [Anton's blog post](https://medium.com/anton-on-security/can-we-have-detection-as-code-96f869cfdc79) and [Augusto Paes de Barros' answer](http://blog.securitybalance.com/2020/09/ddlc-detection-development-life-cycle.html) so I decided to just release my original draft, it is not an answer to anyone, peace :)*
+*Full disclosure: This post was in draft for months, and I recently stumbled upon [Anton's blog post](https://medium.com/anton-on-security/can-we-have-detection-as-code-96f869cfdc79) and [Augusto Paes de Barros' answer](http://blog.securitybalance.com/2020/09/ddlc-detection-development-life-cycle.html) so I decided to just release my original draft, it is not an answer to anyone, peace ✌️ :)*
 
 
 The few SOCs I know are suffering from their growth: expanding team, legacy detection rules, backward incompatible changes in engine's update or uncontrolled performance. Eventually, the ruleset keeps growing in a pure "fire and forget" mode. 
