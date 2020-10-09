@@ -17,17 +17,22 @@ To [*githubify the SOC*](https://medium.com/@johnlatwc/the-githubification-of-in
 
 Individual components exist:
 - [Sigma](https://github.com/Neo23x0/sigma) for writing the SIEM query
-- [ADS](https://medium.com/palantir/alerting-and-detection-strategy-framework-52dc33722df2) to document the alert and give the context
-- [Elastic's detection-rules](https://github.com/elastic/detection-rules) or  [Splunk stories](https://github.com/splunk/security-content/blob/develop/stories/credential_dumping.yml)) for describing (lightly) the context and the query.
+- [ADS](https://medium.com/palantir/alerting-and-detection-strategy-framework-52dc33722df2) to document the alert and give the rationale behind the detection
+- [Elastic's detection-rules](https://github.com/elastic/detection-rules) or  [Splunk stories](https://github.com/splunk/security-content/blob/develop/stories/credential_dumping.yml)) for describing in a lighter format the context and the query.
 - Github for collaborative editing, peer-reviewing, rollback, continuous integration and deployment
 
-But we are missing this little something that will glue everything together; Elastic [Detection engine](https://www.elastic.co/blog/elastic-siem-detections) looks promising but misses the Github workflow and is limited to Elastic's stack obviously (*full disclosure: It is not really a cons in fact since I don't believe in "universal" solutions anyway*).
+But we are missing this little something that will glue everything together; Elastic [Detection engine](https://www.elastic.co/blog/elastic-siem-detections) looks promising but it misses the Github workflow and is limited to Elastic's stack obviously (*full disclosure: It is not really a cons in fact since I don't believe in "universal" solutions anyway*).
 
-If I had a magic wand, I wish we would have Donald Knuth's dream: literate programming where the detection implementation would be embedded in the document (in ADS format). Is it what [Red Canary](https://redcanary.com/blog/breathing-life-detection-capability/) is doing for years?
+If I had a magic wand, I wish we would realize Donald Knuth's dream: literate programming where the detection logic would be embedded in the document (in ADS format). And actually, it looks like in its [screenshot](https://redcanary.com/wp-content/uploads/image2-18.png) that [Red Canary](https://redcanary.com/blog/breathing-life-detection-capability/) is doing exactly that for years, gg!
+
+In the opensource community, no similar solution exists apparently. Lately, I discovered [Panther](https://github.com/panther-labs/panther) which looks 🤩, but as far as I googled it, the Windows event logs use case is not ready yet (I wonder what happened to [panther#1101](https://github.com/panther-labs/panther/issues/1101)).
+
+Imagine if, instead of writing SPL in your Splunk, you would write normal Python code that would be automatically executed by an AWS Lambda when a new `.evtx` is uploaded in a S3 bucket? Instead of having to learn a specific SIEM's silo and get around its quirks and limitations, you would use normal Python, its libraries, interfaced with other tools and servies and  you could leverage all the progress made by the Agile thinkers in the last decade: unit testing, performance profiling, easy refactoring of code, code deployment, typing system, code analytics, telemetry, etc.
+
+Furthermore, coupled with [Jupyter](https://jupyter.org), we may have amazing capabilities. I never had the chance to test Azure Sentinel yet, but its [Notebooks seem to be spot on](https://docs.microsoft.com/en-us/azure/sentinel/notebooks).
+
+In this utopia, I guess it would be great for detecting (or punctual hunting) but it would be insufficient for investigations: As nothing is indexed, when there is an incident to investigate, how would you do? Retrieve the raw .evtx from the S3 bucket and reprocess it somehow into a Splunk instance for further inspection?
 
 
-Could [Jupyter](https://jupyter.org) be an actual answer? I never had the chance to test Azure Sentinel yet, but [Microsoft seems to have took this path for hunting](https://docs.microsoft.com/en-us/azure/sentinel/notebooks).
 
 
-
-Litterate programming, jupyter, ADS, [red canary](https://redcanary.com/blog/breathing-life-detection-capability/), [Splunk stories](https://github.com/splunk/security-content/blob/develop/stories/credential_dumping.yml), Elastic [Detection engine](https://www.elastic.co/blog/elastic-siem-detections) and its [detection-rules](https://github.com/elastic/detection-rules)
