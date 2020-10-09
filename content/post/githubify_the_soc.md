@@ -5,9 +5,14 @@ description: XXX
   XXX
 ---
 
-The few SOCs I know are suffering from a non-scalable rules' lifecycle, bad quality assurance and regressions. The kind of problems that *state-of-the-art developpers* fixed in the last decade with the introduction of agile principles: continuous integration and deployment, end-to-end accountability, unit testing and a strong focus on the end user.
+*Full disclosure: This post was in draft for months, and I recently stumbled upon [Anton's blog post](https://medium.com/anton-on-security/can-we-have-detection-as-code-96f869cfdc79) and [Augusto Paes de Barros' answer](http://blog.securitybalance.com/2020/09/ddlc-detection-development-life-cycle.html) so I decided to just release my original draft, it is not an answer to anyone, peace :)*
 
-SOCs need an easy way to accept contributions from various parts of the organization without putting in danger your detection pipeline: in the best of the worlds, anybody could submit and deploy a detection rule and let it be handed over to the RUN team. Yet, the current situation is extremely fragile: a bad query could overload your SIEM, a wrong filter and here is a storm of false positives to bulk-close, etc.
+
+The few SOCs I know are suffering from their growth: expanding team, legacy detection rules, backward incompatible changes in engine's update or uncontrolled performance. Eventually, the ruleset keeps growing in a pure "fire and forget" mode. 
+
+Worse, SOCs need an easy way to accept contributions from various parts of the organization without putting in danger your detection pipeline: in the best of the worlds, anybody could submit and deploy a detection rule and let it be handed over to the RUN team. Yet, the current situation is extremely fragile: a bad query could overload your SIEM, a wrong filter and here is a storm of false positives to bulk-close, etc.
+
+Said differently, these symptoms can be expressed as: non-scalable lifecycle, bad quality assurance, regressions, fragility to changes. Basically the kind of problems that *state-of-the-art developpers* have fixed in the last decade with the introduction of agile principles: continuous integration and deployment, end-to-end accountability, unit testing and a strong focus on the end user.
 
 What is the solution? Take [*The Phoenix Project*](https://www.amazon.com/Phoenix-Project-DevOps-Helping-Business/dp/0988262592)  book, replace all references to "developpers" with "SOC" and voila, you have your roadmap. 
 
@@ -18,12 +23,12 @@ To [*githubify the SOC*](https://medium.com/@johnlatwc/the-githubification-of-in
 Individual components exist:
 - [Sigma](https://github.com/Neo23x0/sigma) for writing the SIEM query
 - [ADS](https://medium.com/palantir/alerting-and-detection-strategy-framework-52dc33722df2) to document the alert and give the rationale behind the detection
-- [Elastic's detection-rules](https://github.com/elastic/detection-rules) or  [Splunk stories](https://github.com/splunk/security-content/blob/develop/stories/credential_dumping.yml)) for describing in a lighter format the context and the query.
+- [Elastic's detection-rules](https://github.com/elastic/detection-rules) or  [Splunk stories](https://github.com/splunk/security-content/blob/develop/stories/credential_dumping.yml) merge the query and the context in one file directly ingestable by their engine.
 - Github for collaborative editing, peer-reviewing, rollback, continuous integration and deployment
 
-But we are missing this little something that will glue everything together; Elastic [Detection engine](https://www.elastic.co/blog/elastic-siem-detections) looks promising but it misses the Github workflow and is limited to Elastic's stack obviously (*full disclosure: It is not really a cons in fact since I don't believe in "universal" solutions anyway*).
+Yet, we are missing this little something that will glue everything together; Elastic [Detection engine](https://www.elastic.co/blog/elastic-siem-detections) looks promising but it misses the Github workflow and is limited to Elastic's stack obviously (*full disclosure: It is not really a cons in fact since I don't believe in "universal" solutions anyway, it could be another blog post*).
 
-# Enter my utopia
+# Detection as code's
 
 If I had a magic wand, I wish we would realize Donald Knuth's dream: literate programming where the detection logic would be embedded in the document (in ADS format). And actually, it looks like in its [screenshot](https://redcanary.com/wp-content/uploads/image2-18.png) that [Red Canary](https://redcanary.com/blog/breathing-life-detection-capability/) is doing exactly that for years, gg!
 
