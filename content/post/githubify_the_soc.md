@@ -30,9 +30,9 @@ Yet, we are missing this little something that will glue everything together; El
 
 # Detection as code's
 
-If I had a magic wand, I wish we would realize Donald Knuth's dream: literate programming where the detection logic would be embedded in the document (in ADS format). And actually, it looks like in its [screenshot](https://redcanary.com/wp-content/uploads/image2-18.png) that [Red Canary](https://redcanary.com/blog/breathing-life-detection-capability/) is doing exactly that for years, gg!
+If I had a magic wand, I wish we would realize Donald Knuth's dream: literate programming where the detection logic would be embedded in the document (in ADS format). And actually, it looks like (in this [screenshot](https://redcanary.com/wp-content/uploads/image2-18.png)) that [Red Canary](https://redcanary.com/blog/breathing-life-detection-capability/) is doing exactly that for years, gg!
 
-In the opensource community, no similar solution exists apparently. Lately, I discovered [Panther](https://github.com/panther-labs/panther) which looks 🤩, but as far as I googled it, the Windows event logs use case is not ready yet (I wonder what happened to [panther#1101](https://github.com/panther-labs/panther/issues/1101)).
+Lately, I discovered [Panther](https://github.com/panther-labs/panther) which looks 🤩, but as far as I googled it, the Windows event logs use case is not ready yet (I wonder what happened to [panther#1101](https://github.com/panther-labs/panther/issues/1101)). And there is the very promising [Grapl](https://github.com/grapl-security/grapl)!
 
 Imagine if, instead of writing SPL in your Splunk, you would write normal Python code that would be automatically executed by an AWS Lambda when a new `.evtx` is uploaded in a S3 bucket? Instead of having to learn a specific SIEM's silo and get around its quirks and limitations, you would use normal Python, its libraries, interfaced with other tools and servies and  you could leverage all the progress made by the Agile thinkers in the last decade: unit testing, performance profiling, easy refactoring of code, code deployment, typing system, code analytics, telemetry, etc.
 
