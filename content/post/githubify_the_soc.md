@@ -1,8 +1,11 @@
 ---
 date: 2020-10-13
 title: Githubify the SOC
-description: XXX
-  XXX
+description: The SOCs are currently suffering from their growth, plagued by bad quality 
+  assurance and an extreme fragility to changes. This situation used to be the pain and
+  butter of the developers in the 90s. Fortunately, the Agile manifesto came out and a
+  new way of working took off. This post describes an alternative way to run the
+  detection pipeline.
 ---
 
 *Full disclosure: This post was in draft for months, and I recently stumbled upon [Anton's blog post](https://medium.com/anton-on-security/can-we-have-detection-as-code-96f869cfdc79) and [Augusto Paes de Barros' answer](http://blog.securitybalance.com/2020/09/ddlc-detection-development-life-cycle.html) so I decided to just release my original draft without modification, it is not an answer to anyone, peace ✌️ :)*
