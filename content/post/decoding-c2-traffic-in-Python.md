@@ -54,13 +54,13 @@ First, I need to introduce two old buddies:
 
 And the best part? MITRE has contributed bindings for Python: [pynids](https://github.com/MITRECND/pynids.git) and [htpy](https://github.com/MITRECND/htpy). Yummy! Kudos to MITRE, especially [@wxsBSD](https://twitter.com/wxs) !
 
-(For the record, MITRE also developed [chopshop](https://github.com/MITRECND/chopshop) which seems to be exactly what I was looking for, unfortunately, I never managed to overcome its learning curve, its documentation assumes you are already an expert at it, I am sure they have a lot of awesome documentation, but they are not public as far as I know)
+(For the record, MITRE also developed [chopshop](https://github.com/MITRECND/chopshop) which seems to be exactly what I was looking for, unfortunately, I never managed to overcome its learning curve, its documentation assumes you are already an expert at it, I am sure they have a lot of awesome documentation, but they are not public as far as I know. And to be honest, I often prefer to copy/paste functions instead of  committing to a framework and then spend more time trying to workaround its limits or its ways of working.)
 
 ## Integrating these dinosaurs in 2020 :t_rex: :sauropod: :crocodile:
 
-I won't bore you with all my failures trying to compile these relics on a recent Linux distribution but I spent waaaaay too much time (oh, by the way, thank you Debian very much 🤬). Instead, I will directly share with you "what works":
+ won't bore you with all my failures trying to compile these relics on a recent Linux distribution but I spent waaaaay too much time (oh, by the way, thank you Debian very much 🤬).
 
-**protip**: Use the following dockerfile :package: , it just works:
+Instead, I will directly share with you "what works": a simple Docker container. By hardcoding libraries' versions, the build of the image should still be reproducible in 10 years (if Github still exists...).
 
 {{< gist nbareil 07307dee653ef3400cd3ece0c7a35799 "Dockerfile" >}}
 
