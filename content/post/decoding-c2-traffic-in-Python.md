@@ -8,8 +8,8 @@ description: When you have the chance to catch an attacker live, it is always a 
   Ok, you have all the materials needed, now how can we transform the pcap into human transcripts? 
   "You just have to parse the application layer"
   As usual, while it may seem easy in theory, it is a bit more complicated in real life (especially
-  during an Incident Response engagement, so it is better to be prepared!), this post will describe
-  my experience to write such dissector.
+  during an Incident Response engagement, so it is better to be prepared!), this post describes
+  my experience to write such dissector for the last 10 years.
   
 ---
 # The scene :movie_camera:  
