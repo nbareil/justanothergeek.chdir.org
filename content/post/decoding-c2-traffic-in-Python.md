@@ -73,7 +73,7 @@ Here is the skeleton I usually copy/paste when starting a new decoder:
 
 Both libraries use asynchronous event notifications so it is quickly demanding to maintain both state engines at the same time when you make a change in the code. So take your time and it will eventually work :slight_smile:
 
-Or, if your C2 uses HTTP connections, consider using as a template:
+If your C2 uses HTTP connections, you just have to care about three functions:
 
 1. Filter the HTTP sessions you want to track in [request_headers_ready](#L28) based on IP addresses, URL, hostname, etc.
 1. Inspect the HTTP request in [request_complete_callback](#L70)
