@@ -3,6 +3,7 @@ disablePathToLower: true
 languageCode: en-us
 title: Just Another Geek
 theme: hugo-ink
+enableEmoji: true
 permalinks:
   post: /:year/:month/:title/
 markup:
