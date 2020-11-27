@@ -1,7 +1,7 @@
 ---
 date: 2020-11-17
 title: Decoding C2 Traffic in Python
-description: When you have the chance to catch an attacker live, it is always a delight to monitor :popcorn: 
+description: When you have the chance to catch an attacker live, it is always a delight to monitor 🍿 
   and dissect their moves in real-time, even *a posteriori*. To make it happen, you must have some
   kind of *Full Packet Capture* in the first place, then, of course, you need a thorough
   reverse-engineering of the malware will document the encoding, fields, and structures.
