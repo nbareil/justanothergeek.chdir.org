@@ -32,15 +32,15 @@ First of all, let's clarify some assumptions.
 
 The first time I approached the problem, I implemented it using [scapy](https://scapy.net/), with a **very basic** TCP engine (*full disclosure: it routinely entered into an infinite loop: writing a bugfree TCP/IP stack is hard*) and then I faced difficulty handling the HTTP Request/response paradigm in non-convoluted ways ([Answering Machine](https://scapy.readthedocs.io/en/latest/api/scapy.ansmachine.html) was too lightweight, [Automaton](https://scapy.readthedocs.io/en/latest/api/scapy.automaton.html) was too heavy).
 
-Round  :one: :orange_circle: Packet loss  --- :red_circle:   HTTP/1.1 --- :red_circle: Proxy
+**Round  1** :orange_circle: Packet loss  --- :red_circle:   HTTP/1.1 --- :red_circle: Proxy
 
 The second time, I kept it simple: delegate the TCP/IP parsing to a robust tool such as Wireshark/tshark and abuse their "*Follow TCP session*" feature. Obviously, these tools are clearly not designed for that purpose, and automating the session tracking was hackish. Now that I am thinking about it, I wonder if libshark existed at that time,  it would have been much easier... 🤷‍♂️
 
-Round :two: :green_circle: Packet loss  --- :red_circle:   HTTP/1.1 --- :red_circle: Proxy 
+**Round 2** :green_circle: Packet loss  --- :red_circle:   HTTP/1.1 --- :red_circle: Proxy 
 
 The third time, I decided to stop using tools not designed for the job and I met [tcpflow](https://github.com/simsong/tcpflow). This simple tool performs TCP/IP refragmentation/reassembly, extracts the Layer 7 payload, and writes each one-way flow on disk, you end up with gazillions of files. It is like a folder full of C2 streams but without metadata, ordering, without the understanding of the HTTP request/response paradigm: a cluster mess.
 
-Round :three: :green_circle: Packet loss  --- :red_circle:   HTTP/1.1 --- :red_circle: Proxy
+**Round 3** :green_circle: Packet loss  --- :red_circle:   HTTP/1.1 --- :red_circle: Proxy
 
 Now, the gloves are off, we cannot half-baked it finally, it is time to do some real programming! 
 
@@ -81,4 +81,4 @@ If your C2 uses HTTP connections, you just have to care about three functions:
 
 And you are dialed: you have a rock-solid foundation to build your C2 dissector! 
 
-Round :four: :green_circle: Packet loss  --- :green_circle:   HTTP/1.1 --- :green_circle: Proxy
+**Round 4:** :green_circle: Packet loss  --- :green_circle:   HTTP/1.1 --- :green_circle: Proxy
