@@ -7,7 +7,7 @@
          url("https://rsms.me/inter/font-files/Inter-Regular.woff") format("woff");
   }
   
-  @font-face {
+@font-face {
     font-family: 'Inter';
     font-display: swap;
     font-style:  normal;

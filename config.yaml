@@ -10,3 +10,32 @@ markup:
   goldmark:
     renderer:
       unsafe: true
+
+menu:
+  main:
+    - name: Home
+      url: /
+      weight: 1
+    - name: About
+      url: /About
+      weight: 2
+
+params:
+  subtitle: I am blogging about Information Security since 2003
+  avatar: "/images/avatar.jpg"
+  featherIconsCDN: true
+  mode: "auto"
+  social:
+    - name: Twitter
+      icon: twitter
+      url: https://twitter.com/nbareil/
+    - name: Github
+      icon: github
+      url: https://github.com/nbareil/
+    - name: LinkedIn
+      icon: linkedin
+      url: https://fr.linkedin.com/in/nbareil
+    - name: RSS
+      icon: rss
+      url: /index.xml
+
