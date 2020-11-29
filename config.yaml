@@ -22,7 +22,6 @@ menu:
 
 params:
   subtitle: I am blogging about Information Security since 2003
-  avatar: "/images/avatar.jpg"
   featherIconsCDN: true
   mode: "auto"
   social:
