@@ -23,7 +23,7 @@ menu:
 params:
   subtitle: I am blogging about Information Security since 2003
   featherIconsCDN: true
-  mode: "auto"
+  mode: auto
   social:
     - name: Twitter
       icon: twitter

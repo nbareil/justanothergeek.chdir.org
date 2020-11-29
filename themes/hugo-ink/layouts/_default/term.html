@@ -6,7 +6,15 @@
 	<div class="container wrapper tags">
 		{{ partial "head.html" . }}
 
-		<h1 class="page-title">All tags</h1>
+		<h1 class="page-title">{{ .Title }}</h1>
+		
+		{{ with (.Site.GetPage .Title) }}
+		<ul>
+			{{ range .Pages }}
+				<li><a href="{{ .Permalink }}">{{ .Title }}</a></li>
+			{{ end }}
+		</ul>
+		{{ end }}
 	</div>
 
 	{{ partial "footer.html" . }}
