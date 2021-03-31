@@ -16,19 +16,20 @@ In a "classic" software shop , developpers rely on two levels of testing:
 1. Unit-tests, usually achieved in a few seconds. Coupled with basic tests for an immediate feedback (similarly to the checks done by your IDE: syntax checks, undefined functions, etc.)
 1. Integration tests for more thorough scenarios, taking a few minutes to complete
 
-In the context of Detection Engineering (i.e. _Writing detection rules for a SIEM_), unit-tests would be checking that:
-- The syntax is valid
-- We are not using fields that do not exist
-- The styling guideline is respected
-- There is [no performance trap](https://docs.splunk.com/Documentation/Splunk/8.1.2/Search/Quicktipsforoptimization)
+In the context of Detection Engineering (i.e. _Writing detection rules for a SIEM_):
 
-While integration tests would check that:
-- We are correctly alerting for a True Positive
-- False-Positives are under-control
-- We are not adding a hit to the platform performance
-- We are paying attention to [delayed events](https://opstune.com/2016/12/13/siem-tricks-dealing-with-delayed-events-in-splunk/)
+1. Unit-tests would be checking that:
+  - The syntax is valid
+  - We are not using fields that do not exist
+  - The styling guideline is respected
+  - There is [no performance trap](https://docs.splunk.com/Documentation/Splunk/8.1.2/Search/Quicktipsforoptimization)
+2. While integration tests would check that:
+  - We are correctly alerting for a True Positive
+  - False-Positives are under-control
+  - We are not adding a hit to the platform performance
+  - We are paying attention to [delayed events](https://opstune.com/2016/12/13/siem-tricks-dealing-with-delayed-events-in-splunk/)
 
-Today, this post will start with the unit-testing's part and Splunk will be our platform of choice.
+Today, this post will address only the unit-testing's part, applied to Splunk.
 
 # Step 1, parsing Splunk's Search Processing Language
 
