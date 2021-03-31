@@ -1,19 +1,19 @@
 ---
-date: 2021-03-18
+date: 2021-03-31
 title: Unit-testing the Splunk Processing Language
-description: XXX
+description: In my previous post, I declared my undying love for continuous integration and deployment capabilities applied to Detection Engineering. Now, let's put the theory into practice! Today, this post will address the unit-testing's part, applied to Splunk.
 ---
 
-In my previous post [Githubify the SOC](https://justanothergeek.chdir.org/2020/10/githubify-the-soc/), I declared my undying love to continuous integration and deployment capabilities applied to Detection Engineering. Now, let's put the theory into practice! And maybe the best in class to inspire is Microsoft Azure Sentinel.
+In my previous post [Githubify the SOC](https://justanothergeek.chdir.org/2020/10/githubify-the-soc/), I declared my undying love for continuous integration and deployment capabilities applied to Detection Engineering. Now, let's put the theory into practice! And maybe the best in class to inspire is Microsoft Azure Sentinel.
 
-Have you seen the Github Checks in place for adding rules into [Azure/Azure-Sentinel](https://github.com/Azure/Azure-Sentinel) along their [Azure Sentinel Pipeline](https://dev.azure.com/azure/Azure-Sentinel/_build/results?buildId=20904&view=results) ? 😍
+Have you seen the Github Checks in place for adding rules into [Azure/Azure-Sentinel](https://github.com/Azure/Azure-Sentinel) along their [Azure Sentinel Pipeline](https://dev.azure.com/azure/Azure-Sentinel/_build/results?buildId=20904&view=results)? 😍
 
 That's some kind of serious CI/CD practices! How could we apply the same thing for our on-prem deployment?
 
 # Goals
 
-In a "classic" software shop , developpers rely on two levels of testing:
-1. Unit-tests, usually achieved in a few seconds. Coupled with basic tests for an immediate feedback (similarly to the checks done by your IDE: syntax checks, undefined functions, etc.)
+In a "classic" software shop, developers rely on two levels of testing:
+1. Unit-tests, usually achieved in a few seconds. Coupled with basic tests for immediate feedback (similarly to the checks done by your IDE: syntax checks, undefined functions, etc.)
 1. Integration tests for more thorough scenarios, taking a few minutes to complete
 
 In the context of Detection Engineering (i.e. _Writing detection rules for a SIEM_):
@@ -37,7 +37,7 @@ Splunk's Search Processing Language (aka SPL) is a very powerful and expressive 
 
 The language is very permissive, almost everything is optional: fields separator, usage of quotes, no types (string or integer, nobody cares), positions of arguments, etc.
 
-Initially, early 2020, I expected to have a lot of robust SPL parsers available in the opensource but... nope (well there is a caveat here, follow me).
+Initially, in early 2020, I expected to have a lot of robust SPL parsers available in the opensource but... nope (well there is a caveat here, follow me).
 
 I found two projects:
 - https://github.com/salspaugh/splparser: 
@@ -45,27 +45,27 @@ I found two projects:
 
 ## splparser
 
-Here I am trying [salspaugh/splparser](https://github.com/salspaugh/splparser), developped in 2013, and to add confidence, its README states up-front "_It is capable of parsing 66 of the most common approximately 132 SPL commands_".
+Here I am trying [salspaugh/splparser](https://github.com/salspaugh/splparser), developed in 2013, and to add confidence, its README states up-front "_It is capable of parsing 66 of the most common approximately 132 SPL commands_".
 
-Of course, its Python distribution is broken (quite expected for a project with its last commit 4 years ago) but quickly fixed, I ran it on our dataset of queries and it failed on the first query because of one unsupported function. I had 0️⃣ knowledge of PLY/LEX/YACC and [adding a SPL command looked abysal to me](https://github.com/salspaugh/splparser/commit/8511b66e78c26fddaacc52f630bc41c31df1e989).
+Of course, its Python distribution is broken (quite expected for a project with its last commit 4 years ago) but quickly fixed, I ran it on our dataset of queries and it failed on the first query because of one unsupported function. I had 0️⃣ knowledge of PLY/LEX/YACC and [adding a SPL command looked abyssal to me](https://github.com/salspaugh/splparser/commit/8511b66e78c26fddaacc52f630bc41c31df1e989).
 
 🤬
 
-I rage-quitted, thinking it was a 💩 project and moved one. BIG MISTAKE retrospectively but 🤷‍♂️  sorry @salspaugh to have doubted you. More on that later.
+I rage-quitted, thinking it was a 💩 project, and moved one. BIG MISTAKE retrospectively but 🤷‍♂️  sorry @salspaugh to have doubted you. More on that later.
 
 ## splunk_antlr_spl
 
 [splunk_antlr_spl](https://github.com/ffly1985/splunk_antlr_spl) implements SPL using [ANTLR4](https://github.com/antlr/antlr4), it was clearly incomplete but the experience to modify the ANTLR4 language was soooo nice that I could quickly hack it for my needs and [kept trying](https://github.com/ffly1985/splunk_antlr_spl/compare/master...airbus-cert:master) while reading [The Definitive ANTLR 4 Reference](https://www.amazon.com/dp/1934356999/).
 
-Eventually I had to butchered most of the code to support enough SPL commands to parse our complete dataset. This fork lives in https://github.com/airbus-cert/splunk_antlr_spl
+Eventually, I had to butcher most of the code to support enough SPL commands to parse our complete dataset. This fork lives in https://github.com/airbus-cert/splunk_antlr_spl
 
 It works mostly fine, but it has one big problem: it is unbearingly slow. This is not surprising as I am a total n00b in ANTL4 (or even in the parsing field).
 
-For example, parsing 338 rules takes 20 minutes. (**Update**: *While I was writing those lines, and because I could not accept releasing such crappy tool, I optimized my ANTLR4 syntax to make it faster.*)
+For example, parsing 338 rules takes 20 minutes. (**Update**: *While I was writing those lines, and because I could not accept releasing such crappy tool, [I optimized my ANTLR4 syntax to make it faster](https://github.com/airbus-cert/splunk_antlr_spl/commit/d6ff5e80e2eeb672259db0581b4c4d5599c01a9c).*)
 
-So it was not option to have such slow tests in our CI/CD. This post is also an opportunity for me to do some kind of introspection and see if it was worth doing it, I was curious to see what were the commands missing from [salspaugh/splparser](https://github.com/salspaugh/splparser) to be used in our dataset and... Only three tiny commands are missing 😢
+So it was not an option to have such slow tests in our CI/CD. This post is also an opportunity for me to do some kind of introspection and see if it was worth doing it, I was curious to see what were the commands missing from [salspaugh/splparser](https://github.com/salspaugh/splparser) to be used in our dataset and... Only three tiny commands are missing 😢
 
-On the other hand, the learning curve of ANTLR4 is so smooth that I had my first version in less than 5 days, and I wonder how long it would have take me to learn Lex, Yacc, its PLY integration and the time to implement these 3 commands and create a PR to [salspaugh/splparser](https://github.com/salspaugh/splparser). 🤷
+On the other hand, the learning curve of ANTLR4 is so smooth that I had my first version in less than 5 days, and I wonder how long it would have taken me to learn Lex, Yacc, its PLY integration, and the time to implement these 3 commands and create a PR to [salspaugh/splparser](https://github.com/salspaugh/splparser). 🤷
 
 ## Plan B
 
