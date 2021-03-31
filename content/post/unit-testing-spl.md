@@ -38,7 +38,7 @@ I found two projects:
 
 ## splparser
 
-Here I am trying [splparser](https://github.com/salspaugh/splparser), developped in 2013, and to add confidence, its README states up-front "_It is capable of parsing 66 of the most common approximately 132 SPL commands_".
+Here I am trying [salspaugh/splparser](https://github.com/salspaugh/splparser), developped in 2013, and to add confidence, its README states up-front "_It is capable of parsing 66 of the most common approximately 132 SPL commands_".
 
 Of course, its Python distribution is broken (quite expected for a project with its last commit 4 years ago) but quickly fixed, I ran it on our dataset of queries and it failed on the first query because of one unsupported function. I had 0️⃣ knowledge of PLY/LEX/YACC and [adding a SPL command looked abysal to me](https://github.com/salspaugh/splparser/commit/8511b66e78c26fddaacc52f630bc41c31df1e989).
 
@@ -52,15 +52,29 @@ I rage-quitted, thinking it was a 💩 project and moved one. BIG MISTAKE retros
 
 Eventually I had to butchered most of the code to support enough SPL commands to parse our complete dataset. This fork lives in https://github.com/airbus-cert/splunk_antlr_spl
 
-It works mostly fine, but it has one big problem: it is unbearingly slow. This is not surprising as I am a total n00b in ANTL4 (or even parsing).
+It works mostly fine, but it has one big problem: it is unbearingly slow. This is not surprising as I am a total n00b in ANTL4 (or even in the parsing field).
 
-For example, parsing 338 rules takes 20 minutes.
+For example, parsing 338 rules takes 20 minutes. (**Update**: *While I was writing those lines, and because I could not accept releasing such crappy tool, I optimized my ANTLR4 syntax to make it faster.*)
 
-##
+So it was not option to have such slow tests in our CI/CD. This post is also an opportunity for me to do some kind of introspection and see if it was worth doing it, I was curious to see what were the commands missing from [salspaugh/splparser](https://github.com/salspaugh/splparser) to be used in our dataset and... Only three tiny commands are missing 😢
+
+On the other hand, the learning curve of ANTLR4 is so smooth that I had my first version in less than 5 days, and I wonder how long it would have take me to learn Lex, Yacc, its PLY integration and the time to implement these 3 commands and create a PR to [salspaugh/splparser](https://github.com/salspaugh/splparser). 🤷
+
+## Plan B
+
+When there is no perfect solution satisfying all constraints, it is time to workaround with hackish solutions.
+
+And the grossest, but quickest, way to do some basic checks is to use regular expressions all the way around. As an example, I shared an example of our setup on Twitter:
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Thanks, we added this unit test to our CI/CD and... it was much needed indeed 😅 <a href="https://t.co/4dI2rTebLV">pic.twitter.com/4dI2rTebLV</a></p>&mdash; Nicolas Bareil (@nbareil) <a href="https://twitter.com/nbareil/status/1364142702372257792?ref_src=twsrc%5Etfw">February 23, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+As a take away, here is gist of an extract from our code base: [test_statically_spl.py](https://gist.github.com/nbareil/452845cc310557caa6e19a0379dc4ed5#file-test_statically_spl-py)
 
 # Step 2: Now what?
 
+This Twitter discussion re-ignited my desire to level up our SPL parsing and I recently discovered a new project, [kotlaluk/spl-parser](https://github.com/kotlaluk/spl-parser).
 
+This time, Lukáš relies on an official Splunk feature: [`splunk btool` can generate the search and datatypes BNF, no need to reinvent the wheel in fact!](https://community.splunk.com/t5/Archive/Splunk-Query-Grammar/m-p/425022#M75397). Such epiphany!
 
   
 
