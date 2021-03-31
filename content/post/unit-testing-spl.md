@@ -4,7 +4,11 @@ title: Unit-testing the Splunk Processing Language
 description: XXX
 ---
 
-In my previous post [Githubify the SOC](https://justanothergeek.chdir.org/2020/10/githubify-the-soc/), I declared my undying love to continuous integration and deployment capabilities applied to Detection Engineering. Now, let's put the theory into practice!
+In my previous post [Githubify the SOC](https://justanothergeek.chdir.org/2020/10/githubify-the-soc/), I declared my undying love to continuous integration and deployment capabilities applied to Detection Engineering. Now, let's put the theory into practice! And maybe the best in class to inspire is Microsoft Azure Sentinel.
+
+Have you seen the Github Checks in place for adding rules into [Azure/Azure-Sentinel](https://github.com/Azure/Azure-Sentinel) along their [Azure Sentinel Pipeline](https://dev.azure.com/azure/Azure-Sentinel/_build/results?buildId=20904&view=results) ? 😍
+
+That's some kind of serious CI/CD practices! How could we apply the same thing for our on-prem deployment?
 
 # Goals
 
@@ -68,22 +72,15 @@ And the grossest, but quickest, way to do some basic checks is to use regular ex
 
 <blockquote class="twitter-tweet"><p lang="en" dir="ltr">Thanks, we added this unit test to our CI/CD and... it was much needed indeed 😅 <a href="https://t.co/4dI2rTebLV">pic.twitter.com/4dI2rTebLV</a></p>&mdash; Nicolas Bareil (@nbareil) <a href="https://twitter.com/nbareil/status/1364142702372257792?ref_src=twsrc%5Etfw">February 23, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-As a take away, here is gist of an extract from our code base: [test_statically_spl.py](https://gist.github.com/nbareil/452845cc310557caa6e19a0379dc4ed5#file-test_statically_spl-py)
-
-# Step 2: Now what?
+As a take away, here is an extract from our code base: [test_statically_spl.py](https://gist.github.com/nbareil/452845cc310557caa6e19a0379dc4ed5#file-test_statically_spl-py)
 
 This Twitter discussion re-ignited my desire to level up our SPL parsing and I recently discovered a new project, [kotlaluk/spl-parser](https://github.com/kotlaluk/spl-parser).
 
-This time, Lukáš relies on an official Splunk feature: [`splunk btool` can generate the search and datatypes BNF, no need to reinvent the wheel in fact!](https://community.splunk.com/t5/Archive/Splunk-Query-Grammar/m-p/425022#M75397). Such epiphany!
+This time, the project relies on an official Splunk feature, [`splunk btool` can generate the search and datatypes BNF, no need to reinvent the wheel in fact!](https://community.splunk.com/t5/Archive/Splunk-Query-Grammar/m-p/425022#M75397). Such epiphany!
 
-  
+Thanks to Lukáš's work ([pseudo_bnf.lark](https://github.com/kotlaluk/spl-parser/blob/master/spl_parser/grammars/pseudo_bnf.lark)), it is possible to use a generic parser like [lark](https://github.com/lark-parser/lark) to achieve what we want to do.
 
+# Step 2: Now what?
 
 
 # The goal
-
-Have you seen the Github Checks in place for adding rules in [Azure/Azure-Sentinel](https://github.com/Azure/Azure-Sentinel)? 😍
-
-![image](https://user-images.githubusercontent.com/115087/111625753-826b4880-87ed-11eb-9c51-5ae142aaa68e.png)
-
-Their [Azure Sentinel Pipeline](https://dev.azure.com/azure/Azure-Sentinel/_build/results?buildId=20904&view=results)
