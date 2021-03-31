@@ -1,5 +1,5 @@
 ---
-date: 2021-03-31
+date: 2021-04-01
 title: Unit-testing the Splunk Processing Language
 description: In my previous post, I declared my undying love for continuous integration and deployment capabilities applied to Detection Engineering. Now, let's put the theory into practice! Today, this post will address the unit-testing's part, applied to Splunk.
 ---
