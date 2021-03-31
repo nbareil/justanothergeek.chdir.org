@@ -12,13 +12,15 @@ That's some kind of serious CI/CD practices! How could we apply the same thing f
 
 # Goals
 
-The first goal is to be sure SIEM queries "compile", ideally, we would be checking that:
+In a "classic" software shop , developpers rely on two levels of testing:
+1. Unit-tests, usually achieved in a few seconds. Coupled with basic tests for an immediate feedback (similarly to the checks done by your IDE: syntax checks, undefined functions, etc.)
+1. Integration tests for more thorough scenarios, taking a few minutes to complete
+
+In the context of Detection Engineering (i.e. _Writing detection rules for a SIEM_), unit-tests would be checking that:
 - The syntax is valid
 - We are not using fields that do not exist
 - The styling guideline is respected
 - There is [no performance trap](https://docs.splunk.com/Documentation/Splunk/8.1.2/Search/Quicktipsforoptimization)
-
-That's the equivalent of unit-tests in Software Engineering: by using statical analysis, these tests would run at a blazing speed and offer an instantaneous feedback loop to the developpers. 
 
 While integration tests would check that:
 - We are correctly alerting for a True Positive
@@ -26,7 +28,7 @@ While integration tests would check that:
 - We are not adding a hit to the platform performance
 - We are paying attention to [delayed events](https://opstune.com/2016/12/13/siem-tricks-dealing-with-delayed-events-in-splunk/)
 
-Today, this post will start with the unit-testing's part and I will choose Splunk as the platform of choice.
+Today, this post will start with the unit-testing's part and Splunk will be our platform of choice.
 
 # Step 1, parsing Splunk's Search Processing Language
 
@@ -82,5 +84,6 @@ Thanks to Lukáš's work ([pseudo_bnf.lark](https://github.com/kotlaluk/spl-pars
 
 # Step 2: Now what?
 
+Now that we have a parsing engine, we need to take a step back and write a high-level library that will abstract the details of the low-level parsing and expose only the "big picture".
 
-# The goal
+Stay tuned.
