@@ -81,10 +81,10 @@ This Twitter discussion re-ignited my desire to level up our SPL parsing and I r
 
 This time, the project relies on an official Splunk feature, [`splunk btool` can generate the search and datatypes BNF, no need to reinvent the wheel in fact!](https://community.splunk.com/t5/Archive/Splunk-Query-Grammar/m-p/425022#M75397). Such epiphany!
 
-Thanks to Lukáš's work ([pseudo_bnf.lark](https://github.com/kotlaluk/spl-parser/blob/master/spl_parser/grammars/pseudo_bnf.lark)), it is possible to use a generic parser like [lark](https://github.com/lark-parser/lark) to achieve what we want to do.
+Thanks to Lukáš's finding, there may be a way to leverage the Splunk's EBNF... 🤔
 
 # Step 2: Now what?
 
-Now that we have a parsing engine, we need to take a step back and write a high-level library that will abstract the details of the low-level parsing and expose only the "big picture".
+Once we will have a parsing engine, we need to take a step back and write a high-level library that will abstract the details of the low-level parsing and expose only the "big picture".
 
 Stay tuned.
