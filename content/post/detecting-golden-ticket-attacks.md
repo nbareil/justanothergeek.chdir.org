@@ -137,6 +137,7 @@ for user in logged_users:
 A blind spot may occur under the following circumstances:
 - If the attacker is connecting to a server older than Windows 10 and 2016 (because Event 4627 is not available).
 - The attacker may use NTLM to authenticate (This is offtopic as this would not be a Golden Ticket attack)
+- If both the attacker and the real user are using the account the same day (the real user will ask legitimately a TGT)
 
 ### Assumption
 
