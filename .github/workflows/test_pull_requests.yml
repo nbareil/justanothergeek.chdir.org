@@ -11,9 +11,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - name: Check that there are not XXX leftovers
-      run: "if find content/ -name '*.md' -type f -print0 | xargs -0 fgrep  -q XXX; then exit 0 ; else exit 1;fi"
-
     - name: hugo
       uses: klakegg/actions-hugo@1.0.0
       
