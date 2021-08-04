@@ -20,7 +20,7 @@ I don't regret my move. What did I do? Simple, I'm just using dedicated
 browser profiles for each task:\
 \
 -   The most sensitive: the one I use **only** for my mail account and
-    nothing else. I even think to use the [clever proxy hacks mentionned
+    nothing else. I even think to use the [clever proxy hacks mentioned
     by Chris
     Evans](http://scarybeastsecurity.blogspot.com/2011/04/fiddling-with-chromiums-new-certificate.html) to
     only authorized outbound connections to my mail provider. I didn't

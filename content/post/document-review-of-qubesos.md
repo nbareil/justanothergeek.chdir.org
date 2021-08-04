@@ -75,7 +75,7 @@ solution they chose is Xen. They explain why they chose Xen instead of
 KVM in their architecture guide.
 
 Thanks to the Xen hypervisor, each AppVM is isolated and cannot have
-access to other ressources than its own.
+access to other resources than its own.
 
 ### Architecture
 
@@ -101,7 +101,7 @@ access to other ressources than its own.
     same hardware resource so a vulnerability in Xorg would impact other
     Xorg servers.
 
-    The innovation of Qubes OS is to not use any of theses methods. Each
+    The innovation of Qubes OS is to not use any of these methods. Each
     AppVM runs a Xorg instance (with a "dummy graphic driver", which I
     guess is not tied to any hardware device) and a *AppVM Window
     Manager*.
@@ -120,7 +120,7 @@ access to other ressources than its own.
 
     When an *AppViewer* receives a *content refresh* notification, it
     requests to the *AppVM Window Manager* its *composition buffer* (the
-    bitmap of the window content in other words). It receives theses
+    bitmap of the window content in other words). It receives these
     bytes from the ring buffer and displays it on the screen.
 
     The optimization, which is still being investigate, is to ask the
@@ -193,7 +193,7 @@ persistent files are encrypted so an attacker would be disappointed :)
 Most of the remote vulnerabilities found in the Linux kernel have been
 discovered in device drivers like network adapters. Because any bug
 found in the kernel puts in danger the whole system, it would be great
-to find a way to isolate theses drivers.
+to find a way to isolate these drivers.
 
 Thanks to recent CPU features, it is now possible to do such thing:
 Intel VT-d technology permits to safely give to a virtual machine access

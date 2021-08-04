@@ -30,7 +30,7 @@ mail.
     paths:
     -   `constify_plugin.c` enforces read-onlintroduces new constraints
         (`__do_const` and `__no_const`) enforcing read-only permissions
-        at compilation-time and run-time. PaX then makes usage of theses
+        at compilation-time and run-time. PaX then makes usage of these
         new constraints by patching most of the “ops structures”. The
         plugin also automatically protects structures where all members
         are function pointers, this patching on-the-fly is required
@@ -91,7 +91,7 @@ mail.
     different approach by removing Suid binaries from its base install,
     thus preventing execve’s voodoo. This change is just a line in Owl’s
     changelog but is in fact a major achievement: it required them to
-    re-architecture important softwares like crontab or [user management
+    re-architecture important software like crontab or [user management
     tools](http://www.openwall.com/tcb/).\
     `/bin/ping` is setuid-root because it opens a raw socket and injects
     its packet on the wire directly. [A new socket type, `PROT_ICMP`,

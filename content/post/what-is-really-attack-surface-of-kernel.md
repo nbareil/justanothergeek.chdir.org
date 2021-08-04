@@ -37,6 +37,6 @@ In other words, if you are running a pure 32 bits environment, our
 initial intuition was almost good with two bugs so far (in 2004 and
 2006). However, on AMD64, I wouldn't bet.\
 \
-**Disclaimer**: Off course, theses numbers are meaningless because of
-the [non-disclosure policy of the kernel's developpers](http://lwn.net/Articles/400141/).
+**Disclaimer**: Off course, these numbers are meaningless because of
+the [non-disclosure policy of the kernel's developers](http://lwn.net/Articles/400141/).
 

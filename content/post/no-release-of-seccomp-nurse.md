@@ -28,7 +28,7 @@ an advanced proof of concept). Quick links:
 
 \
 [seccomp-nurse](http://github.com/nbareil/seccomp-nurse/) is a generic
-sandbox environnement for Linux, which doesn't require any
+sandbox environment for Linux, which doesn't require any
 recompilation. Its purpose is to run legit applications in hostile
 environment, I repeat, it is not designed to run malicious binary.\
 \
@@ -73,7 +73,7 @@ security of the system relies on it.\
 \
 This routine is completely dummy and has no intelligence at all,
 everything is done in the trusted process, the trustee understands only
-theses commands:\
+these commands:\
 -   Execute this syscall
 -   Raise a SIGTRAP (for debugging purpose)
 -   Native exit

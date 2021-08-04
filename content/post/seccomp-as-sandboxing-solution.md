@@ -27,10 +27,10 @@ memory.
 
 SECCOMP is the perfect solution for a sandbox because the kernel attack
 surface is really small! For the record, in the whole kernel security
-history, no vulnerability was ever found in theses syscalls.
+history, no vulnerability was ever found in these syscalls.
 
 The downside of this feature is its limitation! Once in SECCOMP mode, it
-is impossible to do anything except some arithmetics. Another SECCOMP
+is impossible to do anything except some arithmetic. Another SECCOMP
 problem is that the action of entering in SECCOMP mode is voluntary: the
 program needs to issue itself a `prctl()` call with appropriate
 arguments: that means the application needs to be developed
@@ -206,7 +206,7 @@ In order to intercept (legit) sycalls, we need to intercept the previous
 stored at the address `%gs:0x10` and redirect the process to our own
 function.
 
-This what we do immediatly after turning on SECCOMP:
+This what we do immediately after turning on SECCOMP:
 
     static void hijack_vdso_gate(void) {
             asm("mov %%gs:0x10, %%ebx\n"

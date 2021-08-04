@@ -38,7 +38,7 @@ milder field : the kernel.
 In 2009, Tavis Ormandy and [Julien Tinnes](http://www.cr0.org/) made a
 lot of noise with their *NULL pointer dereference* vulnerabilities.\
 Pro-active measures were developed to mitigate this kind of bug but the
-play of the cat and mouse never stopped to to bypass theses protections.
+play of the cat and mouse never stopped to to bypass these protections.
 
 Bypassing of `mmap_min_addr`
 ----------------------------
@@ -59,7 +59,7 @@ with ~~two~~ one technique~~s~~:
     kernel space. This is done by `access_ok()` with a simple comparison
     of the address against a limit.\
     Sometimes, the kernel needs to use function normally designed to be
-    called by userspace, and as such, theses functions checks the
+    called by userspace, and as such, these functions checks the
     provenance of the pointer... which is embarrassing because the
     kernel only provides kernel pointers.\
     So the kernel goes evil and cheats by manipulating the boundary via
@@ -143,7 +143,7 @@ instructions accessing the array.
 This kind of bug [was already demonstrated dangerous in
 userland](https://www.blackhat.com/presentations/bh-europe-06/bh-eu-06-Flake.pdf)
 and this is even worse in kernel land!\
-However, motivating kernel developers to fix theses issues was not the
+However, motivating kernel developers to fix these issues was not the
 easy part for some of them. For instance, the [netdev maintainer's
 scepticism](http://thread.gmane.org/gmane.linux.network/177506/focus=177549)
 lead Dan Rosenberg to make a [blistering
@@ -207,7 +207,7 @@ Proactive security
 ------------------
 
 A lot of contributions were made to the kernel to improve its security
-proactively. Theses works try to make kernel exploitation more
+proactively. These works try to make kernel exploitation more
 cumbersome, because frankly, we have to admit that the relative easiness
 to exploit a NULL pointer dereference is embarrassing :)
 
@@ -224,25 +224,25 @@ us how expensive it becomes to exploit a given vulnerability. This is
 what we keep saying: there will always a vulnerability somewhere in our
 system, so our only option is to try to make its exploitation insane.
 
-But let's see what are theses proactive measures...
+But let's see what are these proactive measures...
 
 ### Permission hardening
 
 Brad Spengler, author of [grsecurity](http://grsecurity.net/), has long
 been vocal on the fact that too much information were leaked to user
 land. In consequence, grsec includes a lot of restrictions to prevent
-theses information leaks. But what are we talking about?
+these information leaks. But what are we talking about?
 
 `/proc`, `/sys` and `/debug` pseudo-filesystems contain files revealing
 kernel addresses, statistics, memory mapping, etc.\
-Except in debugging session, theses information are totally useless and
-meaningless. Nevertheless, most of theses files are world readable by
+Except in debugging session, these information are totally useless and
+meaningless. Nevertheless, most of these files are world readable by
 default. This is godsend if you are an attacker: no need to bruteforce
 kernel addresses (and we know that bruteforcing this kind of thing in
 kernel land is never a good idea)!
 
 Dan Rosenberg and Kees Cook (of the Ubuntu security team) worked hard to
-merge theses restrictions into the official upstream tree:
+merge these restrictions into the official upstream tree:
 
 -   [`dmesg_restrict`](http://news.gmane.org/find-root.php?message_id=%3c1289273338.6287.128.camel%40dan%3e):
     access to kernel log buffer (used by `dmesg(8)`) now require
@@ -250,7 +250,7 @@ merge theses restrictions into the official upstream tree:
 -   Removal of addresses in
     [`/proc/timer_list`](http://permalink.gmane.org/gmane.linux.kernel/1064008),
     [`/proc/kallsyms`](http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commit;h=59365d136d205cc20fe666ca7f89b1c5001b0d5a), etc.
-    Upstream developers tried hard to not merge theses patches thinking
+    Upstream developers tried hard to not merge these patches thinking
     it was useless (because addresses are also readable in
     `/boot/System.map`) and above all, it would greatly complicate the
     work of maintainers reading bug report. That is why [netdev
@@ -262,7 +262,7 @@ merge theses restrictions into the official upstream tree:
         the ABI and thus a lot of scripts, it was proposed to replaced
         them by a dummy value (`0x000000`) if the reader
         was unprivileged.
-    -   Changing access permissions to theses files, this "simple"
+    -   Changing access permissions to these files, this "simple"
         change had a [nasty effect on an ancient version of klogd
         causing the machine to not boot
         anymore](http://git.kernel.org/?p=linux/kernel/git/torvalds/linux-2.6.git;a=commitdiff;h=33e0d57f5d2f079104611be9f3fccc27ef2c6b24).
@@ -299,7 +299,7 @@ now done in user space: data shall not be executable, code shall be
 read-only, etc.
 
 This is still a work in progress, but developers try to [remediate
-theses issues](http://thread.gmane.org/gmane.linux.kernel/1058823). To
+these issues](http://thread.gmane.org/gmane.linux.kernel/1058823). To
 be successful, a few actions are needed:
 
 -   [Really use hardware permission for the `.ro.data`
@@ -394,7 +394,7 @@ resort" because TCP options carried by the first SYN packet were lost
 since the kernel was not saving it (congestion bit, *window scaling* or
 *selective acknowledgement*).
 
-This is not true anymore: [the kernel now codes theses
+This is not true anymore: [the kernel now codes these
 information](http://git.kernel.org/?s=4dfc2817025965a2fc78a18c50f540736a6b5c24)
 into the 9 lower bits of the TCP Timestamp's SYN-ACK option when
 replying.\
@@ -431,7 +431,7 @@ Conclusion
 
 A lot of good things happened in the Linux kernel last year thanks to
 the people cited in this post. Moreover, it is interesting to see that
-most of theses features have been written by security researchers and
+most of these features have been written by security researchers and
 not "upstream kernel developer" (except Ingo Molnar who proved a lot of
 good will each time).\
 This may be the explanation why each patch merged was the fruit of
@@ -447,11 +447,11 @@ vulnerability is found.\
 Anyway, this is only the opinion of a guy involved in the [security
 circus](http://article.gmane.org/gmane.linux.kernel/706950)...
 
-However, we can still be happy to see theses changes finally merged. And
+However, we can still be happy to see these changes finally merged. And
 with some luck, we can hope that someday, `mmap_min_addr` will not be
 bypassable... And that proactive features will require researchers to
 combine multiple vulnerabilities to exploit one flaw.\
-I don't say that there will be no more bugs, perish the throught, but I
+I don't say that there will be no more bugs, perish the thought, but I
 hope that the exploitation cost will be so high that only a tiny
 fraction of attacker will be able to do it.\
 At this point, security researchers will have to dive into "logic bugs",

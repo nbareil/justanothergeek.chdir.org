@@ -4,7 +4,7 @@ categories:
  - ssh
 date: "2011-07-06T14:34:00Z"
 title: HOWTO authenticate ssh server through certificates
-description: This is a HOWTO use ssh CA mecanism to authenticate servers.
+description: This is a HOWTO use ssh CA mechanism to authenticate servers.
 ---
 
 In August 2010, OpenSSH 5.6 added support for certificate authentication

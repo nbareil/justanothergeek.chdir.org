@@ -71,7 +71,7 @@ implemented in [PR #9](https://github.com/Northern-Lights/yara-parser/pull/9).
 
 To channel the creativity of rules authors regarding their use of meta
 variables, tags or filename, we implemented Python tests (using plyara!) in
-our TravisCI environement. That way, consistency tests are ran for each push or pull
+our TravisCI environment. That way, consistency tests are ran for each push or pull
 request to our main Git repository.
 
 They can also be set as an enforcing gate (i.e. if the tests fail, no merge) but

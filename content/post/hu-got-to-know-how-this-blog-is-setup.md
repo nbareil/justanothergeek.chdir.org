@@ -49,7 +49,7 @@ When there is a push on the master branch, it builds  the HTML pages and uploads
 
 <script src="https://gist.github.com/nbareil/4f32f2e331aa6f8f96becf46d00421bd.js?file=deploy-master.yml"></script>
 
-It takes approximatively 50 seconds between the `git push` and its rendering on the website.
+It takes approximately 50 seconds between the `git push` and its rendering on the website.
 
 # Terraform
 
