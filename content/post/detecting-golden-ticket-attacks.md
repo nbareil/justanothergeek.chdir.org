@@ -119,11 +119,17 @@ So we have a list of sensitive connections, now we want to check that a TGT was 
 
 ```
 no_tgt = set()
-logged_users = set(df['TargetUserName']) # df is the result of the SPL before
 for user in logged_users:
     spl = f'search index=*winevent* 4768 EventID=4768 {user} TargetUserName="{user}"'
     spl += f''
-    df = certpy.siem.session.search_df(spl, days=1)
+    # Get the first connection timestamp
+    first = df_group_ms[df_group_ms['TargetUserName'] == user].sort_values("_time", ascending=False).head(1)
+    since = pd.to_datetime(first.iloc[0].get("_time"), utc=True)
+    # This means that if a TGT was issued, it was in the 10 previous hours (by default)
+    oldest = since - datetime.timedelta(hours=10)
+    newest = since
+    #print(f"oldest={oldest} newest={newest}")
+    df = certpy.siem.session.search_df(spl, start_time=oldest, end_time=newest)
     if df.size == 0:
         sys.stderr.write(f"ALERT on {user}, no TGT was requested\n")
         no_tgt.add(user)
