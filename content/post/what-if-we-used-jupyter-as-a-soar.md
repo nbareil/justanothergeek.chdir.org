@@ -52,7 +52,7 @@ This way of working is also a forcing function to implement as much Python as po
 
 # Conclusion
 
-**Full disclosure**: [I will not lie](https://twitter.com/lizthegrey/status/1456130255198953482), this is not running in production even though everything is :100: functional. Why? Moving to this architecture is a massive change of paradigm to the current teams (60+ people), and making the move would require a lot more investment in the current toolings.
+**Full disclosure**: *[I will not lie](https://twitter.com/lizthegrey/status/1456130255198953482), this is not running in production even though everything is :100: functional. Why? Moving to this architecture is a massive change of paradigm to the current teams (60+ people), and making the move would require a lot more investment in the current toolings.*
 
 I truly believe in this solution, it is simple and elegant without twisting each of these tools. Furthermore, it doesn't require a heck of a platform stack: install JupyterHub and you are good to start!
 
