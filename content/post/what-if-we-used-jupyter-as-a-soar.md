@@ -1,7 +1,7 @@
 ---
 date: 2021-11-12
 title: What if we used Jupyter as a SOAR?
-description: 
+description: Would it be crazy to use JupyterHub as a Workbench? Could it replace a SOAR?
 ---
 
 Today, rightfully, [all the rage is on XDR and the broken promises of SOAR](https://twitter.com/anton_chuvakin/status/1458563366025265153) and I fully support that feeling: your mileage may vary but, from my experience, developing something sustainable within a SOAR is an endeavor:
