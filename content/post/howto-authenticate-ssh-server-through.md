@@ -17,7 +17,7 @@ awesome for system administrators, even for a small deployment.
 
 Certificates allow you to sign user or host keys. In other words:
 - Thanks to a unique file (CA certificate) on the server, it can accept any (signed) user keys transparently
-- If every servers' host keys are signed, clients only need to carry the CA to authenticate every servers of your network, which means no more "The authenticity of host foobar can't be established. Fingerprint is..." message
+- If every servers' host keys are signed, clients only need to carry the CA to authenticate every servers of your network, which means no more "*The authenticity of host foobar can't be established. Fingerprint is...*" message
 
 Here is the HOWTO for the latter case.
 
