@@ -3,7 +3,7 @@ categories:
  - til
 date: 2022-12-16T15:27:21.270328
 title: HOWTO build a robust CLI application using Cookiecutter, click and Nix
-description:  XXX
+description:  TIL how to build a CLI tool that won't break at next upgrade
 ---
 
 
