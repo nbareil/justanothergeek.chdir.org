@@ -11,7 +11,7 @@ I don't know about you but usually, when I develop a quick&dirty tool, I usually
 from scratch in in my `~/projects` folder and then I create a symbolic link within one of my
 `$PATH` entries.
 
-Eventually, it will stop working because of broken dependancies, repository renamed or 
+Eventually, it will stop working because of broken dependencies, repository renamed or
 worst case: Migrating to a new workstation without bulk importing my `$HOME` folder.
 
 Today, I needed to create [a new tool](https://github.com/nbareil/til-manager) and resisted
@@ -23,8 +23,8 @@ And the reality is that I had never invested having "*something that works*".
 
 To make it worked, I did three things:
 - I finally took the time to learn the minimum vital about [setuptools](https://setuptools.pypa.io/en/latest/) and deploying console applications.
-- I [created a cookiecutter template](https://github.com/nbareil/cookiecutter-py-cli) that includes most of the usual suspects (and the new setuptool's skill I learned today). 
-  <br /> 
+- I [created a cookiecutter template](https://github.com/nbareil/cookiecutter-py-cli) that includes most of the usual suspects (and the new setuptool's skill I learned today).
+  <br />
   From now on, when I want to create a new Python CLI tool, it boils down to:
   ```
   $ cd ~/projects/
@@ -74,7 +74,7 @@ To make it worked, I did three things:
     ];
   }
 
-And voila! I now have a functionnal and sustainable system: I am guaranteed
+And voila! I now have a functional and sustainable system: I am guaranteed
 that everything will work on the long term: Dependencies will never be broken,
 the CLI tool will always be within my `$PATH` folders as any other application.
 
