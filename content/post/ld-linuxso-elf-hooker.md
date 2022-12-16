@@ -47,7 +47,7 @@ auxv). At this point, main()'s program is eventually executed.</span>\
 <span style="font-family: inherit;">\
 </span>\
 <span style="font-family: inherit;">Our goal was to permit the execution
-of code for abitrary dynamically linked binary without patching each of
+of code for arbitrary dynamically linked binary without patching each of
 them. So our interest moved on <span
 style="background-color: transparent;">the loader, the common point
 between most executables. Thus, we decided to patch a normal ld in order

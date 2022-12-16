@@ -361,7 +361,7 @@ On i386, this is easily done by using segmentation logic. But on AMD64,
 this stays a (dirty) hack by moving the user space zone at another place
 and change its permissions.
 
-The problem is that we just shift the issue: now, instead of deferencing
+The problem is that we just shift the issue: now, instead of dereferencing
 a null pointer, attacker now has to influence the kernel to dereference
 another address, but as pageexec said, if we are at this point, this
 should the last of our concern :)\
