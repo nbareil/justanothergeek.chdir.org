@@ -63,7 +63,7 @@ On the endpoint that made the request:
 		1. Review the result of `autoruns` and review the most recently updated entries.
 		1. Perform an AV full-scan (or better, a Yara disk scan)
 		1. If the initial domain name/IP address was known in VirusTotal to be associated with a specific malware family, apply this knowledge to the possible artefacts on the systems
-		1. Collect all .evtx and apply [Chainsaw](https://github.com/WithSecureLabs/chainsaw) with the public [Sigma](https://github.com/SigmaHQ/sigma) ruleset
+		1. Collect all .evtx and apply [Chainsaw](https://github.com/WithSecureLabs/chainsaw) with your own Sigma ruleset
 1. Review all AV and SOC detections in the past 30 days
 
 
