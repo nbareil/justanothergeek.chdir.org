@@ -60,7 +60,7 @@ that means that if a process has two threads, one can be sandboxed
 (which will be called untrustee) and the other (called trustee) is free
 to do whatever it wants, furthermore, if threads share everything, any
 action done in one thread has an impact on the other. This is pretty
-cool! But so dangereous!\
+cool! But so dangerous!\
 \
 Indeed, everything is shared, only the CPU registers are not shared
 between threads, that's all! The trustee must consider its environment
