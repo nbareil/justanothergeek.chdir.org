@@ -173,7 +173,7 @@ by Stephen Kuenzli to get a grasp on it.
 
 There are (at least?) two ways to authenticate in IAM:
 - *Instance profiles*: You assign a role to an EC2 instance or Lambda
-  implicitely, everything is handled under the hood by AWS and you don't need
+  implicitly, everything is handled under the hood by AWS and you don't need
   to handle API keys and so on.
 - Explicit API keys: You create a user, assign a role to it and generate an API
   key/id. Finally, you put that credentials into a "secret" file on your disk and
