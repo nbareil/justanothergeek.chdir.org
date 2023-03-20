@@ -19,18 +19,18 @@ Credit: https://twitter.com/chrissanders88/status/1628050893315899393
 - Who dropped that executable?
 - How was this executable dropped?
 - Who is responsible for the execution of this file?
-- Any different of handling with AWS context?
+- Any difference in handling with AWS context?
 
 ### What is this executable?
 
 When I read SQLServer, I think automatically of Microsoft SQL Server. However,
-the official binary name is `SQLSERVR.EXE` (pay attention at the missing `E`)
+the official binary name is `SQLSERVR.EXE` (pay attention to the missing `E`)
 so it may be an attempt to masquerade a piece of malware... Or can it be a
-legitimate binary from an barely known company?
+legitimate binary from a barely known company?
 
 #### Curiosity time
 
-It would not change the course of investigation, but first, I was curious to
+It would not change the course of the investigation, but first, I was curious to
 see if there was any tool signed with an "*Original Name*" of `sqlserver.exe`.
 
 We are lucky enough to have a kind of copy of VirusTotal's metadata in Splunk, let's query it:
@@ -80,12 +80,12 @@ Both executables are from Unisys Corporation:
 
 So the conclusion is that unless we are actively working on with Unisys, or
 unless the server is linked to a development environment, this executable is
-worrysome.
+worrisome.
 
 #### Hash reputation
 
-If we have the hashes of this file from the initial alert, or from any
-telemetry means like Sysmon EventID 1, native EventID 4688 or from the EDR, we
+If we have the hashes of this file from the initial alert, or any
+telemetry means like Sysmon EventID 1, native EventID 4688, or from the EDR, we
 apply the [Triage Executable routine](/2023/03/Investigation-scenario-No-User-Agent-in-the-proxy-logs#triage-executable).
 
 
@@ -112,16 +112,15 @@ information can be gathered by:
   downloaded from Internet
 - MFT creation times and owner
 
-### What if it was coming from the webserver?
+### What if it was coming from the web server?
 
-As we know that a webserver is running, possibly over Internet, it is possible
+As we know that a web server is running, possibly over the Internet, it is possible
 that the executable was created following the exploitation of a vulnerable Web
 application:
 - Spot HTTP requests in the Apache/IIS logs with a `bytes_in` in the range of
   the executable's file size
 - Filter out IP addresses using GreyNoise to remove the Internet noise
-  - Stack the target URL and see if any rarely used resource is accessed by a
-    limited number of IP addresses
+  - Stack the target URL and see if any rarely used resource is accessed by a limited number of IP addresses
 
 ### Investigation fallback
 
@@ -155,13 +154,13 @@ Now that we have a good understanding of what happened to this single machine,
 we have to care about the surrounding environment, AWS.
 
 ## AWS Context
-### Exposed to Internet
+### Exposed to the Internet
 
 If the EC2 instance is on an Internet-enabled VPC, and if we assume the server
 was compromised, it will be worth hunting for any Webshell deployed on the
 host.
 
-One of the most relevant resource in this endeavor is to use the "[Mitigating Web
+One of the most relevant resources in this endeavor is to use the "[Mitigating Web
 Shells](https://github.com/nsacyber/Mitigating-Web-Shells)" strategy defined by
 the NSA and ASD teams: They describe Yara rules as well as detection heuristics.
 
@@ -177,13 +176,13 @@ There are (at least?) two ways to authenticate in IAM:
   to handle API keys and so on.
 - Explicit API keys: You create a user, assign a role to it and generate an API
   key/id. Finally, you put that credentials into a "secret" file on your disk and
-  this is where attackers may have an interest stealing them to move laterally.
+  this is where attackers may have an interest in stealing them to move laterally.
 
 
 #### Instance profile
 
 To get the role policy for this host, we need to understand that:
-1. An EC2 instance is associated to an instance profile
+1. An EC2 instance is associated with an instance profile
 1. An instance profile is linked to a role
 1. A role is linked to a policy
 1. The policy registers what the role is allowed to do
@@ -279,7 +278,7 @@ Using AWS CloudTrail logs, we review all API calls from the IP address of the
 victim EC2.
 
 For each new credential discovered, we review the role policy for each of them
-like we did in the previous section to see the possible extend of the
+like we did in the previous section to see the possible extent of the
 compromission.
 
 ### Lateral movement
