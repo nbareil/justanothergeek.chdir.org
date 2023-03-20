@@ -18,16 +18,16 @@ Credit: https://twitter.com/chrissanders88/status/1630581503506935811
 
 In my experience, HTTP requests without User-Agent are **very very** frequent on a Corporate network (like more than 20% of the global traffic, YMMV), I will act like it is not the case :)
 
-I would split the actions in these steps:
+I would split the actions into these steps:
 1. Situational Awareness
 1. Focus on the destination domain name/IP address
 1. Pivot on the domain name in the logs
-1. Investigate on the endpoint
+1. Investigate the endpoint
 
 ### Situational Awareness
 
-1. To have a sense of urgency in processing this alert, **how often does this behaviour happen?**
-	1. how many hosts and users share the same behaviour?
+1. To have a sense of urgency in processing this alert, **how often does this behavior happen?**
+	1. how many hosts and users share the same behavior?
 1. **Get a vague timeline**: When did this behaviour start/end?
 
 ### Focus on the destination domain name and IP address
@@ -38,18 +38,18 @@ Perform a reputation check on the contacted Domain name or IP address:
 1. RiskIQ
 1. Domain Categorisation in Websense/Bluecoat/Netskope/Forcepoint
 1. Whois - 🚩 if the domain was recently created
-1. PassiveDNS - 🚩 if  the domain name shows parking behaviour
+1. PassiveDNS - 🚩 if  the domain name shows parking behavior
 
 ### Pivot on the domain name in the logs
 
 Pivot on the domain name in our proxy logs:
-1. How many clients did connect to it?  🚩 if there are less than 0.01% of the fleet
-1. How many requests and bytes were sent per client and per day?  🚩 if there is one client sending more than X hits per day (X being a reasonable value for beaconing activities, like one request every 3 minutes) or uploading more than Y bytes
+1. How many clients did connect to it?  🚩 if there is less than 0.01% of the fleet
+1. How many requests and bytes were sent per client and day?  🚩 if one client is sending more than X hits per day (X being a reasonable value for beaconing activities, like one request every 3 minutes) or uploading more than Y bytes
 1. What are the median values of `bytes_in` and `bytes_out` of the HTTP request?
 1. Is there any other suspicious User-Agent for this domain?
 1. Any IDS alert linked to the IP address/domain names.
 
-### Investigate on the endpoint
+### Investigate the endpoint
 
 On the endpoint that made the request:
 1. **Identify the usual users of this host** from Active Directory logs (Kerberos tickets from this host) and local endpoint logs (4624)
@@ -62,7 +62,7 @@ On the endpoint that made the request:
 	1. If we can not identify the process
 		1. Review the result of `autoruns` and review the most recently updated entries.
 		1. Perform an AV full-scan (or better, a Yara disk scan)
-		1. If the initial domain name/IP address was known in VirusTotal to be associated with a specific malware family, apply this knowledge to the possible artefacts on the systems
+		1. If the initial domain name/IP address was known in VirusTotal to be associated with a specific malware family, apply this knowledge to the possible artifacts on the systems
 		1. Collect all .evtx and apply [Chainsaw](https://github.com/WithSecureLabs/chainsaw) with your own Sigma ruleset
 1. Review all AV and SOC detections in the past 30 days
 
