@@ -10,5 +10,7 @@ pkgs.mkShell {
   buildInputs = [
         pkgs.pre-commit
         pkgs.hugo
+        pkgs.codespell
+        pkgs.pre-commit
   ];
 }
