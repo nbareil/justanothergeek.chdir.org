@@ -19,7 +19,9 @@ menu:
     - name: About
       url: /About
       weight: 2
-
+    - name: What am I doing now
+      url: /now
+      weight: 3
 params:
   subtitle: I am blogging about Information Security since 2003
   featherIconsCDN: true
@@ -37,4 +39,3 @@ params:
     - name: RSS
       icon: rss
       url: /index.xml
-
