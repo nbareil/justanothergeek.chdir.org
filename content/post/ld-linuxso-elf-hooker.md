@@ -1,12 +1,13 @@
 ---
 categories:
- - sandbox
- - glibc
- - elf
+  - sandbox
+  - glibc
+  - elf
 date: "2011-11-02T16:30:00Z"
 title: ld-linux.so ELF hooker
 description: I release a new tool, ldshatner, to inject code at runtime without the LD_PRELOAD hack
 ---
+
 <div
 style="-moz-border-radius: 6px; -moz-box-shadow: #F6EECD 0px 0px 200px inset; -o-box-shadow: #F6EECD 0px 0px 200px inset; -webkit-border-radius: 6px; background-color: #faf8ef; border-collapse: separate; border-radius: 6px; border-spacing: 1.428em; box-shadow: #F6EECD 0px 0px 200px inset; padding: 1.428em;">
 
@@ -17,13 +18,13 @@ style="color: #5d2a07; letter-spacing: 0.04em; text-transform: uppercase;">**TL;
 new tool injecting code at runtime, just between the ELF loader and
 target binary. It is an alternative to `LD_PRELOAD`, just a little bit
 more intrusive but 100% reliable :)\
+
 <div style="text-align: center;">
 
- [Sources were released on
+[Sources were released on
 Github](https://github.com/sduverger/ld-shatner)
 
 </div>
-
 
 \
 <span style="font-family: inherit;">\
@@ -63,6 +64,7 @@ style="background-color: transparent; font-family: 'Courier New', Courier, monos
 style="background-color: transparent; font-family: inherit;"> file
 accordingly:</span>\
 \
+
 <div class="separator" style="clear: both; text-align: center;">
 
 </div>
@@ -108,31 +110,30 @@ accordingly:</span>\
     style="background-color: transparent;"> was replaced by a pointer to
     our payload)</span></span>
 6.  <span style="background-color: transparent;"><span
-    style="font-family: inherit;">Embdded code runs</span></span>
+    style="font-family: inherit;">Embedded code runs</span></span>
 7.  <span style="font-family: inherit;"><span
     style="background-color: transparent;">It returns to our routine
     which finally jumps on original target</span><span
     style="background-color: transparent;"> entry point</span></span>
 
-
 <span style="background-color: transparent;">Some pictures before/after
 ld-shatner voodoo:</span>
 
+---
 
-  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  [![ld-shatner voodo](https://docs.google.com/drawings/pub?id=134woIW7XWxLXnXc-8vNTcUyhuOqD-zt8IoQYKivDDh0&w=1501&h=979)](https://docs.google.com/drawings/pub?id=134woIW7XWxLXnXc-8vNTcUyhuOqD-zt8IoQYKivDDh0&w=1501&h=979)
-  
-  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+[![ld-shatner voodo](https://docs.google.com/drawings/pub?id=134woIW7XWxLXnXc-8vNTcUyhuOqD-zt8IoQYKivDDh0&w=1501&h=979)](https://docs.google.com/drawings/pub?id=134woIW7XWxLXnXc-8vNTcUyhuOqD-zt8IoQYKivDDh0&w=1501&h=979)
+
+---
 
 ### Screenshot
 
-``` {style="background-color: #f8f8f8; color: #444444; font-family: 'Bitstream Vera Sans Mono', Courier, monospace; font-size: 11px; font: normal normal normal 12px/normal 'Bitstream Vera Sans Mono', Courier, monospace; padding-bottom: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px; white-space: pre-wrap; width: 74em; word-wrap: break-word;"}
+```{style="background-color: #f8f8f8; color: #444444; font-family: 'Bitstream Vera Sans Mono', Courier, monospace; font-size: 11px; font: normal normal normal 12px/normal 'Bitstream Vera Sans Mono', Courier, monospace; padding-bottom: 0px; padding-left: 0px; padding-right: 0px; padding-top: 0px; white-space: pre-wrap; width: 74em; word-wrap: break-word;"}
 $ make clean all
 $ cp /lib/ld-linux.so.2 /bin/ls .
 $ ./ld-shatner ld-linux.so.2 obj.elf
 $ sudo cp ld-hook.so /lib/
 $ ./interpatch ls
-$ ./ls 
+$ ./ls
 ld-hook <---------------------- output of obj.elf
 [...]
 ```
@@ -140,11 +141,11 @@ ld-hook <---------------------- output of obj.elf
 \
 (Ok, we cheat for the moment because we have to patch ls binary but we
 will not have to do that eventually)\
+
 ### So what?
 
 My ultimate goal for ld-shatner is to use this method for starting
 applications in my sandbox
 project, [seccomp-nurse](http://chdir.org/~nico/seccomp-nurse/). For the
-moment, I rely on LD\_PRELOAD feature but this approach is... hackish
+moment, I rely on LD_PRELOAD feature but this approach is... hackish
 and I have to work around some bugs because of this special context...
-
