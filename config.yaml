@@ -4,7 +4,8 @@ languageCode: en-us
 title: Just Another Geek
 theme: hugo-ink
 enableEmoji: true
-DisqusShortname: false
+disqusShortname: false
+
 
 permalinks:
   post: /:year/:month/:title/
