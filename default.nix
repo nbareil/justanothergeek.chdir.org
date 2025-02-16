@@ -1,10 +1,8 @@
-# nixos-21.11 on 2022-01-14 - https://status.nixos.org/
-with (import (fetchTarball https://github.com/nixos/nixpkgs/archive/386234e2a61e1e8acf94dfa3a3d3ca19a6776efb.tar.gz) {});
+# nixos-unstable on 2025-02-16 - https://status.nixos.org/
+with (import (fetchTarball https://github.com/nixos/nixpkgs/archive/8bb37161a0488b89830168b81c48aed11569cb93.tar.gz) {});
 
 
 let
-  customPython = pkgs.python38.buildEnv.override {
-  };
 in
 pkgs.mkShell {
   buildInputs = [
